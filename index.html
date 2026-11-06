@@ -363,6 +363,7 @@ input:disabled{background:var(--photo);color:var(--mute)}
 <div class="foot-bottom"><span>이용약관 · <b>개인정보처리방침</b></span><span>© 2026 LYNANDWON</span></div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (function(){
 "use strict";
@@ -407,8 +408,26 @@ refund:["돌려받은 상품을 확인하고 3영업일 안에 환불해 드려�
 var VIEWS=["front","back","detail"];
 var state={cart:[],reviews:{},wish:{},orders:[],account:null,loggedIn:false,authMsg:"",myMsg:"",sort:"new",q:"",lastOrder:null,pd:{id:null,color:null,size:null,qty:1,vi:0,msg:""}};
 /* 이 브라우저에만 저장 (서버 없는 데모) */
-state.guestOrders=[];state.guestOk=false;state.afterLogin="";state.lookup=null;
-var STORE="lynandwon-demo-v1",KEEP=["cart","reviews","wish","orders","account","loggedIn","guestOrders"];
+state.guestOk=false;state.afterLogin="";state.lookup=null;state.user=null;state.authReady=false;state.myOrders=null;state.signupSent="";state.pwSent="";
+/* 회원 서버 (Supabase). publishable key는 브라우저에 공개해도 되는 키예요. 데이터는 RLS 규칙으로 보호돼요. */
+var SB_URL="https://uroinllhfqqxnbnufhcd.supabase.co",SB_KEY="sb_publishable_6_pYF-qM4B2nRohQnFFUvg_TzOdtcjp";
+var SITE=location.origin+location.pathname;
+var sb=null;try{if(window.supabase)sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{flowType:"implicit",detectSessionInUrl:true,persistSession:true}});}catch(e){sb=null;}
+function acct(){var u=state.user;if(!u)return null;var m=u.user_metadata||{};return {name:m.name||"",email:u.email||"",tel:m.tel||"",addr:m.addr||"",ad:!!m.ad};}
+function noServer(el){if(sb)return false;if(el)el.textContent="회원 서버에 연결하지 못했어요. 잠시 뒤 다시 시도해 주세요.";return true;}
+function authErr(e){var m=(e&&e.message)||"";
+if(/Invalid login credentials/i.test(m))return "이메일 또는 비밀번호가 맞지 않아요.";
+if(/Email not confirmed/i.test(m))return "가입 확인 메일의 링크를 먼저 눌러 주세요.";
+if(/already (been )?registered/i.test(m))return "이미 가입된 이메일이에요. 로그인해 주세요.";
+if(/Password should|weak/i.test(m))return "비밀번호를 더 길고 복잡하게 정해 주세요.";
+if(/rate limit|security purposes|too many/i.test(m))return "요청이 많아요. 잠시 뒤 다시 시도해 주세요.";
+if(/email/i.test(m)&&/invalid|validate/i.test(m))return "이메일 형식을 확인해 주세요.";
+if(/fetch|network/i.test(m))return "회원 서버에 연결하지 못했어요. 인터넷 연결을 확인해 주세요.";
+return "문제가 생겼어요. ("+m+")";}
+function busy(form,on,label){var b=form.querySelector('button[type="submit"]');if(!b)return;if(on){b.dataset.label=b.textContent;b.disabled=true;b.textContent=label||"처리 중…";}else{b.disabled=false;b.textContent=b.dataset.label||b.textContent;}}
+function loadMyOrders(){if(!sb||!state.user||state.myOrders==="loading")return;state.myOrders="loading";
+sb.from("orders").select("order_no,items,total,pay,status,created_at").order("created_at",{ascending:false}).then(function(r){state.myOrders=r.error?{error:r.error.message}:r.data;if(current()==="mypage")render(true);});}
+var STORE="lynandwon-demo-v1",KEEP=["cart","reviews","wish"];
 function load(){try{var s=JSON.parse(window.localStorage.getItem(STORE)||"{}");KEEP.forEach(function(k){if(s[k]!==undefined&&s[k]!==null)state[k]=s[k];});}catch(e){}}
 function save(){try{var o={};KEEP.forEach(function(k){o[k]=state[k];});window.localStorage.setItem(STORE,JSON.stringify(o));}catch(e){}}
 
@@ -539,15 +558,20 @@ var l=PRODUCTS.filter(function(p){return state.wish[p.id];});
 return '<div class="full"><div class="list-head"><h1>WISH LIST</h1><p class="ko">찜한 상품 '+l.length+'개</p></div><div style="height:40px"></div>'+(l.length?grid(l):'<div class="empty">찜한 상품이 없어요. 상품 사진 위 하트를 눌러 찜해 보세요.</div>')+'</div>';
 }
 function viewMypage(){
-if(!state.loggedIn){state.authMsg="마이페이지는 로그인한 뒤 볼 수 있어요.";location.hash="login";return "";}
-var a=state.account||{},wishN=PRODUCTS.filter(function(p){return state.wish[p.id];}).length,revN=0;
+if(!state.authReady)return '<div class="page"><h1 class="page-title">MY PAGE</h1><p class="note center">회원 정보를 불러오고 있어요…</p></div>';
+if(!state.loggedIn){state.authMsg="마이페이지는 로그인한 뒤 볼 수 있어요.";state.afterLogin="mypage";location.hash="login";return "";}
+var a=acct()||{},wishN=PRODUCTS.filter(function(p){return state.wish[p.id];}).length,revN=0;
 Object.keys(state.reviews).forEach(function(k){revN+=state.reviews[k].length;});
-var orders=state.orders.length?'<div class="table-wrap"><table class="orders"><thead><tr><th scope="col">주문일</th><th scope="col">주문번호</th><th scope="col">상품</th><th scope="col">결제 금액</th><th scope="col">상태</th></tr></thead><tbody>'+
-state.orders.map(function(o){return '<tr><td>'+o.date+'</td><td>'+o.no+'</td><td>'+o.items.map(function(i){return esc(i.name)+' · '+i.color+' / '+i.size+' × '+i.qty;}).join("<br>")+'</td><td>'+won(o.total)+'<br><span class="note">'+o.pay+'</span></td><td><span class="status">결제 완료</span></td></tr>';}).join("")+
-'</tbody></table></div><p class="note">데모 페이지라 실제 결제와 배송은 진행되지 않아요.</p>':'<div class="empty">아직 주문 내역이 없어요.</div>';
+if(state.myOrders===null)setTimeout(loadMyOrders,0);
+var mo=state.myOrders,list=Array.isArray(mo)?mo:[];
+var orders=(mo===null||mo==="loading")?'<p class="note">주문 내역을 불러오고 있어요…</p>':
+(mo&&mo.error)?'<p class="err">주문 내역을 불러오지 못했어요. 잠시 뒤 새로고침해 주세요.</p>':
+list.length?'<div class="table-wrap"><table class="orders"><thead><tr><th scope="col">주문일</th><th scope="col">주문번호</th><th scope="col">상품</th><th scope="col">금액</th><th scope="col">상태</th></tr></thead><tbody>'+
+list.map(function(o){return '<tr><td>'+esc(String(o.created_at).slice(0,10))+'</td><td>'+esc(o.order_no)+'</td><td>'+(o.items||[]).map(function(i){return esc(i.name)+' · '+esc(i.color)+' / '+esc(i.size)+' × '+i.qty;}).join("<br>")+'</td><td>'+won(o.total)+'<br><span class="note">'+esc(o.pay)+'</span></td><td><span class="status">'+esc(o.status)+'</span></td></tr>';}).join("")+
+'</tbody></table></div>':'<div class="empty">아직 주문 내역이 없어요.</div>';
 return '<div class="page"><h1 class="page-title">MY PAGE</h1>'+
 '<div class="my-hello"><div><b>'+esc(a.name||"회원")+'</b>님, 반가워요<p class="note">'+esc(a.email||"")+'</p></div><button type="button" class="text-btn" data-act="logout">로그아웃</button></div>'+
-'<div class="my-stats"><a href="#mypage" data-act="scroll" data-target="myOrders"><b class="num">'+state.orders.length+'</b>주문</a><a href="#wish"><b class="num">'+wishN+'</b>찜</a><a href="#cart"><b class="num">'+cartQty()+'</b>장바구니</a><a href="#mypage" data-act="scroll" data-target="myOrders"><b class="num">'+revN+'</b>후기</a></div>'+
+'<div class="my-stats"><a href="#mypage" data-act="scroll" data-target="myOrders"><b class="num">'+list.length+'</b>주문</a><a href="#wish"><b class="num">'+wishN+'</b>찜</a><a href="#cart"><b class="num">'+cartQty()+'</b>장바구니</a><a href="#mypage" data-act="scroll" data-target="myOrders"><b class="num">'+revN+'</b>후기</a></div>'+
 '<section class="my-sec" id="myOrders"><h2>ORDER</h2>'+orders+'</section>'+
 '<section class="my-sec"><h2>PROFILE</h2><form class="form-grid" id="profileForm" novalidate>'+
 '<div class="field"><label for="pfName">이름</label><input type="text" id="pfName" value="'+esc(a.name||"")+'" autocomplete="name"></div>'+
@@ -556,7 +580,7 @@ return '<div class="page"><h1 class="page-title">MY PAGE</h1>'+
 '<div class="field span"><label for="pfAddr">기본 배송지</label><input type="text" id="pfAddr" value="'+esc(a.addr||"")+'" placeholder="주문하면 마지막 배송지가 저장돼요"></div>'+
 '<label class="check span" for="pfAd"><input type="checkbox" id="pfAd"'+(a.ad?" checked":"")+'><span>신상품·할인 소식 받기</span></label>'+
 '<p class="ok span" id="pfOk" role="status">'+esc(state.myMsg)+'</p>'+
-'<div class="span"><button class="btn" type="submit">회원 정보 저장</button></div></form></section></div>';
+'<div class="span" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><button class="btn" type="submit">회원 정보 저장</button><a class="text-btn" href="#new-pw">비밀번호 바꾸기</a></div></form></section></div>';
 }
 function renderSearchPanel(){
 var q=document.getElementById("spInput").value,r=matchQ(q).slice(0,4),box=document.getElementById("spRes");
@@ -586,7 +610,7 @@ return '<div class="page"><h1 class="page-title">ORDER</h1><div class="narrow" s
 '<button type="button" class="btn-outline" data-act="guest-order">비회원으로 주문하기</button>'+
 '<p class="note">비회원 주문은 주문번호와 휴대폰 번호로 조회할 수 있어요.</p></div></div>';
 }
-var sum=cartSum(),fee=shipFee(sum),acc=(state.loggedIn&&state.account)||{};
+var sum=cartSum(),fee=shipFee(sum),acc=(state.loggedIn&&acct())||{};
 var lines=state.cart.map(function(c){var p=byId(c.id);return '<div class="sum-row"><span>'+esc(p.name)+' · '+c.size+' × '+c.qty+'</span><span>'+won(p.price*c.qty)+'</span></div>';}).join("");
 return '<div class="page"><h1 class="page-title">ORDER</h1><form class="two" id="checkoutForm" novalidate><div>'+
 '<div class="form-sec"><h2>배송지</h2><div class="form-grid">'+
@@ -601,30 +625,35 @@ return '<div class="page"><h1 class="page-title">ORDER</h1><form class="two" id=
 '<label><input type="radio" name="pay" value="bank"><span>계좌이체</span><small>실시간 계좌이체 또는 무통장 입금</small></label></div></div>'+
 '<div class="form-sec" style="border-bottom:0">'+(state.loggedIn?'':'<p class="note">비회원으로 주문하고 있어요. 주문 조회에 휴대폰 번호가 쓰여요.</p><label class="check" for="coGuestAgree"><input type="checkbox" id="coGuestAgree"><span>(필수) 비회원 구매를 위한 개인정보 수집·이용에 동의해요. (이름, 연락처, 주소 · 주문 처리 후 5년 보관)</span></label>')+'<label class="check" for="coAgree"><input type="checkbox" id="coAgree"><span>주문 내용을 확인했고, 결제에 동의해요. (배송·교환·환불 안내 포함)</span></label><p class="err" id="coErr" role="alert"></p></div></div>'+
 '<aside class="summary"><h2>주문 상품</h2>'+lines+'<div class="sum-row t" style="font-size:13px;font-weight:400"><span>배송비</span><span>'+(fee?won(fee):"무료")+'</span></div><div class="sum-row" style="font-size:16px;font-weight:500"><span>총 결제 금액</span><span>'+won(sum+fee)+'</span></div>'+
-'<button class="btn-black" type="submit">'+won(sum+fee)+' 결제하기</button><p class="note">데모 페이지라 실제 결제는 진행되지 않아요.</p></aside></form></div>';
+'<button class="btn-black" type="submit">'+won(sum+fee)+' 주문하기</button><p class="note">온라인 결제는 준비 중이라 지금은 주문만 접수돼요. 결제 방법은 따로 안내해 드려요.</p></aside></form></div>';
 }
 function viewDone(){
 var o=state.lastOrder;
 if(!o)return '<div class="page"><div class="done"><h1>주문 내역이 없어요</h1><a class="link" href="#home">메인으로</a></div></div>';
-return '<div class="page"><h1 class="page-title">ORDER COMPLETE</h1><div class="done"><h1>주문이 접수되었어요</h1><p>'+esc(o.name)+'님, 고맙습니다. '+o.payLabel+'(으)로 '+won(o.total)+' 주문이 접수되었어요.<br>결제를 마친 뒤 1~3영업일 안에 보내 드려요.</p><p class="note">데모 페이지라 실제 결제와 배송은 진행되지 않았어요.</p><p class="note">주문번호 <b style="color:var(--ink)">'+esc(o.no||"")+'</b>'+(o.member?'':'<br>비회원 주문은 로그인 화면의 비회원 주문 조회에서 주문번호와 휴대폰 번호로 확인할 수 있어요.')+'</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">'+(o.member?'<a class="btn ghost" href="#mypage">주문 내역 보기</a>':'')+'<a class="btn" href="#home">쇼핑 계속하기</a></div></div></div>';
+return '<div class="page"><h1 class="page-title">ORDER COMPLETE</h1><div class="done"><h1>주문이 접수되었어요</h1><p>'+esc(o.name)+'님, 고맙습니다. '+o.payLabel+'(으)로 '+won(o.total)+' 주문이 접수되었어요.</p><p class="note">온라인 결제는 준비 중이라 지금은 주문만 접수됐어요. 결제가 확인되면 1~3영업일 안에 보내 드려요.</p><p class="note">주문번호 <b style="color:var(--ink)">'+esc(o.no||"")+'</b>'+(o.member?'':'<br>비회원 주문은 로그인 화면의 비회원 주문 조회에서 주문번호와 휴대폰 번호로 확인할 수 있어요.')+'</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">'+(o.member?'<a class="btn ghost" href="#mypage">주문 내역 보기</a>':'')+'<a class="btn" href="#home">쇼핑 계속하기</a></div></div></div>';
 }
 function viewLogin(){
 if(state.loggedIn){location.hash="mypage";return "";}
-var m=state.authMsg;state.authMsg="";
+var m=state.authMsg;
 return '<div class="page"><h1 class="page-title">LOGIN</h1><form class="narrow" id="loginForm" novalidate>'+(m?'<p class="ok center">'+esc(m)+'</p>':'')+
 '<div class="field"><label for="lgId">이메일</label><input type="email" id="lgId" autocomplete="email"></div>'+
 '<div class="field"><label for="lgPw">비밀번호</label><input type="password" id="lgPw" autocomplete="current-password"></div>'+
 '<p class="err" id="lgErr" role="alert"></p><button class="btn-black" type="submit">LOGIN</button><a class="btn-outline" href="#signup">JOIN US</a>'+
-'<p class="note center">데모 페이지라 비밀번호는 확인하지 않고, 이 브라우저에만 저장돼요.</p></form>'+
+'<p class="center"><a class="text-btn" href="#find-pw">비밀번호를 잊으셨나요?</a></p></form>'+
 '<div class="narrow" style="margin-top:56px;border-top:1px solid var(--ink);padding-top:28px"><h2 style="font-family:var(--font-en);font-size:15px;font-weight:600;text-align:center">GUEST</h2>'+
 (state.cart.length?'<button type="button" class="btn-outline" data-act="guest-order">비회원으로 구매하기 ('+cartQty()+'개)</button>':'<p class="note center">장바구니에 상품을 담으면 비회원으로도 구매할 수 있어요.</p>')+
 '<form id="lookupForm" style="display:grid;gap:12px;margin-top:20px" novalidate><p style="font-size:13px;font-weight:500">비회원 주문 조회</p>'+
-'<div class="field"><label for="lkNo">주문번호</label><input type="text" id="lkNo" placeholder="예: LW20261106-1234"></div>'+
+'<div class="field"><label for="lkNo">주문번호</label><input type="text" id="lkNo" placeholder="예: LW20261106-AB12CD"></div>'+
 '<div class="field"><label for="lkTel">주문할 때 입력한 휴대폰 번호</label><input type="tel" id="lkTel" placeholder="010-0000-0000"></div>'+
 '<button class="btn ghost" type="submit">주문 조회</button>'+lookupHtml()+'</form></div></div>';
 }
 function viewSignup(){
 if(state.loggedIn){location.hash="mypage";return "";}
+if(state.signupSent){var em=state.signupSent;
+return '<div class="page"><h1 class="page-title">JOIN US</h1><div class="narrow" style="text-align:center">'+
+'<p><b>'+esc(em)+'</b>로 가입 확인 메일을 보냈어요.</p><p>메일의 <b>확인 링크</b>를 누르면 가입이 끝나고 바로 로그인돼요.</p>'+
+'<p class="note">메일이 안 보이면 스팸함도 확인해 주세요. 링크는 이 브라우저에서 여는 게 가장 좋아요.</p>'+
+'<a class="btn-outline" href="#login">로그인 화면으로</a></div></div>';}
 return '<div class="page"><h1 class="page-title">JOIN US</h1><form class="narrow" id="signupForm" novalidate>'+
 '<div class="field"><label for="suName">이름</label><input type="text" id="suName" autocomplete="name"></div>'+
 '<div class="field"><label for="suMail">이메일</label><input type="email" id="suMail" autocomplete="email"></div>'+
@@ -649,14 +678,32 @@ return '<div class="page" style="max-width:800px"><h1 class="page-title">CUSTOME
 function lookupHtml(){
 var l=state.lookup;if(!l)return "";
 if(l==="none")return '<p class="err" role="alert">맞는 주문이 없어요. 주문번호와 휴대폰 번호를 다시 확인해 주세요.</p>';
-return '<div class="review" role="status" style="border-top:1px solid var(--line)"><p><b>'+esc(l.no)+'</b> · '+l.date+' · <span class="status">결제 완료</span></p>'+
-l.items.map(function(i){return '<p>'+esc(i.name)+' · '+i.color+' / '+i.size+' × '+i.qty+'</p>';}).join("")+'<p class="num">'+won(l.total)+' · '+l.pay+'</p></div>';
+return '<div class="review" role="status" style="border-top:1px solid var(--line)"><p><b>'+esc(l.order_no)+'</b> · '+esc(String(l.created_at).slice(0,10))+' · <span class="status">'+esc(l.status)+'</span></p>'+
+(l.items||[]).map(function(i){return '<p>'+esc(i.name)+' · '+esc(i.color)+' / '+esc(i.size)+' × '+i.qty+'</p>';}).join("")+'<p class="num">'+won(l.total)+' · '+esc(l.pay)+'</p></div>';
+}
+function viewFindPw(){
+if(state.pwSent){var em=state.pwSent;state.pwSent="";
+return '<div class="page"><h1 class="page-title">FIND PASSWORD</h1><div class="narrow" style="text-align:center"><p><b>'+esc(em)+'</b>로 비밀번호 재설정 메일을 보냈어요.</p><p class="note">가입된 이메일이면 메일이 도착해요. 메일의 링크를 누르면 새 비밀번호를 정할 수 있어요.</p><a class="btn-outline" href="#login">로그인 화면으로</a></div></div>';}
+var fm0=state.authMsg;
+return '<div class="page"><h1 class="page-title">FIND PASSWORD</h1><form class="narrow" id="findPwForm" novalidate>'+(fm0?'<p class="ok center">'+esc(fm0)+'</p>':'')+
+'<p class="note center">가입한 이메일을 입력하면 비밀번호를 다시 정하는 링크를 보내 드려요.</p>'+
+'<div class="field"><label for="fpMail">이메일</label><input type="email" id="fpMail" autocomplete="email"></div>'+
+'<p class="err" id="fpErr" role="alert"></p><button class="btn-black" type="submit">재설정 메일 보내기</button><a class="btn-outline" href="#login">로그인 화면으로</a></form></div>';
+}
+function viewNewPw(){
+if(!state.authReady)return '<div class="page"><p class="note center" style="padding-top:60px">확인하고 있어요…</p></div>';
+if(!state.loggedIn){state.authMsg="비밀번호 재설정 링크가 만료됐어요. 다시 요청해 주세요.";location.hash="find-pw";return "";}
+return '<div class="page"><h1 class="page-title">NEW PASSWORD</h1><form class="narrow" id="newPwForm" novalidate>'+
+'<div class="field"><label for="npPw">새 비밀번호</label><input type="password" id="npPw" autocomplete="new-password" placeholder="8자 이상"></div>'+
+'<div class="field"><label for="npPw2">새 비밀번호 확인</label><input type="password" id="npPw2" autocomplete="new-password"></div>'+
+'<p class="err" id="npErr" role="alert"></p><button class="btn-black" type="submit">비밀번호 바꾸기</button></form></div>';
 }
 function viewMissing(){return '<div class="page"><div class="done"><h1>찾는 페이지가 없어요</h1><a class="link" href="#home">메인으로</a></div></div>';}
 
 /* 라우팅 */
 var app=document.getElementById("app");
-function current(){return location.hash.replace(/^#/,"")||"home";}
+function isAuthHash(){return /access_token=|error_description=|type=recovery|type=signup/.test(location.hash);}
+function current(){if(isAuthHash())return "auth-callback";return location.hash.replace(/^#/,"")||"home";}
 function render(keep){
 var h=current(),html,to=null;
 if(h==="home")html=viewHome();
@@ -670,6 +717,9 @@ else if(h==="signup")html=viewSignup();
 else if(h==="search")html=viewSearch();
 else if(h==="wish")html=viewWish();
 else if(h==="mypage")html=viewMypage();
+else if(h==="find-pw")html=viewFindPw();
+else if(h==="new-pw")html=viewNewPw();
+else if(h==="auth-callback")html='<div class="page"><p class="note center" style="padding-top:60px">확인하고 있어요…</p></div>';
 else if(h==="help"||h==="help-ship"||h==="help-return"){html=viewHelp();to=h==="help-ship"?"sec-ship":h==="help-return"?"sec-return":null;}
 else html=viewMissing();
 var y=window.scrollY;app.innerHTML=html;
@@ -682,7 +732,8 @@ if(to){var el=document.getElementById(to);if(el)el.scrollIntoView();}else window
 function placeDrawer(){var b=document.getElementById("top").getBoundingClientRect().bottom;document.getElementById("drawer").style.top=b+"px";document.getElementById("scrim").style.top=b+"px";}
 function openMenu(){placeDrawer();document.body.classList.add("menu-open");document.getElementById("drawer").setAttribute("aria-hidden","false");var m=document.getElementById("menuBtn");m.setAttribute("aria-expanded","true");m.setAttribute("aria-label","메뉴 닫기");}
 function closeMenu(){document.body.classList.remove("menu-open");document.getElementById("drawer").setAttribute("aria-hidden","true");var m=document.getElementById("menuBtn");m.setAttribute("aria-expanded","false");m.setAttribute("aria-label","메뉴 열기");}
-window.addEventListener("hashchange",function(){closeMenu();closeSearch();render(false);});
+var lastH=location.hash;
+window.addEventListener("hashchange",function(){if(lastH==="#login"||lastH==="#find-pw")state.authMsg="";lastH=location.hash;closeMenu();closeSearch();render(false);});
 window.addEventListener("scroll",function(){if(document.body.classList.contains("menu-open"))placeDrawer();},{passive:true});
 window.addEventListener("resize",function(){if(document.body.classList.contains("menu-open"))placeDrawer();});
 document.addEventListener("keydown",function(e){
@@ -710,7 +761,7 @@ else if(a==="login-for-order"){state.afterLogin="checkout";state.authMsg="로그
 else if(a==="search-tag"){var si=document.getElementById("spInput");si.value=t.textContent;renderSearchPanel();si.focus();}
 else if(a==="search-all"){e.preventDefault();state.q=document.getElementById("spInput").value;closeSearch();if(location.hash==="#search")render(false);else location.hash="search";}
 else if(a==="wishcard"){var wid=t.getAttribute("data-id");state.wish[wid]=!state.wish[wid];if(!state.wish[wid])delete state.wish[wid];render(true);}
-else if(a==="logout"){state.loggedIn=false;closeMenu();state.authMsg="로그아웃했어요.";if(location.hash==="#login")render(false);else location.hash="login";}
+else if(a==="logout"){closeMenu();var done=function(){state.user=null;state.loggedIn=false;state.myOrders=null;state.authMsg="로그아웃했어요.";if(location.hash==="#login")render(false);else location.hash="login";};if(sb)sb.auth.signOut().then(done,done);else done();}
 else if(a==="menu-close")closeMenu();
 else if(a==="acc"){var open=t.getAttribute("aria-expanded")==="true";t.setAttribute("aria-expanded",String(!open));document.getElementById(t.getAttribute("aria-controls")).hidden=open;}
 else if(a==="scroll"){var el=document.getElementById(t.getAttribute("data-target"));if(el){var y=el.getBoundingClientRect().top+window.scrollY-document.getElementById("top").offsetHeight;window.scrollTo({top:y,behavior:"smooth"});}}
@@ -742,33 +793,83 @@ else if(f.id==="checkoutForm"){var err=document.getElementById("coErr");
 if(!val("coName")||!val("coTel")||!val("coAddr")){err.textContent="받는 분, 연락처, 주소를 모두 입력해 주세요.";return;}
 if(!state.loggedIn&&!document.getElementById("coGuestAgree").checked){err.textContent="비회원 구매 개인정보 수집·이용에 동의해 주세요.";return;}
 if(!document.getElementById("coAgree").checked){err.textContent="결제 동의에 체크해 주세요.";return;}
+if(noServer(err))return;
 var pay=f.querySelector('input[name="pay"]:checked').value,sum=cartSum(),payLabel={card:"신용·체크카드",easy:"간편결제",bank:"계좌이체"}[pay];
-var d=new Date(),pad=function(n){return (n<10?"0":"")+n;},ds=d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
-var order={no:"LW"+ds.replace(/-/g,"")+"-"+String(Math.floor(1000+Math.random()*9000)),date:ds,total:sum+shipFee(sum),pay:payLabel,
-items:state.cart.map(function(c){var p=byId(c.id);return {name:p.name,color:COLORS[c.color].name,size:c.size,qty:c.qty};})};
-if(state.loggedIn&&state.account){state.orders.unshift(order);state.account.addr=val("coAddr")+(val("coAddr2")?" "+val("coAddr2"):"");if(!state.account.tel)state.account.tel=val("coTel");}
-else{order.name=val("coName");order.tel=val("coTel").replace(/\D/g,"");state.guestOrders.unshift(order);state.guestOk=false;}
-state.lastOrder={name:val("coName"),total:order.total,payLabel:payLabel,no:order.no,member:state.loggedIn};state.cart=[];location.hash="order-done";}
+var d=new Date(),pad=function(n){return (n<10?"0":"")+n;},ds=""+d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate());
+var no="LW"+ds+"-"+Math.random().toString(36).slice(2,8).toUpperCase().padEnd(6,"0");
+var addr=val("coAddr")+(val("coAddr2")?" "+val("coAddr2"):""),member=state.loggedIn&&!!state.user;
+var row={order_no:no,total:sum+shipFee(sum),pay:payLabel,ship_name:val("coName"),ship_tel:val("coTel"),ship_addr:addr,memo:val("coMemo"),
+items:state.cart.map(function(c){var p=byId(c.id);return {id:p.id,name:p.name,color:COLORS[c.color].name,size:c.size,qty:c.qty,price:p.price};})};
+if(member)row.user_id=state.user.id;else{row.guest_name=val("coName");row.guest_tel=val("coTel").replace(/\D/g,"");}
+busy(f,true,"주문 접수 중…");
+sb.from("orders").insert(row).then(function(r){
+if(r.error){busy(f,false);err.textContent="주문을 저장하지 못했어요. 잠시 뒤 다시 시도해 주세요. ("+r.error.message+")";return;}
+if(member){var a=acct();sb.auth.updateUser({data:{addr:addr,tel:a.tel||val("coTel")}}).then(function(u){if(u.data&&u.data.user)state.user=u.data.user;});state.myOrders=null;}
+state.lastOrder={name:val("coName"),total:row.total,payLabel:payLabel,no:no,member:member};state.cart=[];state.guestOk=false;location.hash="order-done";
+},function(x){busy(f,false);err.textContent=authErr(x);});}
 else if(f.id==="loginForm"){var le=document.getElementById("lgErr"),em=val("lgId");
 if(!em||!val("lgPw")){le.textContent="이메일과 비밀번호를 입력해 주세요.";return;}
-if(em.indexOf("@")<1){le.textContent="이메일 형식을 확인해 주세요.";return;}
-if(!state.account||state.account.email!==em){state.account={name:em.split("@")[0],email:em,tel:"",addr:"",ad:false};}
-state.loggedIn=true;state.myMsg="";var go=state.afterLogin||"mypage";state.afterLogin="";location.hash=go;}
-else if(f.id==="lookupForm"){var no=val("lkNo").toUpperCase(),tel=val("lkTel").replace(/\D/g,""),hit=null;
-if(!no||!tel){state.lookup="none";render(true);return;}
-state.guestOrders.forEach(function(o){if(o.no===no&&o.tel===tel)hit=o;});state.lookup=hit||"none";render(true);state.lookup=null;}
+if(noServer(le))return;
+busy(f,true,"로그인 중…");
+sb.auth.signInWithPassword({email:em,password:val("lgPw")}).then(function(r){
+if(r.error){busy(f,false);le.textContent=authErr(r.error);return;}
+state.user=r.data.user;state.loggedIn=true;state.authReady=true;state.myOrders=null;state.myMsg="";
+var go=state.afterLogin||"mypage";state.afterLogin="";location.hash=go;
+},function(x){busy(f,false);le.textContent=authErr(x);});}
+else if(f.id==="lookupForm"){var no2=val("lkNo"),tel=val("lkTel").replace(/\D/g,"");
+if(!no2||!tel){state.lookup="none";render(true);state.lookup=null;return;}
+if(noServer(null)){state.lookup="none";render(true);state.lookup=null;return;}
+busy(f,true,"조회 중…");
+sb.rpc("lookup_guest_order",{p_no:no2,p_tel:tel}).then(function(r){state.lookup=(r.error||!r.data||!r.data.length)?"none":r.data[0];render(true);state.lookup=null;},function(){state.lookup="none";render(true);state.lookup=null;});}
 else if(f.id==="signupForm"){var se=document.getElementById("suErr");
 if(!val("suName")||!val("suMail")||val("suPw").length<8){se.textContent="이름, 이메일을 입력하고 비밀번호는 8자 이상으로 정해 주세요.";return;}
 if(val("suMail").indexOf("@")<1){se.textContent="이메일 형식을 확인해 주세요.";return;}
 if(!document.getElementById("suTerms").checked||!document.getElementById("suPriv").checked){se.textContent="필수 약관 두 가지에 동의해 주세요.";return;}
-state.account={name:val("suName"),email:val("suMail"),tel:val("suTel"),addr:"",ad:document.getElementById("suAd").checked};state.orders=[];
-state.loggedIn=true;state.myMsg="가입을 환영해요! 회원 정보는 여기서 바꿀 수 있어요.";var go2=state.afterLogin||"mypage";state.afterLogin="";location.hash=go2;}
-else if(f.id==="profileForm"){if(!val("pfName")){document.getElementById("pfOk").textContent="이름을 입력해 주세요.";return;}
-state.account.name=val("pfName");state.account.tel=val("pfTel");state.account.addr=val("pfAddr");state.account.ad=document.getElementById("pfAd").checked;
-state.myMsg="회원 정보를 저장했어요.";render(true);state.myMsg="";}
+if(noServer(se))return;
+var mail=val("suMail");busy(f,true,"가입 중…");
+sb.auth.signUp({email:mail,password:val("suPw"),options:{emailRedirectTo:SITE,data:{name:val("suName"),tel:val("suTel"),ad:document.getElementById("suAd").checked}}}).then(function(r){
+if(r.error){busy(f,false);se.textContent=authErr(r.error);return;}
+if(r.data.user&&r.data.user.identities&&r.data.user.identities.length===0){busy(f,false);se.textContent="이미 가입된 이메일이에요. 로그인해 주세요.";return;}
+if(r.data.session){state.user=r.data.user;state.loggedIn=true;state.authReady=true;state.myMsg="가입을 환영해요! 회원 정보는 여기서 바꿀 수 있어요.";var go2=state.afterLogin||"mypage";state.afterLogin="";location.hash=go2;return;}
+state.signupSent=mail;render(false);
+},function(x){busy(f,false);se.textContent=authErr(x);});}
+else if(f.id==="findPwForm"){var fe=document.getElementById("fpErr"),fm=val("fpMail");
+if(fm.indexOf("@")<1){fe.textContent="가입한 이메일을 입력해 주세요.";return;}
+if(noServer(fe))return;
+busy(f,true,"보내는 중…");
+sb.auth.resetPasswordForEmail(fm,{redirectTo:SITE}).then(function(r){if(r.error){busy(f,false);fe.textContent=authErr(r.error);return;}state.pwSent=fm;render(false);},function(x){busy(f,false);fe.textContent=authErr(x);});}
+else if(f.id==="newPwForm"){var ne=document.getElementById("npErr");
+if(val("npPw").length<8){ne.textContent="비밀번호는 8자 이상으로 정해 주세요.";return;}
+if(val("npPw")!==val("npPw2")){ne.textContent="두 비밀번호가 서로 달라요.";return;}
+busy(f,true,"바꾸는 중…");
+sb.auth.updateUser({password:val("npPw")}).then(function(r){if(r.error){busy(f,false);ne.textContent=authErr(r.error);return;}state.myMsg="비밀번호를 바꿨어요.";location.hash="mypage";},function(x){busy(f,false);ne.textContent=authErr(x);});}
+else if(f.id==="profileForm"){var pk=document.getElementById("pfOk");if(!val("pfName")){pk.textContent="이름을 입력해 주세요.";return;}
+if(noServer(pk))return;
+busy(f,true,"저장 중…");
+sb.auth.updateUser({data:{name:val("pfName"),tel:val("pfTel"),addr:val("pfAddr"),ad:document.getElementById("pfAd").checked}}).then(function(r){
+if(r.error){busy(f,false);pk.textContent=authErr(r.error);return;}
+state.user=r.data.user;state.myMsg="회원 정보를 저장했어요.";render(true);state.myMsg="";
+},function(x){busy(f,false);pk.textContent=authErr(x);});}
 });
+
+/* 시작: 저장된 장바구니·찜 불러오기, 메일 링크로 들어온 경우 처리, 로그인 상태 확인 */
 load();
+(function(){var hp;try{hp=new URLSearchParams(location.hash.slice(1));}catch(e){hp=null;}
+if(hp&&hp.get("error_description")){state.authMsg=/expired|invalid/i.test(hp.get("error_description"))?"메일 링크가 만료됐거나 이미 사용됐어요. 다시 시도해 주세요.":"인증에 실패했어요. 다시 시도해 주세요.";
+try{history.replaceState(null,"",location.pathname+location.search+"#login");}catch(e){location.hash="login";}}})();
+if(!sb)state.authReady=true;
 render(false);
+if(sb){
+sb.auth.onAuthStateChange(function(ev,session){setTimeout(function(){
+var prev=state.user&&state.user.id;state.user=session?session.user:null;state.loggedIn=!!state.user;state.authReady=true;
+if((state.user&&state.user.id)!==prev)state.myOrders=null;
+var cb=isAuthHash();
+if(ev==="PASSWORD_RECOVERY"||(cb&&/type=recovery/.test(location.hash))){location.hash="new-pw";return;}
+if(cb){if(state.user){state.myMsg="메일 인증이 끝났어요. 린앤원에 오신 걸 환영해요!";location.hash="mypage";}else{state.authMsg="인증에 실패했어요. 다시 로그인해 주세요.";location.hash="login";}return;}
+if(ev==="SIGNED_IN"&&current()==="login")return;
+render(true);
+},0);});
+}
 })();
 </script>
 </body>

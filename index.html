@@ -232,6 +232,40 @@ details p{margin-top:10px;font-size:13px;color:var(--mute)}
 .help-sec{padding:40px 0;display:grid;gap:14px}
 .help-sec h2{font-size:15px;font-weight:700}
 
+/* 찜 하트, 검색창, 마이페이지 */
+.card-wrap{position:relative}
+.card-heart{position:absolute;top:8px;right:8px;padding:6px;color:var(--ink)}
+.card-heart .ico{width:20px;height:20px}
+.card-heart[aria-pressed="true"] .ico{fill:var(--ink)}
+.search-panel{position:fixed;left:0;right:0;z-index:35;background:#fff;border-bottom:1px solid var(--ink);padding:28px 30px 34px}
+.search-panel[hidden]{display:none}
+.sp-in{max-width:640px;margin:0 auto;display:grid;gap:16px}
+.sp-field{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--ink);padding:4px 0}
+.sp-field input{border:0;outline:none;flex:1;font-size:16px;padding:8px 0;background:transparent}
+.sp-tags{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12px}
+.sp-tags span{color:var(--mute);margin-right:4px}
+.sp-tags button{border:1px solid var(--line);padding:5px 12px}
+.sp-tags button:hover{border-color:var(--ink)}
+.sp-field input::-webkit-search-cancel-button{display:none}
+input:disabled{background:var(--photo);color:var(--mute)}
+.sp-res{display:grid}
+.sp-res a{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:6px 0;font-size:13px}
+.sp-res a:hover span:first-of-type{text-decoration:underline}
+.sp-res .ph{padding:8%}
+.my-hello{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-top:1px solid var(--ink);padding:28px 0}
+.my-hello b{font-size:20px;font-weight:500}
+.my-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.my-stats a{display:grid;gap:4px;justify-items:center;padding:26px 8px;font-size:12px;color:var(--mute)}
+.my-stats a + a{border-left:1px solid var(--line)}
+.my-stats a:hover{background:var(--photo)}
+.my-stats b{font-family:var(--font-en);font-size:24px;font-weight:500;color:var(--ink)}
+.my-sec{padding:48px 0 0;display:grid;gap:14px}
+.my-sec h2{font-family:var(--font-en);font-size:15px;font-weight:600}
+.orders th,.orders td{text-align:left;vertical-align:top}
+.status{font-size:12px;border:1px solid var(--line);padding:2px 8px;white-space:nowrap}
+.ok{font-size:12px;color:var(--beige);min-height:18px}
+.text-btn{font-size:12px;color:var(--mute);border-bottom:1px solid var(--line)}
+@media (max-width:600px){.my-stats{grid-template-columns:repeat(2,1fr)}.my-stats a:nth-child(3){border-left:0}.my-stats a:nth-child(n+3){border-top:1px solid var(--line)}}
 /* 하단 */
 .foot{border-top:1px solid var(--ink);margin-top:80px;padding:44px 30px 36px;font-size:12px;color:#4a4642}
 .foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.6fr;gap:30px}
@@ -285,13 +319,20 @@ details p{margin-top:10px;font-size:13px;color:var(--mute)}
 </button>
 <a href="#home" class="logo" aria-label="린앤원 메인으로">LYNANDWON</a>
 <nav class="icons" aria-label="회원 메뉴">
-<a href="#search" aria-label="검색"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></a>
-<a href="#login" aria-label="로그인"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg></a>
+<button type="button" id="searchBtn" data-act="search-toggle" aria-label="검색" aria-expanded="false" aria-controls="searchPanel"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button>
+<a href="#login" id="userLink" aria-label="로그인"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg></a>
 <a href="#wish" aria-label="찜 목록"><svg class="ico" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.1A4.1 4.1 0 0 1 12 7.6a4.1 4.1 0 0 1 7.5 2.3C19.5 15.4 12 20 12 20z"/></svg></a>
 <a href="#cart" aria-label="장바구니"><svg class="ico" viewBox="0 0 24 24"><path d="M5.5 8h13l-1 12.5h-11z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="cnt" id="cartCount">0</span></a>
 </nav>
 </div>
 </header>
+<div class="search-panel" id="searchPanel" hidden role="search">
+<div class="sp-in">
+<label class="sp-field" for="spInput"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" id="spInput" placeholder="상품 이름이나 소재를 입력하세요" autocomplete="off"><button type="button" class="text-btn" data-act="search-close">닫기</button></label>
+<div class="sp-tags"><span>추천 검색어</span><button type="button" data-act="search-tag">모달</button><button type="button" data-act="search-tag">원피스</button><button type="button" data-act="search-tag">세트</button><button type="button" data-act="search-tag">기모</button><button type="button" data-act="search-tag">거즈</button></div>
+<div class="sp-res" id="spRes"></div>
+</div>
+</div>
 <div class="scrim" id="scrim" data-act="menu-close"></div>
 <aside class="drawer" id="drawer" aria-label="메뉴" aria-hidden="true">
 <nav class="mnav" aria-label="상품 카테고리">
@@ -307,7 +348,7 @@ details p{margin-top:10px;font-size:13px;color:var(--mute)}
 <div class="acc-panel" id="accHelp" hidden><a href="#help">자주 묻는 질문</a><a href="#help-ship">배송 안내</a><a href="#help-return">교환·환불 안내</a></div>
 </div>
 </nav>
-<div class="msmall"><a href="#login">로그인</a><a href="#signup">회원가입</a><a href="#cart">장바구니</a></div>
+<div class="msmall" id="msmall"></div>
 </aside>
 
 <main id="app"></main>
@@ -364,7 +405,11 @@ exchange:["상품을 받은 날부터 7일 안에 신청해 주세요","단순 �
 refund:["돌려받은 상품을 확인하고 3영업일 안에 환불해 드려요","카드·간편결제는 결제를 취소하는 방식으로 환불돼요","계좌이체는 입력하신 환불 계좌로 보내 드려요"]
 };
 var VIEWS=["front","back","detail"];
-var state={cart:[],reviews:{},wish:{},sort:"new",q:"",lastOrder:null,pd:{id:null,color:null,size:null,qty:1,vi:0,msg:""}};
+var state={cart:[],reviews:{},wish:{},orders:[],account:null,loggedIn:false,authMsg:"",myMsg:"",sort:"new",q:"",lastOrder:null,pd:{id:null,color:null,size:null,qty:1,vi:0,msg:""}};
+/* 이 브라우저에만 저장 (서버 없는 데모) */
+var STORE="lynandwon-demo-v1",KEEP=["cart","reviews","wish","orders","account","loggedIn"];
+function load(){try{var s=JSON.parse(window.localStorage.getItem(STORE)||"{}");KEEP.forEach(function(k){if(s[k]!==undefined&&s[k]!==null)state[k]=s[k];});}catch(e){}}
+function save(){try{var o={};KEEP.forEach(function(k){o[k]=state[k];});window.localStorage.setItem(STORE,JSON.stringify(o));}catch(e){}}
 
 function won(n){return n.toLocaleString("ko-KR")+"원";}
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -397,7 +442,10 @@ if(view==="detail"){vb=shape==="bottom"?"30 70 60 80":(shape==="slip"?"30 4 60 8
 return '<svg viewBox="'+vb+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">'+body+'</svg>';
 }
 function tags(p){return (p.isNew?"[NEW]":"")+"["+p.gender+"]";}
-function card(p){return '<a class="card" href="#item-'+p.id+'"><div class="ph">'+garment(p.shape,COLORS[p.colors[0]].hex)+'</div><p class="nm">'+tags(p)+esc(p.name)+'</p><p class="pr">'+won(p.price)+'</p></a>';}
+var HEART='<path d="M12 20s-7.5-4.6-7.5-10.1A4.1 4.1 0 0 1 12 7.6a4.1 4.1 0 0 1 7.5 2.3C19.5 15.4 12 20 12 20z"/>';
+function card(p){var w=!!state.wish[p.id];return '<div class="card-wrap"><a class="card" href="#item-'+p.id+'"><div class="ph">'+garment(p.shape,COLORS[p.colors[0]].hex)+'</div><p class="nm">'+tags(p)+esc(p.name)+'</p><p class="pr">'+won(p.price)+'</p></a>'+
+'<button type="button" class="card-heart" data-act="wishcard" data-id="'+p.id+'" aria-pressed="'+w+'" aria-label="'+esc(p.name)+(w?' 찜 해제':' 찜하기')+'">'+ico(HEART)+'</button></div>';}
+function matchQ(q){q=q.trim().toLowerCase();if(!q)return [];return PRODUCTS.filter(function(p){var f=FABRIC[p.fabric];return (p.name+" "+f.label+" "+f.en+" "+CAT[p.cat]+" "+(p.gender==="남"?"남자":"여자")+(p.pair?" 커플":"")).toLowerCase().indexOf(q)>-1;});}
 function grid(list){return '<div class="grid">'+list.map(card).join("")+'</div>';}
 function cartQty(){return state.cart.reduce(function(a,b){return a+b.qty;},0);}
 function cartSum(){return state.cart.reduce(function(a,b){return a+byId(b.id).price*b.qty;},0);}
@@ -482,13 +530,40 @@ return '<div class="full"><div class="list-head"><h1>SEARCH</h1></div><div style
 }
 function searchResults(){
 var q=state.q.trim();if(!q)return '<p class="note center">검색어를 입력해 주세요.</p>';
-var r=PRODUCTS.filter(function(p){return (p.name+FABRIC[p.fabric].label+FABRIC[p.fabric].en).indexOf(q)>-1;});
-return r.length?grid(r):'<p class="note center">"'+esc(q)+'"에 맞는 상품이 없어요.</p>';
+var r=matchQ(q);
+return (r.length?'<p class="note center" style="margin-bottom:24px">"'+esc(q)+'" 검색 결과 '+r.length+'개</p>'+grid(r):'<p class="note center">"'+esc(q)+'"에 맞는 상품이 없어요. 다른 단어로 찾아보세요.</p>');
 }
 function viewWish(){
 var l=PRODUCTS.filter(function(p){return state.wish[p.id];});
-return '<div class="full"><div class="list-head"><h1>WISH LIST</h1></div><div style="height:40px"></div>'+(l.length?grid(l):'<p class="note center">찜한 상품이 없어요. 상세페이지에서 찜을 눌러 보세요.</p>')+'</div>';
+return '<div class="full"><div class="list-head"><h1>WISH LIST</h1><p class="ko">찜한 상품 '+l.length+'개</p></div><div style="height:40px"></div>'+(l.length?grid(l):'<div class="empty">찜한 상품이 없어요. 상품 사진 위 하트를 눌러 찜해 보세요.</div>')+'</div>';
 }
+function viewMypage(){
+if(!state.loggedIn){state.authMsg="마이페이지는 로그인한 뒤 볼 수 있어요.";location.hash="login";return "";}
+var a=state.account||{},wishN=PRODUCTS.filter(function(p){return state.wish[p.id];}).length,revN=0;
+Object.keys(state.reviews).forEach(function(k){revN+=state.reviews[k].length;});
+var orders=state.orders.length?'<div class="table-wrap"><table class="orders"><thead><tr><th scope="col">주문일</th><th scope="col">주문번호</th><th scope="col">상품</th><th scope="col">결제 금액</th><th scope="col">상태</th></tr></thead><tbody>'+
+state.orders.map(function(o){return '<tr><td>'+o.date+'</td><td>'+o.no+'</td><td>'+o.items.map(function(i){return esc(i.name)+' · '+i.color+' / '+i.size+' × '+i.qty;}).join("<br>")+'</td><td>'+won(o.total)+'<br><span class="note">'+o.pay+'</span></td><td><span class="status">결제 완료</span></td></tr>';}).join("")+
+'</tbody></table></div><p class="note">데모 페이지라 실제 결제와 배송은 진행되지 않아요.</p>':'<div class="empty">아직 주문 내역이 없어요.</div>';
+return '<div class="page"><h1 class="page-title">MY PAGE</h1>'+
+'<div class="my-hello"><div><b>'+esc(a.name||"회원")+'</b>님, 반가워요<p class="note">'+esc(a.email||"")+'</p></div><button type="button" class="text-btn" data-act="logout">로그아웃</button></div>'+
+'<div class="my-stats"><a href="#mypage" data-act="scroll" data-target="myOrders"><b class="num">'+state.orders.length+'</b>주문</a><a href="#wish"><b class="num">'+wishN+'</b>찜</a><a href="#cart"><b class="num">'+cartQty()+'</b>장바구니</a><a href="#mypage" data-act="scroll" data-target="myOrders"><b class="num">'+revN+'</b>후기</a></div>'+
+'<section class="my-sec" id="myOrders"><h2>ORDER</h2>'+orders+'</section>'+
+'<section class="my-sec"><h2>PROFILE</h2><form class="form-grid" id="profileForm" novalidate>'+
+'<div class="field"><label for="pfName">이름</label><input type="text" id="pfName" value="'+esc(a.name||"")+'" autocomplete="name"></div>'+
+'<div class="field"><label for="pfTel">휴대폰 번호</label><input type="tel" id="pfTel" value="'+esc(a.tel||"")+'" autocomplete="tel" placeholder="010-0000-0000"></div>'+
+'<div class="field span"><label for="pfMail">이메일</label><input type="email" id="pfMail" value="'+esc(a.email||"")+'" disabled></div>'+
+'<div class="field span"><label for="pfAddr">기본 배송지</label><input type="text" id="pfAddr" value="'+esc(a.addr||"")+'" placeholder="주문하면 마지막 배송지가 저장돼요"></div>'+
+'<label class="check span" for="pfAd"><input type="checkbox" id="pfAd"'+(a.ad?" checked":"")+'><span>신상품·할인 소식 받기</span></label>'+
+'<p class="ok span" id="pfOk" role="status">'+esc(state.myMsg)+'</p>'+
+'<div class="span"><button class="btn" type="submit">회원 정보 저장</button></div></form></section></div>';
+}
+function renderSearchPanel(){
+var q=document.getElementById("spInput").value,r=matchQ(q).slice(0,4),box=document.getElementById("spRes");
+if(!q.trim()){box.innerHTML="";return;}
+box.innerHTML=r.length?r.map(function(p){return '<a href="#item-'+p.id+'"><div class="ph">'+garment(p.shape,COLORS[p.colors[0]].hex)+'</div><span>'+esc(p.name)+'</span><span class="num">'+won(p.price)+'</span></a>';}).join("")+'<a href="#search" data-act="search-all" style="grid-template-columns:1fr;font-size:12px;color:var(--mute)">검색 결과 전체 보기 ('+matchQ(q).length+'개)</a>':'<p class="note">맞는 상품이 없어요.</p>';
+}
+function openSearch(){var t=document.getElementById("top").getBoundingClientRect().bottom;var sp=document.getElementById("searchPanel");sp.style.top=t+"px";sp.hidden=false;document.getElementById("searchBtn").setAttribute("aria-expanded","true");var i=document.getElementById("spInput");i.value=state.q;renderSearchPanel();i.focus();}
+function closeSearch(){document.getElementById("searchPanel").hidden=true;document.getElementById("searchBtn").setAttribute("aria-expanded","false");}
 function viewCart(){
 var head='<h1 class="page-title">CART</h1>';
 if(!state.cart.length)return '<div class="page">'+head+'<div class="empty">장바구니가 비어 있어요. <a class="link" href="#home">잠옷 둘러보기</a></div></div>';
@@ -503,13 +578,13 @@ return '<div class="page">'+head+'<div class="two"><div class="cart-top">'+items
 }
 function viewCheckout(){
 if(!state.cart.length){location.hash="cart";return "";}
-var sum=cartSum(),fee=shipFee(sum);
+var sum=cartSum(),fee=shipFee(sum),acc=(state.loggedIn&&state.account)||{};
 var lines=state.cart.map(function(c){var p=byId(c.id);return '<div class="sum-row"><span>'+esc(p.name)+' · '+c.size+' × '+c.qty+'</span><span>'+won(p.price*c.qty)+'</span></div>';}).join("");
 return '<div class="page"><h1 class="page-title">ORDER</h1><form class="two" id="checkoutForm" novalidate><div>'+
 '<div class="form-sec"><h2>배송지</h2><div class="form-grid">'+
-'<div class="field"><label for="coName">받는 분</label><input type="text" id="coName" autocomplete="name"></div>'+
-'<div class="field"><label for="coTel">연락처</label><input type="tel" id="coTel" autocomplete="tel" placeholder="010-0000-0000"></div>'+
-'<div class="field span"><label for="coAddr">주소</label><input type="text" id="coAddr" autocomplete="street-address" placeholder="도로명 주소"></div>'+
+'<div class="field"><label for="coName">받는 분</label><input type="text" id="coName" autocomplete="name" value="'+esc(acc.name||"")+'"></div>'+
+'<div class="field"><label for="coTel">연락처</label><input type="tel" id="coTel" autocomplete="tel" placeholder="010-0000-0000" value="'+esc(acc.tel||"")+'"></div>'+
+'<div class="field span"><label for="coAddr">주소</label><input type="text" id="coAddr" autocomplete="street-address" placeholder="도로명 주소" value="'+esc(acc.addr||"")+'"></div>'+
 '<div class="field span"><label for="coAddr2">상세 주소</label><input type="text" id="coAddr2" placeholder="동, 호수"></div>'+
 '<div class="field span"><label for="coMemo">배송 요청사항</label><select class="input" id="coMemo"><option>문 앞에 놓아 주세요</option><option>경비실에 맡겨 주세요</option><option>배송 전에 연락 주세요</option><option>요청사항 없음</option></select></div></div></div>'+
 '<div class="form-sec"><h2>결제 수단</h2><div class="pay" role="radiogroup" aria-label="결제 수단">'+
@@ -523,15 +598,19 @@ return '<div class="page"><h1 class="page-title">ORDER</h1><form class="two" id=
 function viewDone(){
 var o=state.lastOrder;
 if(!o)return '<div class="page"><div class="done"><h1>주문 내역이 없어요</h1><a class="link" href="#home">메인으로</a></div></div>';
-return '<div class="page"><h1 class="page-title">ORDER COMPLETE</h1><div class="done"><h1>주문이 접수되었어요</h1><p>'+esc(o.name)+'님, 고맙습니다. '+o.payLabel+'(으)로 '+won(o.total)+' 주문이 접수되었어요.<br>결제를 마친 뒤 1~3영업일 안에 보내 드려요.</p><p class="note">데모 페이지라 실제 결제와 배송은 진행되지 않았어요.</p><a class="btn" href="#home">쇼핑 계속하기</a></div></div>';
+return '<div class="page"><h1 class="page-title">ORDER COMPLETE</h1><div class="done"><h1>주문이 접수되었어요</h1><p>'+esc(o.name)+'님, 고맙습니다. '+o.payLabel+'(으)로 '+won(o.total)+' 주문이 접수되었어요.<br>결제를 마친 뒤 1~3영업일 안에 보내 드려요.</p><p class="note">데모 페이지라 실제 결제와 배송은 진행되지 않았어요.</p><p class="note">주문번호 '+esc(o.no||"")+'</p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">'+(o.member?'<a class="btn ghost" href="#mypage">주문 내역 보기</a>':'')+'<a class="btn" href="#home">쇼핑 계속하기</a></div></div></div>';
 }
 function viewLogin(){
-return '<div class="page"><h1 class="page-title">LOGIN</h1><form class="narrow" id="loginForm" novalidate>'+
+if(state.loggedIn){location.hash="mypage";return "";}
+var m=state.authMsg;state.authMsg="";
+return '<div class="page"><h1 class="page-title">LOGIN</h1><form class="narrow" id="loginForm" novalidate>'+(m?'<p class="ok center">'+esc(m)+'</p>':'')+
 '<div class="field"><label for="lgId">이메일</label><input type="email" id="lgId" autocomplete="email"></div>'+
 '<div class="field"><label for="lgPw">비밀번호</label><input type="password" id="lgPw" autocomplete="current-password"></div>'+
-'<p class="err" id="lgErr" role="alert"></p><button class="btn-black" type="submit">LOGIN</button><a class="btn-outline" href="#signup">JOIN US</a></form></div>';
+'<p class="err" id="lgErr" role="alert"></p><button class="btn-black" type="submit">LOGIN</button><a class="btn-outline" href="#signup">JOIN US</a>'+
+'<p class="note center">데모 페이지라 비밀번호는 확인하지 않고, 이 브라우저에만 저장돼요.</p></form></div>';
 }
 function viewSignup(){
+if(state.loggedIn){location.hash="mypage";return "";}
 return '<div class="page"><h1 class="page-title">JOIN US</h1><form class="narrow" id="signupForm" novalidate>'+
 '<div class="field"><label for="suName">이름</label><input type="text" id="suName" autocomplete="name"></div>'+
 '<div class="field"><label for="suMail">이메일</label><input type="email" id="suMail" autocomplete="email"></div>'+
@@ -570,19 +649,27 @@ else if(h==="login")html=viewLogin();
 else if(h==="signup")html=viewSignup();
 else if(h==="search")html=viewSearch();
 else if(h==="wish")html=viewWish();
+else if(h==="mypage")html=viewMypage();
 else if(h==="help"||h==="help-ship"||h==="help-return"){html=viewHelp();to=h==="help-ship"?"sec-ship":h==="help-return"?"sec-return":null;}
 else html=viewMissing();
 var y=window.scrollY;app.innerHTML=html;
 document.getElementById("cartCount").textContent=cartQty();
+var ul=document.getElementById("userLink");ul.href=state.loggedIn?"#mypage":"#login";ul.setAttribute("aria-label",state.loggedIn?"마이페이지":"로그인");
+document.getElementById("msmall").innerHTML=(state.loggedIn?'<a href="#mypage">마이페이지</a>':'<a href="#login">로그인</a><a href="#signup">회원가입</a>')+'<a href="#wish">찜 목록</a><a href="#cart">장바구니</a>'+(state.loggedIn?'<button type="button" data-act="logout" style="text-align:left;font-size:12px">로그아웃</button>':'');
+save();
 if(to){var el=document.getElementById(to);if(el)el.scrollIntoView();}else window.scrollTo(0,keep?y:0);
 }
 function placeDrawer(){var b=document.getElementById("top").getBoundingClientRect().bottom;document.getElementById("drawer").style.top=b+"px";document.getElementById("scrim").style.top=b+"px";}
 function openMenu(){placeDrawer();document.body.classList.add("menu-open");document.getElementById("drawer").setAttribute("aria-hidden","false");var m=document.getElementById("menuBtn");m.setAttribute("aria-expanded","true");m.setAttribute("aria-label","메뉴 닫기");}
 function closeMenu(){document.body.classList.remove("menu-open");document.getElementById("drawer").setAttribute("aria-hidden","true");var m=document.getElementById("menuBtn");m.setAttribute("aria-expanded","false");m.setAttribute("aria-label","메뉴 열기");}
-window.addEventListener("hashchange",function(){closeMenu();render(false);});
+window.addEventListener("hashchange",function(){closeMenu();closeSearch();render(false);});
 window.addEventListener("scroll",function(){if(document.body.classList.contains("menu-open"))placeDrawer();},{passive:true});
 window.addEventListener("resize",function(){if(document.body.classList.contains("menu-open"))placeDrawer();});
-document.addEventListener("keydown",function(e){if(e.key==="Escape"&&document.body.classList.contains("menu-open")){closeMenu();document.getElementById("menuBtn").focus();}});
+document.addEventListener("keydown",function(e){
+if(e.key==="Escape"&&document.body.classList.contains("menu-open")){closeMenu();document.getElementById("menuBtn").focus();}
+if(e.key==="Escape"&&!document.getElementById("searchPanel").hidden){closeSearch();document.getElementById("searchBtn").focus();}
+if(e.key==="Enter"&&e.target.id==="spInput"){e.preventDefault();state.q=e.target.value;closeSearch();if(location.hash==="#search")render(false);else location.hash="search";}
+});
 
 function addToCart(){
 var pd=state.pd,p=byId(pd.id);
@@ -595,7 +682,13 @@ document.addEventListener("click",function(e){
 var t=e.target.closest("[data-act]");if(!t)return;
 var a=t.getAttribute("data-act"),pd=state.pd;
 if(a==="scroll")e.preventDefault();
-if(a==="menu-toggle"){document.body.classList.contains("menu-open")?closeMenu():openMenu();}
+if(a==="menu-toggle"){closeSearch();document.body.classList.contains("menu-open")?closeMenu():openMenu();}
+else if(a==="search-toggle"){closeMenu();document.getElementById("searchPanel").hidden?openSearch():closeSearch();}
+else if(a==="search-close")closeSearch();
+else if(a==="search-tag"){var si=document.getElementById("spInput");si.value=t.textContent;renderSearchPanel();si.focus();}
+else if(a==="search-all"){e.preventDefault();state.q=document.getElementById("spInput").value;closeSearch();if(location.hash==="#search")render(false);else location.hash="search";}
+else if(a==="wishcard"){var wid=t.getAttribute("data-id");state.wish[wid]=!state.wish[wid];if(!state.wish[wid])delete state.wish[wid];render(true);}
+else if(a==="logout"){state.loggedIn=false;closeMenu();state.authMsg="로그아웃했어요.";if(location.hash==="#login")render(false);else location.hash="login";}
 else if(a==="menu-close")closeMenu();
 else if(a==="acc"){var open=t.getAttribute("aria-expanded")==="true";t.setAttribute("aria-expanded",String(!open));document.getElementById(t.getAttribute("aria-controls")).hidden=open;}
 else if(a==="scroll"){var el=document.getElementById(t.getAttribute("data-target"));if(el){var y=el.getBoundingClientRect().top+window.scrollY-document.getElementById("top").offsetHeight;window.scrollTo({top:y,behavior:"smooth"});}}
@@ -604,7 +697,7 @@ else if(a==="next"){pd.vi=(pd.vi+1)%VIEWS.length;render(true);}
 else if(a==="qty"){pd.qty=Math.max(1,Math.min(9,pd.qty+Number(t.getAttribute("data-d"))));render(true);}
 else if(a==="add"){if(addToCart())render(true);}
 else if(a==="buy"){if(addToCart()){pd.msg="";location.hash="checkout";}}
-else if(a==="wish"){state.wish[pd.id]=!state.wish[pd.id];pd.msg=state.wish[pd.id]?"찜 목록에 담았어요.":"찜 목록에서 뺐어요.";render(true);}
+else if(a==="wish"){state.wish[pd.id]=!state.wish[pd.id];if(!state.wish[pd.id])delete state.wish[pd.id];pd.msg=state.wish[pd.id]?"찜 목록에 담았어요.":"찜 목록에서 뺐어요.";render(true);}
 else if(a==="cqty"){var c=state.cart[Number(t.getAttribute("data-i"))];c.qty=Math.max(1,Math.min(9,c.qty+Number(t.getAttribute("data-d"))));render(true);}
 else if(a==="cdel"){state.cart.splice(Number(t.getAttribute("data-i")),1);render(true);}
 });
@@ -614,7 +707,10 @@ if(id==="sortSel"){state.sort=e.target.value;render(true);}
 else if(id==="optColor"){pd.color=e.target.value||null;pd.msg="";render(true);}
 else if(id==="optSize"){pd.size=e.target.value||null;pd.msg="";render(true);}
 });
-document.addEventListener("input",function(e){if(e.target.id==="searchInput"){state.q=e.target.value;document.getElementById("searchResults").innerHTML=searchResults();}});
+document.addEventListener("input",function(e){
+if(e.target.id==="searchInput"){state.q=e.target.value;document.getElementById("searchResults").innerHTML=searchResults();}
+if(e.target.id==="spInput")renderSearchPanel();
+});
 function val(id){var el=document.getElementById(id);return el?el.value.trim():"";}
 document.addEventListener("submit",function(e){
 var f=e.target;e.preventDefault();
@@ -623,14 +719,28 @@ var pd=state.pd;(state.reviews[pd.id]=state.reviews[pd.id]||[]).unshift({rating:
 else if(f.id==="checkoutForm"){var err=document.getElementById("coErr");
 if(!val("coName")||!val("coTel")||!val("coAddr")){err.textContent="받는 분, 연락처, 주소를 모두 입력해 주세요.";return;}
 if(!document.getElementById("coAgree").checked){err.textContent="결제 동의에 체크해 주세요.";return;}
-var pay=f.querySelector('input[name="pay"]:checked').value,sum=cartSum();
-state.lastOrder={name:val("coName"),total:sum+shipFee(sum),payLabel:{card:"신용·체크카드",easy:"간편결제",bank:"계좌이체"}[pay]};state.cart=[];location.hash="order-done";}
-else if(f.id==="loginForm"){var le=document.getElementById("lgErr");le.textContent=(!val("lgId")||!val("lgPw"))?"이메일과 비밀번호를 입력해 주세요.":"데모 페이지라 실제 로그인은 되지 않아요.";}
+var pay=f.querySelector('input[name="pay"]:checked').value,sum=cartSum(),payLabel={card:"신용·체크카드",easy:"간편결제",bank:"계좌이체"}[pay];
+var d=new Date(),pad=function(n){return (n<10?"0":"")+n;},ds=d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+var order={no:"LW"+ds.replace(/-/g,"")+"-"+String(Math.floor(1000+Math.random()*9000)),date:ds,total:sum+shipFee(sum),pay:payLabel,
+items:state.cart.map(function(c){var p=byId(c.id);return {name:p.name,color:COLORS[c.color].name,size:c.size,qty:c.qty};})};
+if(state.loggedIn&&state.account){state.orders.unshift(order);state.account.addr=val("coAddr")+(val("coAddr2")?" "+val("coAddr2"):"");if(!state.account.tel)state.account.tel=val("coTel");}
+state.lastOrder={name:val("coName"),total:order.total,payLabel:payLabel,no:order.no,member:state.loggedIn};state.cart=[];location.hash="order-done";}
+else if(f.id==="loginForm"){var le=document.getElementById("lgErr"),em=val("lgId");
+if(!em||!val("lgPw")){le.textContent="이메일과 비밀번호를 입력해 주세요.";return;}
+if(em.indexOf("@")<1){le.textContent="이메일 형식을 확인해 주세요.";return;}
+if(!state.account||state.account.email!==em){state.account={name:em.split("@")[0],email:em,tel:"",addr:"",ad:false};}
+state.loggedIn=true;state.myMsg="";location.hash="mypage";}
 else if(f.id==="signupForm"){var se=document.getElementById("suErr");
 if(!val("suName")||!val("suMail")||val("suPw").length<8){se.textContent="이름, 이메일을 입력하고 비밀번호는 8자 이상으로 정해 주세요.";return;}
+if(val("suMail").indexOf("@")<1){se.textContent="이메일 형식을 확인해 주세요.";return;}
 if(!document.getElementById("suTerms").checked||!document.getElementById("suPriv").checked){se.textContent="필수 약관 두 가지에 동의해 주세요.";return;}
-se.textContent="데모 페이지라 실제 가입은 되지 않아요.";}
+state.account={name:val("suName"),email:val("suMail"),tel:val("suTel"),addr:"",ad:document.getElementById("suAd").checked};state.orders=[];
+state.loggedIn=true;state.myMsg="가입을 환영해요! 회원 정보는 여기서 바꿀 수 있어요.";location.hash="mypage";}
+else if(f.id==="profileForm"){if(!val("pfName")){document.getElementById("pfOk").textContent="이름을 입력해 주세요.";return;}
+state.account.name=val("pfName");state.account.tel=val("pfTel");state.account.addr=val("pfAddr");state.account.ad=document.getElementById("pfAd").checked;
+state.myMsg="회원 정보를 저장했어요.";render(true);state.myMsg="";}
 });
+load();
 render(false);
 })();
 </script>

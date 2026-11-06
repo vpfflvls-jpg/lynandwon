@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>린앤원 LYNANDWON</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&family=Italiana&display=swap" rel="stylesheet">
+<style>
+/* 레이아웃: 흰 바탕, 검은 얇은 선, 큰 사진 4열. 메뉴는 헤더 아래 왼쪽에서 열림. 상세는 왼쪽 사진, 오른쪽 정보 칸 */
+:root{
+--paper:#FFFFFF;
+--ink:#1C1A18;
+--mute:#8E8780;
+--line:#E4E0DB;
+--photo:#F0EBE4;
+--beige:#9A8571;
+--font-en:"Jost","Noto Sans KR",sans-serif;
+--font-body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+--font-deco:"Italiana","Times New Roman",serif;
+--head-h:74px;
+color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;padding:0}
+svg{display:block}
+h1,h2,h3{margin:0;font-weight:500;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:2px solid var(--beige);outline-offset:2px}
+.ico{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.full{padding:0 30px}
+.num{font-variant-numeric:tabular-nums}
+
+/* 상단 */
+.notice{background:var(--ink);color:#fff;font-family:var(--font-en);font-size:12px;font-weight:500;text-align:center;padding:8px 16px;letter-spacing:.02em}
+.top{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--ink)}
+.top-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:var(--head-h);padding:0 30px}
+.menu-btn{justify-self:start;padding:6px}
+.menu-btn .x{display:none}
+body.menu-open .menu-btn .bars{display:none}
+body.menu-open .menu-btn .x{display:block}
+.logo{font-family:var(--font-en);font-weight:600;font-size:29px;letter-spacing:.04em;line-height:1}
+.icons{justify-self:end;display:flex;align-items:center;gap:44px}
+.icons a{display:flex;align-items:flex-start;gap:2px}
+.cnt{font-family:var(--font-en);font-size:10px;color:var(--beige);margin-top:8px}
+
+/* 메뉴바 */
+.scrim{position:fixed;left:0;right:0;bottom:0;top:0;z-index:30;background:rgba(30,28,26,.32);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);opacity:0;visibility:hidden;transition:opacity .25s}
+.drawer{position:fixed;left:0;bottom:0;top:0;z-index:31;width:min(377px,86vw);background:var(--paper);padding:24px 10px 40px;overflow-y:auto;transform:translateX(-100%);visibility:hidden;transition:transform .3s ease,visibility .3s}
+body.menu-open .scrim{opacity:1;visibility:visible}
+body.menu-open .drawer{transform:none;visibility:visible}
+.mnav{display:grid}
+.mnav > a,.acc-btn{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500;line-height:30px;text-align:left}
+.acc-btn .ico{width:14px;height:14px;stroke-width:1.6;color:var(--mute);transition:transform .2s}
+.acc-btn[aria-expanded="true"] .ico{transform:rotate(180deg)}
+.acc-panel{display:grid;padding:2px 0 8px 12px}
+.acc-panel[hidden]{display:none}
+.acc-panel a{font-size:13px;line-height:28px;color:#4a4642}
+.mnav a:hover,.acc-btn:hover{color:var(--beige)}
+.gap{height:30px}
+.msmall{display:grid;gap:2px;margin-top:56px;font-size:12px}
+.msmall a:hover{color:var(--beige)}
+
+/* 섹션 제목 */
+.sec{padding:60px 0 20px}
+.sec-title{font-family:var(--font-en);font-weight:600;font-size:18px;letter-spacing:.02em;text-align:center;margin-bottom:12px}
+.sec-sub{text-align:center;color:var(--mute);font-size:12px;margin-bottom:36px}
+
+/* 메인 배너 */
+.hero{position:relative;background:var(--photo);aspect-ratio:16/7;display:grid;grid-template-columns:1fr 1fr;align-items:end;justify-items:center;padding:6% 22% 0}
+.hero svg{width:78%;height:auto}
+.hero-text{position:absolute;left:30px;bottom:28px;display:grid;gap:6px}
+.hero-text .en{font-family:var(--font-en);font-weight:600;font-size:22px;letter-spacing:.02em}
+.hero-text .ko{font-size:13px;color:#4a4642}
+.hero-text a{font-family:var(--font-en);font-size:12px;font-weight:500;border-bottom:1px solid var(--ink);justify-self:start;margin-top:8px}
+.hero-note{position:absolute;right:30px;bottom:28px;font-size:11px;color:var(--mute)}
+
+/* 상품 목록 */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:46px 10px}
+.card{display:grid;gap:14px}
+.ph{aspect-ratio:4/5;background:var(--photo);display:grid;place-items:center;padding:13%}
+.ph svg{width:100%;height:100%}
+.nm{font-size:13px;line-height:1.5}
+.pr{font-size:13px;margin-top:-10px}
+.card:hover .nm{text-decoration:underline;text-underline-offset:3px}
+.list-head{padding:52px 0 0;text-align:center}
+.list-head h1{font-family:var(--font-en);font-weight:600;font-size:18px}
+.subcats{display:flex;justify-content:center;gap:22px;margin-top:14px;font-size:13px;color:var(--mute)}
+.subcats a[aria-current="page"]{color:var(--ink);font-weight:500}
+.tools{display:flex;justify-content:flex-end;gap:24px;align-items:center;margin:36px 0 22px;font-size:12px}
+.tools select{border:0;background:transparent;font-size:12px;padding:0;cursor:pointer;appearance:none;-webkit-appearance:none}
+.list-head .ko{font-size:12px;color:var(--mute);margin-top:4px}
+.cat-label{font-family:var(--font-en);font-size:13px;font-weight:500;display:flex;justify-content:space-between}
+.cat-label small{color:var(--mute);font-weight:400}
+.insta{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.insta div{aspect-ratio:1;background:var(--photo);display:grid;place-items:center;font-size:11px;color:var(--mute)}
+
+/* 상세 */
+.pd{display:grid;grid-template-columns:1fr 600px;border-bottom:1px solid var(--line);min-height:calc(100vh - var(--head-h))}
+.pd-media{display:flex;justify-content:center;align-items:flex-start}
+.pd-stage{position:relative;height:calc(100vh - var(--head-h));max-height:930px;min-height:520px;aspect-ratio:7/10;max-width:calc(100% - 240px)}
+.pd-ph{width:100%;height:100%;background:var(--photo);display:grid;place-items:center;padding:12%}
+.pd-ph svg{width:100%;height:100%}
+.arr{position:absolute;top:50%;transform:translateY(-50%);padding:10px;color:var(--ink);z-index:2}
+.arr .ico{width:34px;height:34px;stroke-width:1.3}
+.arr.l{left:-120px}
+.arr.r{right:-120px}
+.pd-info{border-left:1px solid var(--line);padding:50px 30px 60px}
+.pd-sticky{position:sticky;top:calc(var(--head-h) + 30px);display:grid;gap:0}
+.pd-name{font-size:17px;font-weight:400}
+.pd-price{font-size:13px;margin-top:10px}
+.btn-line{display:block;width:400px;max-width:100%;border:1px solid var(--ink);padding:11px;font-size:14px;font-weight:700;margin-top:18px}
+.btn-line:hover{background:var(--photo)}
+.desc{margin-top:42px;font-size:13px;display:grid;gap:18px;color:#3b3835}
+.desc .dl{font-family:var(--font-en);color:var(--ink);font-size:13px}
+.opts{margin-top:34px;border-top:1px solid var(--ink)}
+.opt{position:relative;border-bottom:1px solid var(--ink)}
+.opt label{position:absolute;left:0;top:13px;font-size:11px;color:#4a4642;pointer-events:none}
+.opt select{width:100%;appearance:none;-webkit-appearance:none;border:0;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%231C1A18' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 4px center/14px;padding:12px 30px 12px 90px;font-size:13px;cursor:pointer}
+.opt select.blank{color:transparent}
+.opt select option{color:var(--ink)}
+.sel-line{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:13px}
+.qty{display:inline-grid;grid-template-columns:28px 34px 28px;border:1px solid var(--line);height:30px;align-items:center;text-align:center}
+.qty button{height:100%}
+.qty button:hover{background:var(--photo)}
+.sum{margin-top:30px;font-size:14px}
+.sum b{font-size:18px;font-weight:500}
+.msg{font-size:12px;color:var(--beige);min-height:18px;margin-top:8px}
+.btn-black,.btn-outline{display:flex;align-items:center;justify-content:center;width:100%;height:50px;font-family:var(--font-en);font-size:15px;font-weight:500;letter-spacing:.01em}
+.btn-black{background:var(--ink);color:#fff;margin-top:12px;border:1px solid var(--ink)}
+.btn-black:hover{background:#3a3633}
+.btn-outline{border:1px solid var(--ink);margin-top:5px}
+.btn-outline:hover{background:var(--photo)}
+.wish-row{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ink);margin-top:5px;padding-top:12px;font-size:12px}
+.btn-wish{display:flex;align-items:center;gap:6px;font-size:12px}
+.btn-wish .ico{width:16px;height:16px}
+.btn-wish[aria-pressed="true"] .ico{fill:var(--ink)}
+.match{margin-top:34px;display:grid;gap:10px}
+.match .ttl{font-size:12px;color:var(--mute)}
+.match a{display:grid;grid-template-columns:54px 1fr auto;gap:14px;align-items:center;font-size:13px}
+.match .ph{padding:10%}
+.match a:hover span:first-of-type{text-decoration:underline}
+
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);max-width:1400px;margin:0 auto;border-bottom:1px solid var(--ink)}
+.tabs a{display:flex;align-items:center;justify-content:center;gap:8px;height:64px;font-size:14px;color:var(--mute);border:1px solid var(--line);border-bottom:0;margin-bottom:-1px}
+.tabs a + a{border-left:0}
+.tabs a[aria-current="true"]{color:var(--ink);border:1px solid var(--ink);border-bottom:1px solid var(--paper);position:relative;z-index:1}
+.tabs .badge{display:inline-grid;place-items:center;min-width:16px;height:16px;padding:0 4px;background:#c9c4be;color:#fff;font-size:11px;border-radius:2px}
+.dsec{padding:100px 30px 40px}
+.dbody{max-width:800px;margin:0 auto;display:grid;gap:44px}
+.dbox{background:var(--photo);padding:96px 40px 72px;text-align:center;display:grid;gap:18px;justify-items:center}
+.dbox .en{font-family:var(--font-deco);font-size:72px;line-height:1;color:var(--beige)}
+.dbox .ko{font-size:24px;font-weight:300;color:var(--beige)}
+.dbox .ph{width:62%;background:transparent;margin-top:28px;padding:0}
+.dtext{font-size:14px;text-align:center;color:#3b3835;line-height:1.9}
+.dimg{background:var(--photo);aspect-ratio:4/5;display:grid;place-items:center;padding:14%}
+.dimg svg{width:100%;height:100%}
+.cap{font-size:11px;color:var(--mute);text-align:center;margin-top:-34px}
+.dh{font-family:var(--font-en);font-size:15px;font-weight:600;text-align:center;margin-bottom:16px}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:440px;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:12px 8px;text-align:center;border-bottom:1px solid var(--line)}
+thead th{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);font-weight:500}
+tbody th{font-weight:500}
+.note{font-size:12px;color:var(--mute)}
+.center{text-align:center}
+.care{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:13px;text-align:center;color:#3b3835}
+.empty{border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding:56px 20px;text-align:center;color:var(--mute);font-size:13px}
+.review{border-bottom:1px solid var(--line);padding:18px 4px;display:grid;gap:6px;font-size:13px}
+.stars{letter-spacing:.1em}
+.by{font-size:12px;color:var(--mute)}
+.review-form{display:grid;gap:12px}
+.policy{display:grid;gap:34px}
+.policy h3{font-size:14px;font-weight:700;margin-bottom:10px}
+.policy ul{margin:0;padding-left:16px;display:grid;gap:4px;font-size:13px;color:#3b3835}
+
+/* 폼, 공통 버튼 */
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;height:50px;padding:0 28px;font-size:14px;border:1px solid var(--ink)}
+.btn:hover{background:#3a3633}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--photo)}
+.btn.w{width:100%}
+.link{border-bottom:1px solid currentColor}
+.field{display:grid;gap:6px}
+.field label{font-size:12px;color:#4a4642}
+input[type="text"],input[type="email"],input[type="password"],input[type="tel"],input[type="search"],select.input,textarea{width:100%;border:1px solid var(--line);background:#fff;padding:12px 14px;font-size:13px;border-radius:0}
+input:focus,select.input:focus,textarea:focus{outline:none;border-color:var(--ink)}
+textarea{min-height:100px;resize:vertical}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px}
+.check input{margin-top:4px;accent-color:var(--ink)}
+.err{font-size:12px;color:#9A3B2E;min-height:18px}
+
+.page{max-width:1100px;margin:0 auto;padding:0 30px 100px}
+.page-title{font-family:var(--font-en);font-weight:600;font-size:18px;text-align:center;padding:52px 0 40px}
+.two{display:grid;grid-template-columns:1fr 360px;gap:50px;align-items:start}
+.line-item{display:grid;grid-template-columns:90px 1fr auto;gap:20px;padding:20px 0;border-bottom:1px solid var(--line);align-items:start;font-size:13px}
+.line-item .ph{padding:10%}
+.li-info{display:grid;gap:4px}
+.li-opt{color:var(--mute)}
+.li-side{display:grid;gap:10px;justify-items:end}
+.del{font-size:12px;color:var(--mute);border-bottom:1px solid var(--line)}
+.cart-top{border-top:1px solid var(--ink)}
+.summary{position:sticky;top:calc(var(--head-h) + 24px);border-top:1px solid var(--ink);padding-top:20px;display:grid;gap:12px}
+.summary h2{font-size:15px;font-weight:500;margin-bottom:4px}
+.sum-row{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-variant-numeric:tabular-nums}
+.sum-row.t{border-top:1px solid var(--line);padding-top:14px;font-size:16px;font-weight:500}
+.form-sec{display:grid;gap:16px;padding:28px 0;border-bottom:1px solid var(--line)}
+.form-sec:first-child{border-top:1px solid var(--ink)}
+.form-sec h2{font-size:15px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-grid .span{grid-column:1/-1}
+.pay{display:grid;gap:8px}
+.pay label{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;border:1px solid var(--line);padding:14px 16px;cursor:pointer;font-size:13px}
+.pay label:has(input:checked){border-color:var(--ink)}
+.pay input{accent-color:var(--ink);margin-top:4px}
+.pay small{grid-column:2;color:var(--mute);font-size:12px}
+.narrow{max-width:400px;margin:0 auto;display:grid;gap:16px}
+.done{max-width:560px;margin:0 auto;text-align:center;display:grid;gap:16px;padding-top:40px}
+.done h1{font-size:22px}
+details{border-bottom:1px solid var(--line);padding:16px 0}
+details:first-child{border-top:1px solid var(--ink)}
+summary{cursor:pointer;font-size:14px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--mute)}
+details[open] summary::after{content:"−"}
+details p{margin-top:10px;font-size:13px;color:var(--mute)}
+.help-sec{padding:40px 0;display:grid;gap:14px}
+.help-sec h2{font-size:15px;font-weight:700}
+
+/* 하단 */
+.foot{border-top:1px solid var(--ink);margin-top:80px;padding:44px 30px 36px;font-size:12px;color:#4a4642}
+.foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.6fr;gap:30px}
+.foot .logo{font-size:20px;display:inline-block;margin-bottom:10px;color:var(--ink)}
+.foot h3{font-family:var(--font-en);font-size:12px;font-weight:600;color:var(--ink);margin-bottom:10px}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.foot a:hover{color:var(--ink);text-decoration:underline}
+.foot-bottom{margin-top:36px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--mute)}
+
+@media (max-width:1200px){
+.pd{grid-template-columns:1fr 460px}
+.pd-stage{max-width:calc(100% - 140px)}
+.arr.l{left:-66px}.arr.r{right:-66px}
+}
+@media (max-width:900px){
+.grid{grid-template-columns:repeat(2,1fr);gap:36px 8px}
+.pd{grid-template-columns:1fr;min-height:0}
+.pd-stage{height:auto;min-height:0;width:calc(100% - 100px);max-width:none}
+.arr.l{left:-50px}.arr.r{right:-50px}
+.arr .ico{width:26px;height:26px}
+.pd-info{border-left:0;border-top:1px solid var(--line);padding:30px 20px 50px}
+.two{grid-template-columns:1fr}
+.summary{position:static}
+.foot-grid{grid-template-columns:1fr 1fr}
+.hero{aspect-ratio:4/3;padding:8% 6% 0}
+.icons{gap:20px}
+}
+@media (max-width:600px){
+.full,.top-in,.page{padding-left:16px;padding-right:16px}
+.logo{font-size:21px}
+.icons{gap:14px}
+.icons .ico{width:20px;height:20px}
+.insta{grid-template-columns:repeat(3,1fr)}
+.form-grid{grid-template-columns:1fr}
+.foot-grid{grid-template-columns:1fr}
+.dbox .en{font-size:48px}
+.dbox .ko{font-size:18px}
+.tabs a{height:52px;font-size:13px}
+.hero-note{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
+</style>
+</head>
+<body>
+<div class="notice">LYNANDWON 26 WINTER · 50,000원 이상 무료배송</div>
+<header class="top" id="top">
+<div class="top-in">
+<button class="menu-btn" type="button" id="menuBtn" data-act="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="drawer">
+<svg class="ico bars" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+<svg class="ico x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg>
+</button>
+<a href="#home" class="logo" aria-label="린앤원 메인으로">LYNANDWON</a>
+<nav class="icons" aria-label="회원 메뉴">
+<a href="#search" aria-label="검색"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></a>
+<a href="#login" aria-label="로그인"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg></a>
+<a href="#wish" aria-label="찜 목록"><svg class="ico" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.1A4.1 4.1 0 0 1 12 7.6a4.1 4.1 0 0 1 7.5 2.3C19.5 15.4 12 20 12 20z"/></svg></a>
+<a href="#cart" aria-label="장바구니"><svg class="ico" viewBox="0 0 24 24"><path d="M5.5 8h13l-1 12.5h-11z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="cnt" id="cartCount">0</span></a>
+</nav>
+</div>
+</header>
+<div class="scrim" id="scrim" data-act="menu-close"></div>
+<aside class="drawer" id="drawer" aria-label="메뉴" aria-hidden="true">
+<nav class="mnav" aria-label="상품 카테고리">
+<a href="#new">NEW</a>
+<a href="#men">남자 잠옷</a>
+<div class="acc">
+<button type="button" class="acc-btn" data-act="acc" aria-expanded="false" aria-controls="accWomen">여자 잠옷<svg class="ico" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+<div class="acc-panel" id="accWomen" hidden><a href="#women">전체</a><a href="#women-top">상의</a><a href="#women-bottom">하의</a><a href="#women-dress">원피스</a></div>
+</div>
+<div class="gap"></div>
+<div class="acc">
+<button type="button" class="acc-btn" data-act="acc" aria-expanded="false" aria-controls="accHelp">고객센터<svg class="ico" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+<div class="acc-panel" id="accHelp" hidden><a href="#help">자주 묻는 질문</a><a href="#help-ship">배송 안내</a><a href="#help-return">교환·환불 안내</a></div>
+</div>
+</nav>
+<div class="msmall"><a href="#login">로그인</a><a href="#signup">회원가입</a><a href="#cart">장바구니</a></div>
+</aside>
+
+<main id="app"></main>
+
+<footer class="foot">
+<div class="foot-grid">
+<div><span class="logo">LYNANDWON</span><p>린앤원 · 커플 잠옷</p><p>인스타그램 @lynandwon (준비 중)</p></div>
+<div><h3>SHOP</h3><ul><li><a href="#men">남자 잠옷</a></li><li><a href="#women">여자 잠옷</a></li><li><a href="#women-dress">원피스</a></li></ul></div>
+<div><h3>CUSTOMER CENTER</h3><ul><li><a href="#help">자주 묻는 질문</a></li><li><a href="#help-ship">배송 안내</a></li><li><a href="#help-return">교환·환불 안내</a></li><li>평일 10:00–17:00</li></ul></div>
+<div><h3>COMPANY</h3><ul><li>상호 린앤원 · 대표자 입력 예정</li><li>사업자등록번호 입력 예정 · 통신판매업 신고번호 입력 예정</li><li>주소 입력 예정</li><li>전화 입력 예정 · 이메일 입력 예정</li></ul></div>
+</div>
+<div class="foot-bottom"><span>이용약관 · <b>개인정보처리방침</b></span><span>© 2026 LYNANDWON</span></div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+/* 상품, 가격, 수치는 예시 */
+var SHIP_FEE=3000,FREE_OVER=50000;
+var COLORS={oat:{name:"오트밀",hex:"#D9C7B0"},ivory:{name:"아이보리",hex:"#F6F1E8"},cocoa:{name:"코코아",hex:"#8C6F5A"},rose:{name:"더스티 로즈",hex:"#D9BCB0"},charcoal:{name:"차콜",hex:"#5C5752"},mocha:{name:"모카",hex:"#AD917B"}};
+var FABRIC={
+modal:{label:"모달 60% · 면 40%",en:"soft modal",tag:"매끄럽게 감기는 모달로 지은 포근한 밤",info:["매끄럽고 부드러운 모달 저지","몸을 따라 떨어지는 여유 있는 핏","목둘레와 소매 끝 파이핑 마감","허리 밴딩과 안쪽 조절끈"],
+desc:"모달은 피부에 닿는 면이 매끄럽고 잘 늘어나지 않아요.<br>몸을 따라 부드럽게 떨어져서 자다가 뒤척여도 걸리는 데가 없어요.",care:["30℃ 이하 미온수로 단독 세탁","세탁망에 넣고 약하게 탈수","건조기 사용 금지","그늘에서 뉘어 말리기"]},
+gauze:{label:"면 100% (2중 거즈)",en:"cotton gauze",tag:"두 겹 거즈가 품은 가벼운 온기",info:["두 겹 거즈로 사계절 착용","빨수록 부드러워지는 면 100%","여유 있는 오버핏","자연스러운 주름 질감"],
+desc:"얇은 면 거즈 두 겹을 겹쳐 짰어요.<br>두 겹 사이 공기층 덕분에 겨울엔 따뜻하고 여름엔 땀을 빨리 말려요.",care:["40℃ 이하 세탁 가능","첫 세탁 때 조금 줄어들 수 있음","표백제 사용 금지","그늘 건조"]},
+jersey:{label:"면 80% · 폴리 20% (안쪽 기모)",en:"brushed jersey",tag:"한겨울 밤을 위한 안쪽 기모",info:["안쪽 기모로 포근한 겨울 잠옷","잘 늘어나지 않는 고밀도 저지","부드러운 시보리 마감","여유 있는 핏"],
+desc:"안쪽을 살짝 기모 처리한 면 저지예요.<br>난방을 낮춘 한겨울 방에서도 포근하게 입을 수 있어요.",care:["뒤집어서 30℃ 이하 세탁","섬유유연제는 조금만","건조기 사용 시 수축 주의","낮은 온도로 다림질"]},
+linen:{label:"리넨 55% · 레이온 45%",en:"linen blend",tag:"바람이 통하는 여름밤의 잠옷",info:["시원한 리넨 블렌드","길이를 조절하는 어깨끈","몸에 붙지 않는 A라인","봄부터 초가을까지"],
+desc:"리넨의 바스락한 결에 레이온을 섞어 몸에 닿는 느낌을 부드럽게 했어요.<br>봄부터 초가을까지 시원하게 입어요.",care:["손세탁 또는 울 코스","비틀어 짜지 않기","그늘에서 걸어 말리기","중간 온도 다림질"]}
+};
+var PRODUCTS=[
+{id:"m1",name:"포근 모달 상하의 세트",gender:"남",cat:"men",shape:"set",fabric:"modal",price:69000,colors:["oat","charcoal"],isNew:true,best:true,pair:["w1","w2"]},
+{id:"w1",name:"포근 모달 셔츠",gender:"여",cat:"women-top",shape:"top",fabric:"modal",price:36000,colors:["rose","oat"],isNew:true,best:true,pair:["m1"]},
+{id:"w2",name:"포근 모달 팬츠",gender:"여",cat:"women-bottom",shape:"bottom",fabric:"modal",price:33000,colors:["rose","oat"],isNew:true,pair:["m1"]},
+{id:"w6",name:"리넨 블렌드 슬립 원피스",gender:"여",cat:"women-dress",shape:"slip",fabric:"linen",price:54000,colors:["ivory","rose"],isNew:true},
+{id:"m2",name:"코튼 거즈 파자마 세트",gender:"남",cat:"men",shape:"set",fabric:"gauze",price:59000,colors:["ivory","mocha"],isNew:true,pair:["w3","w4"]},
+{id:"w4",name:"코튼 거즈 밴딩 팬츠",gender:"여",cat:"women-bottom",shape:"bottom",fabric:"gauze",price:31000,colors:["ivory","mocha"],isNew:true,pair:["m2"]},
+{id:"w3",name:"코튼 거즈 셔츠",gender:"여",cat:"women-top",shape:"top",fabric:"gauze",price:34000,colors:["ivory","mocha"],pair:["m2"]},
+{id:"m3",name:"기모 저지 상하의 세트",gender:"남",cat:"men",shape:"set",fabric:"jersey",price:72000,colors:["cocoa","charcoal"],best:true,pair:["w5"]},
+{id:"w5",name:"기모 저지 롱 원피스",gender:"여",cat:"women-dress",shape:"dress",fabric:"jersey",price:58000,colors:["cocoa","oat"],best:true,pair:["m3"]}
+];
+var SIZES={
+set:{sizes:["M","L","XL"],head:["사이즈","어깨","가슴단면","상의 총장","허리단면(밴딩)","바지 총장"],rows:[["M",46,56,72,"34–44",100],["L",48,59,74,"36–46",102],["XL",50,62,76,"38–48",104]]},
+top:{sizes:["S","M","L"],head:["사이즈","어깨","가슴단면","소매길이","총장"],rows:[["S",38,50,56,62],["M",40,53,57,64],["L",42,56,58,66]]},
+bottom:{sizes:["S","M","L"],head:["사이즈","허리단면(밴딩)","엉덩이단면","밑위","총장"],rows:[["S","30–38",50,29,95],["M","32–40",53,30,97],["L","34–42",56,31,99]]},
+dress:{sizes:["S","M","L"],head:["사이즈","어깨","가슴단면","허리단면","총장"],rows:[["S",37,50,48,112],["M",39,53,51,115],["L",41,56,54,118]]},
+slip:{sizes:["S","M","L"],head:["사이즈","가슴단면","허리단면","총장(어깨끈 제외)"],rows:[["S",44,46,98],["M",47,49,100],["L",50,52,102]]}
+};
+var CAT={"men":"남자 잠옷","women":"여자 잠옷","women-top":"여자 상의","women-bottom":"여자 하의","women-dress":"원피스","new":"신상품"};
+var CAT_EN={"men":"MEN","women":"WOMEN","women-top":"WOMEN TOP","women-bottom":"WOMEN BOTTOM","women-dress":"DRESS","new":"NEW ARRIVAL"};
+var POLICY={
+ship:["배송비 3,000원 · 50,000원 이상 구매하면 무료","결제를 마친 뒤 1~3영업일 안에 보내 드려요","받는 데까지는 보통 1~2일 걸려요","제주·도서산간 지역은 배송비 3,000원이 더 붙어요"],
+exchange:["상품을 받은 날부터 7일 안에 신청해 주세요","단순 변심은 왕복 배송비 6,000원을 부담해 주세요","불량이거나 잘못 보내 드린 상품은 배송비 없이 교환·환불해 드려요","입었거나 세탁한 상품, 택을 뗀 상품은 위생 문제로 교환·환불이 어려워요"],
+refund:["돌려받은 상품을 확인하고 3영업일 안에 환불해 드려요","카드·간편결제는 결제를 취소하는 방식으로 환불돼요","계좌이체는 입력하신 환불 계좌로 보내 드려요"]
+};
+var VIEWS=["front","back","detail"];
+var state={cart:[],reviews:{},wish:{},sort:"new",q:"",lastOrder:null,pd:{id:null,color:null,size:null,qty:1,vi:0,msg:""}};
+
+function won(n){return n.toLocaleString("ko-KR")+"원";}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function byId(id){for(var i=0;i<PRODUCTS.length;i++){if(PRODUCTS[i].id===id)return PRODUCTS[i];}return null;}
+function shade(hex,amt){var n=parseInt(hex.slice(1),16),r=n>>16,g=(n>>8)&255,b=n&255;function f(c){return Math.max(0,Math.min(255,Math.round(c*(1+amt))));}return "#"+((1<<24)+(f(r)<<16)+(f(g)<<8)+f(b)).toString(16).slice(1);}
+function ico(d){return '<svg class="ico" viewBox="0 0 24 24">'+d+'</svg>';}
+
+/* 옷 그림: 실제 사진이 들어오기 전 자리 표시 */
+function garment(shape,hex,view){
+view=view||"front";var d=shade(hex,-0.3),back=view==="back";
+var st='fill="'+hex+'" stroke="'+d+'" stroke-width="1" stroke-linejoin="round"';
+var ln=' fill="none" stroke="'+d+'" stroke-width=".9" stroke-linecap="round"';
+function shirt(){var s='<path '+st+' d="M44 10 L60 17 L76 10 L98 18 L112 60 L100 64 L90 34 L88 78 L32 78 L30 34 L20 64 L8 60 L22 18 Z"/><path'+ln+' d="M109 53 L98 57 M11 53 L22 57"/>';
+if(back){s+='<path'+ln+' d="M44 10 Q60 15 76 10"/><path'+ln+' d="M46 30 Q60 34 74 30"/>';}
+else{s+='<path'+ln+' d="M44 10 L60 30 L76 10"/><path'+ln+' d="M60 30 L60 78"/><path'+ln+' d="M37 40 h12 v11 h-12 z"/>';[40,51,62,72].forEach(function(y){s+='<circle cx="63" cy="'+y+'" r="1.4" fill="'+d+'"/>';});}
+return s;}
+function pants(){var s='<path '+st+' d="M32 76 L88 76 L94 150 L66 150 L60 98 L54 150 L26 150 Z"/><path'+ln+' d="M32 83 L88 83 M27 143 L54 143 M66 143 L93 143"/>';
+if(!back){s+='<path'+ln+' d="M60 83 L60 97"/><path'+ln+' d="M57 83 Q55 90 52 92 M63 83 Q65 90 68 92"/>';}return s;}
+function dress(){var s='<path '+st+' d="M46 8 L60 15 L74 8 L90 14 L101 40 L91 44 L84 30 L82 58 L98 152 L22 152 L38 58 L36 30 L29 44 L19 40 L30 14 Z"/><path'+ln+' d="M99 34 L89 38 M21 34 L31 38 M24 145 L96 145"/>';
+if(back){s+='<path'+ln+' d="M46 8 Q60 13 74 8"/>';}else{s+='<path'+ln+' d="M46 8 Q60 28 74 8"/><path'+ln+' d="M38 60 Q60 64 82 60"/><path'+ln+' d="M60 62 L56 74 M60 62 L64 74"/>';}return s;}
+function slip(){var s='<path'+ln+' d="M47 34 L50 8 M73 34 L70 8"/><path '+st+' d="M44 34 Q52 28 60 34 Q68 28 76 34 L80 60 L97 152 L23 152 L40 60 Z"/><path'+ln+' d="M25 145 L95 145"/>';
+if(!back){s+='<path'+ln+' d="M41 58 Q60 62 79 58"/>';}return s;}
+var body="",vb="0 0 120 160";
+if(shape==="set"){body=pants()+shirt();}
+else if(shape==="top"){body=shirt();vb="4 -30.5 112 149";}
+else if(shape==="bottom"){body=pants();vb="12 49 96 128";}
+else if(shape==="dress"){body=dress();}
+else if(shape==="slip"){body=slip();}
+if(view==="detail"){vb=shape==="bottom"?"30 70 60 80":(shape==="slip"?"30 4 60 80":"30 0 60 80");}
+return '<svg viewBox="'+vb+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">'+body+'</svg>';
+}
+function tags(p){return (p.isNew?"[NEW]":"")+"["+p.gender+"]";}
+function card(p){return '<a class="card" href="#item-'+p.id+'"><div class="ph">'+garment(p.shape,COLORS[p.colors[0]].hex)+'</div><p class="nm">'+tags(p)+esc(p.name)+'</p><p class="pr">'+won(p.price)+'</p></a>';}
+function grid(list){return '<div class="grid">'+list.map(card).join("")+'</div>';}
+function cartQty(){return state.cart.reduce(function(a,b){return a+b.qty;},0);}
+function cartSum(){return state.cart.reduce(function(a,b){return a+byId(b.id).price*b.qty;},0);}
+function shipFee(s){return s===0||s>=FREE_OVER?0:SHIP_FEE;}
+
+/* 화면 */
+function viewHome(){
+var news=PRODUCTS.filter(function(p){return p.isNew;}).slice(0,8),best=PRODUCTS.filter(function(p){return p.best;});
+var tiles=[["men","MEN","남자 잠옷","set","oat"],["women-top","TOP","여자 상의","top","rose"],["women-bottom","BOTTOM","여자 하의","bottom","ivory"],["women-dress","DRESS","원피스","dress","cocoa"]];
+var insta="";for(var i=0;i<6;i++){insta+='<div>사진 '+(i+1)+'</div>';}
+return '<section class="hero" aria-label="메인 배너">'+garment("set",COLORS.oat.hex)+garment("set",COLORS.rose.hex)+
+'<div class="hero-text"><p class="en">26 WINTER — SAME NIGHT</p><p class="ko">결이 같은 원단으로 짝지어 만든 커플 잠옷</p><a href="#new">SHOP NOW</a></div><p class="hero-note">메인 배너 사진이 들어갈 자리예요</p></section>'+
+'<div class="full"><section class="sec"><h2 class="sec-title">NEW ARRIVAL</h2><p class="sec-sub">이번 시즌 새로 나온 잠옷</p>'+grid(news)+'</section>'+
+'<section class="sec"><h2 class="sec-title">CATEGORY</h2><p class="sec-sub">찾는 잠옷 바로 보기</p><div class="grid">'+tiles.map(function(t){
+var n=PRODUCTS.filter(function(p){return p.cat===t[0];}).length;
+return '<a class="card" href="#'+t[0]+'"><div class="ph">'+garment(t[3],COLORS[t[4]].hex)+'</div><p class="cat-label">'+t[1]+' <small>'+t[2]+' '+n+'</small></p></a>';}).join("")+'</div></section>'+
+'<section class="sec"><h2 class="sec-title">BEST ITEM</h2><p class="sec-sub">많이 찾는 잠옷</p>'+grid(best)+'</section>'+
+'<section class="sec"><h2 class="sec-title">@lynandwon</h2><p class="sec-sub">인스타그램 계정을 준비하고 있어요</p><div class="insta">'+insta+'</div></section></div>';
+}
+function viewList(key){
+var list;
+if(key==="new")list=PRODUCTS.filter(function(p){return p.isNew;});
+else if(key==="women")list=PRODUCTS.filter(function(p){return p.cat.indexOf("women")===0;});
+else list=PRODUCTS.filter(function(p){return p.cat===key;});
+list=list.slice();
+if(state.sort==="low")list.sort(function(a,b){return a.price-b.price;});
+if(state.sort==="high")list.sort(function(a,b){return b.price-a.price;});
+var sub="";
+if(key.indexOf("women")===0){sub='<nav class="subcats" aria-label="여자 잠옷 분류">'+[["women","전체"],["women-top","상의"],["women-bottom","하의"],["women-dress","원피스"]].map(function(t){return '<a href="#'+t[0]+'"'+(t[0]===key?' aria-current="page"':'')+'>'+t[1]+'</a>';}).join("")+'</nav>';}
+return '<div class="full"><div class="list-head"><h1>'+CAT_EN[key]+'</h1>'+(sub||'<p class="ko">'+CAT[key]+'</p>')+'</div>'+
+'<div class="tools"><span class="num" style="color:var(--mute)">'+list.length+' items</span><label for="sortSel">보기 <select id="sortSel"><option value="new"'+(state.sort==="new"?" selected":"")+'>신상품순</option><option value="low"'+(state.sort==="low"?" selected":"")+'>낮은 가격순</option><option value="high"'+(state.sort==="high"?" selected":"")+'>높은 가격순</option></select></label></div>'+
+grid(list)+'</div>';
+}
+function stars(n){var s="";for(var i=1;i<=5;i++){s+=i<=n?"★":"☆";}return s;}
+function tabBar(i,rv){
+var t=[["sec-detail","상세정보"],["sec-review",'상품후기 <span class="badge">'+rv+'</span>'],["sec-guide","구매안내"]];
+return '<nav class="tabs" aria-label="상세 메뉴">'+t.map(function(x,k){return '<a href="#'+'" data-act="scroll" data-target="'+x[0]+'"'+(k===i?' aria-current="true"':'')+'>'+x[1]+'</a>';}).join("")+'</nav>';
+}
+function viewItem(id){
+var p=byId(id);if(!p)return viewMissing();
+var pd=state.pd;if(pd.id!==id){state.pd=pd={id:id,color:null,size:null,qty:1,vi:0,msg:""};}
+var hex=COLORS[pd.color||p.colors[0]].hex,f=FABRIC[p.fabric],sz=SIZES[p.shape],rv=state.reviews[id]||[];
+var chosen=pd.color&&pd.size;
+var match="";
+if(p.pair){match='<div class="match"><p class="ttl">같은 원단의 '+(p.gender==="남"?"여자":"남자")+' 잠옷 · 커플로 맞추기</p>'+p.pair.map(function(pid){var q=byId(pid);return '<a href="#item-'+q.id+'"><div class="ph">'+garment(q.shape,COLORS[q.colors[0]].hex)+'</div><span>'+esc(q.name)+'</span><span>'+won(q.price)+'</span></a>';}).join("")+'</div>';}
+var reviews=rv.length?rv.map(function(r){return '<div class="review"><span class="stars" aria-label="별점 '+r.rating+'점">'+stars(r.rating)+'</span><p>'+esc(r.text)+'</p><span class="by">'+esc(r.opt)+'</span></div>';}).join(""):'<div class="empty">아직 작성된 후기가 없어요.</div>';
+return '<div class="pd">'+
+'<div class="pd-media"><div class="pd-stage"><button type="button" class="arr l" data-act="prev" aria-label="이전 사진">'+ico('<path d="M15 4l-8 8 8 8"/>')+'</button>'+
+'<div class="pd-ph">'+garment(p.shape,hex,VIEWS[pd.vi])+'</div>'+
+'<button type="button" class="arr r" data-act="next" aria-label="다음 사진">'+ico('<path d="M9 4l8 8-8 8"/>')+'</button></div></div>'+
+'<div class="pd-info"><div class="pd-sticky">'+
+'<h1 class="pd-name">'+tags(p)+esc(p.name)+'</h1><p class="pd-price">'+won(p.price)+'</p>'+
+'<button type="button" class="btn-line" data-act="scroll" data-target="sizeGuide">사이즈 가이드 확인</button>'+
+'<div class="desc"><p class="dl">Description</p><p>[FABRIC]<br>'+f.label+'</p><p>[INFO]<br>'+f.info.map(function(x){return '- '+x;}).join("<br>")+'</p></div>'+
+'<div class="opts"><div class="opt"><label for="optColor">색상</label><select id="optColor" class="'+(pd.color?"":"blank")+'"><option value="">선택해 주세요</option>'+p.colors.map(function(k){return '<option value="'+k+'"'+(pd.color===k?" selected":"")+'>'+COLORS[k].name+'</option>';}).join("")+'</select></div>'+
+'<div class="opt"><label for="optSize">사이즈</label><select id="optSize" class="'+(pd.size?"":"blank")+'"><option value="">선택해 주세요</option>'+sz.sizes.map(function(s){return '<option value="'+s+'"'+(pd.size===s?" selected":"")+'>'+s+'</option>';}).join("")+'</select></div></div>'+
+(chosen?'<div class="sel-line"><span>'+COLORS[pd.color].name+' / '+pd.size+'</span><div class="qty"><button type="button" data-act="qty" data-d="-1" aria-label="수량 줄이기">−</button><span class="num">'+pd.qty+'</span><button type="button" data-act="qty" data-d="1" aria-label="수량 늘리기">+</button></div><span class="num">'+won(p.price*pd.qty)+'</span></div>':'')+
+'<p class="sum">총 상품금액(수량) <b class="num">'+(chosen?won(p.price*pd.qty):"0원")+'</b> ('+(chosen?pd.qty:0)+'개)</p>'+
+'<p class="msg" role="status">'+esc(pd.msg)+'</p>'+
+'<button type="button" class="btn-black" data-act="buy">BUY NOW</button><button type="button" class="btn-outline" data-act="add">ADD TO CART</button>'+
+'<div class="wish-row"><span class="note">카드 · 간편결제 · 계좌이체</span><button type="button" class="btn-wish" data-act="wish" aria-pressed="'+(!!state.wish[id])+'">'+ico('<path d="M12 20s-7.5-4.6-7.5-10.1A4.1 4.1 0 0 1 12 7.6a4.1 4.1 0 0 1 7.5 2.3C19.5 15.4 12 20 12 20z"/>')+'찜</button></div>'+
+match+'</div></div></div>'+
+'<section class="dsec" id="sec-detail">'+tabBar(0,rv.length)+'<div class="dbody" style="margin-top:100px">'+
+'<div class="dbox"><p class="en">'+f.en+'</p><p class="ko">'+f.tag+'</p><div class="ph">'+garment(p.shape,hex,"front")+'</div></div>'+
+'<p class="dtext">'+f.desc+'</p>'+
+'<div class="dimg">'+garment(p.shape,hex,"detail")+'</div><p class="cap">상세 사진이 들어갈 자리예요</p>'+
+'<div class="dimg">'+garment(p.shape,hex,"back")+'</div><p class="cap">착용 사진이 들어갈 자리예요</p>'+
+'<div id="sizeGuide"><p class="dh">SIZE</p><div class="table-wrap"><table><thead><tr>'+sz.head.map(function(h){return '<th scope="col">'+h+'</th>';}).join("")+'</tr></thead><tbody>'+
+sz.rows.map(function(r){return '<tr>'+r.map(function(c,i){return i===0?'<th scope="row">'+c+'</th>':'<td>'+c+'</td>';}).join("")+'</tr>';}).join("")+'</tbody></table></div>'+
+'<p class="note center" style="margin-top:12px">단위 cm · 옷을 바닥에 펼쳐 놓고 잰 길이예요. 재는 방법에 따라 1~2cm 차이가 날 수 있어요.</p></div>'+
+'<div><p class="dh">CARE</p><ul class="care">'+f.care.map(function(c){return '<li>'+c+'</li>';}).join("")+'</ul></div>'+
+'</div></section>'+
+'<section class="dsec" id="sec-review">'+tabBar(1,rv.length)+'<div class="dbody" style="margin-top:60px"><div>'+reviews+'</div>'+
+'<form class="review-form" id="reviewForm" novalidate><div class="field"><label for="rvRating">별점</label><select class="input" id="rvRating"><option value="5">★★★★★ 아주 좋아요</option><option value="4">★★★★☆ 좋아요</option><option value="3">★★★☆☆ 보통이에요</option><option value="2">★★☆☆☆ 아쉬워요</option><option value="1">★☆☆☆☆ 별로예요</option></select></div>'+
+'<div class="field"><label for="rvText">후기</label><textarea id="rvText" placeholder="사이즈, 촉감, 색감은 어땠나요?"></textarea></div><p class="err" id="rvErr" role="alert"></p><button class="btn ghost" type="submit">후기 등록</button></form></div></section>'+
+'<section class="dsec" id="sec-guide">'+tabBar(2,rv.length)+'<div class="dbody policy" style="margin-top:60px">'+policyHtml()+'</div></section>';
+}
+function li(t){return '<li>'+t+'</li>';}
+function policyHtml(){return '<div><h3>배송</h3><ul>'+POLICY.ship.map(li).join("")+'</ul></div><div><h3>교환 · 반품</h3><ul>'+POLICY.exchange.map(li).join("")+'</ul></div><div><h3>환불</h3><ul>'+POLICY.refund.map(li).join("")+'</ul></div>';}
+function viewSearch(){
+return '<div class="full"><div class="list-head"><h1>SEARCH</h1></div><div style="max-width:480px;margin:30px auto 40px"><label class="field"><span class="note">상품 이름이나 소재로 찾아보세요</span><input type="search" id="searchInput" value="'+esc(state.q)+'" placeholder="예: 모달, 원피스"></label></div><div id="searchResults">'+searchResults()+'</div></div>';
+}
+function searchResults(){
+var q=state.q.trim();if(!q)return '<p class="note center">검색어를 입력해 주세요.</p>';
+var r=PRODUCTS.filter(function(p){return (p.name+FABRIC[p.fabric].label+FABRIC[p.fabric].en).indexOf(q)>-1;});
+return r.length?grid(r):'<p class="note center">"'+esc(q)+'"에 맞는 상품이 없어요.</p>';
+}
+function viewWish(){
+var l=PRODUCTS.filter(function(p){return state.wish[p.id];});
+return '<div class="full"><div class="list-head"><h1>WISH LIST</h1></div><div style="height:40px"></div>'+(l.length?grid(l):'<p class="note center">찜한 상품이 없어요. 상세페이지에서 찜을 눌러 보세요.</p>')+'</div>';
+}
+function viewCart(){
+var head='<h1 class="page-title">CART</h1>';
+if(!state.cart.length)return '<div class="page">'+head+'<div class="empty">장바구니가 비어 있어요. <a class="link" href="#home">잠옷 둘러보기</a></div></div>';
+var sum=cartSum(),fee=shipFee(sum);
+var items=state.cart.map(function(c,i){var p=byId(c.id);
+return '<div class="line-item"><a href="#item-'+p.id+'" class="ph">'+garment(p.shape,COLORS[c.color].hex)+'</a><div class="li-info"><a href="#item-'+p.id+'">'+esc(p.name)+'</a><span class="li-opt">'+COLORS[c.color].name+' / '+c.size+'</span><span class="num">'+won(p.price*c.qty)+'</span></div>'+
+'<div class="li-side"><div class="qty"><button type="button" data-act="cqty" data-i="'+i+'" data-d="-1" aria-label="수량 줄이기">−</button><span class="num">'+c.qty+'</span><button type="button" data-act="cqty" data-i="'+i+'" data-d="1" aria-label="수량 늘리기">+</button></div><button type="button" class="del" data-act="cdel" data-i="'+i+'">삭제</button></div></div>';}).join("");
+var left=FREE_OVER-sum;
+return '<div class="page">'+head+'<div class="two"><div class="cart-top">'+items+(left>0?'<p class="note" style="margin-top:14px">'+won(left)+' 더 담으면 무료로 배송해 드려요.</p>':'')+'</div>'+
+'<aside class="summary"><h2>주문 금액</h2><div class="sum-row"><span>상품 금액</span><span>'+won(sum)+'</span></div><div class="sum-row"><span>배송비</span><span>'+(fee?won(fee):"무료")+'</span></div><div class="sum-row t"><span>결제 예정 금액</span><span>'+won(sum+fee)+'</span></div>'+
+'<a class="btn-black" href="#checkout">ORDER</a><a class="btn-outline" href="#home">CONTINUE SHOPPING</a></aside></div></div>';
+}
+function viewCheckout(){
+if(!state.cart.length){location.hash="cart";return "";}
+var sum=cartSum(),fee=shipFee(sum);
+var lines=state.cart.map(function(c){var p=byId(c.id);return '<div class="sum-row"><span>'+esc(p.name)+' · '+c.size+' × '+c.qty+'</span><span>'+won(p.price*c.qty)+'</span></div>';}).join("");
+return '<div class="page"><h1 class="page-title">ORDER</h1><form class="two" id="checkoutForm" novalidate><div>'+
+'<div class="form-sec"><h2>배송지</h2><div class="form-grid">'+
+'<div class="field"><label for="coName">받는 분</label><input type="text" id="coName" autocomplete="name"></div>'+
+'<div class="field"><label for="coTel">연락처</label><input type="tel" id="coTel" autocomplete="tel" placeholder="010-0000-0000"></div>'+
+'<div class="field span"><label for="coAddr">주소</label><input type="text" id="coAddr" autocomplete="street-address" placeholder="도로명 주소"></div>'+
+'<div class="field span"><label for="coAddr2">상세 주소</label><input type="text" id="coAddr2" placeholder="동, 호수"></div>'+
+'<div class="field span"><label for="coMemo">배송 요청사항</label><select class="input" id="coMemo"><option>문 앞에 놓아 주세요</option><option>경비실에 맡겨 주세요</option><option>배송 전에 연락 주세요</option><option>요청사항 없음</option></select></div></div></div>'+
+'<div class="form-sec"><h2>결제 수단</h2><div class="pay" role="radiogroup" aria-label="결제 수단">'+
+'<label><input type="radio" name="pay" value="card" checked><span>신용·체크카드</span><small>모든 카드사 · 할부 가능</small></label>'+
+'<label><input type="radio" name="pay" value="easy"><span>간편결제</span><small>카카오페이 · 네이버페이 · 토스페이</small></label>'+
+'<label><input type="radio" name="pay" value="bank"><span>계좌이체</span><small>실시간 계좌이체 또는 무통장 입금</small></label></div></div>'+
+'<div class="form-sec" style="border-bottom:0"><label class="check" for="coAgree"><input type="checkbox" id="coAgree"><span>주문 내용을 확인했고, 결제에 동의해요. (배송·교환·환불 안내 포함)</span></label><p class="err" id="coErr" role="alert"></p></div></div>'+
+'<aside class="summary"><h2>주문 상품</h2>'+lines+'<div class="sum-row t" style="font-size:13px;font-weight:400"><span>배송비</span><span>'+(fee?won(fee):"무료")+'</span></div><div class="sum-row" style="font-size:16px;font-weight:500"><span>총 결제 금액</span><span>'+won(sum+fee)+'</span></div>'+
+'<button class="btn-black" type="submit">'+won(sum+fee)+' 결제하기</button><p class="note">데모 페이지라 실제 결제는 진행되지 않아요.</p></aside></form></div>';
+}
+function viewDone(){
+var o=state.lastOrder;
+if(!o)return '<div class="page"><div class="done"><h1>주문 내역이 없어요</h1><a class="link" href="#home">메인으로</a></div></div>';
+return '<div class="page"><h1 class="page-title">ORDER COMPLETE</h1><div class="done"><h1>주문이 접수되었어요</h1><p>'+esc(o.name)+'님, 고맙습니다. '+o.payLabel+'(으)로 '+won(o.total)+' 주문이 접수되었어요.<br>결제를 마친 뒤 1~3영업일 안에 보내 드려요.</p><p class="note">데모 페이지라 실제 결제와 배송은 진행되지 않았어요.</p><a class="btn" href="#home">쇼핑 계속하기</a></div></div>';
+}
+function viewLogin(){
+return '<div class="page"><h1 class="page-title">LOGIN</h1><form class="narrow" id="loginForm" novalidate>'+
+'<div class="field"><label for="lgId">이메일</label><input type="email" id="lgId" autocomplete="email"></div>'+
+'<div class="field"><label for="lgPw">비밀번호</label><input type="password" id="lgPw" autocomplete="current-password"></div>'+
+'<p class="err" id="lgErr" role="alert"></p><button class="btn-black" type="submit">LOGIN</button><a class="btn-outline" href="#signup">JOIN US</a></form></div>';
+}
+function viewSignup(){
+return '<div class="page"><h1 class="page-title">JOIN US</h1><form class="narrow" id="signupForm" novalidate>'+
+'<div class="field"><label for="suName">이름</label><input type="text" id="suName" autocomplete="name"></div>'+
+'<div class="field"><label for="suMail">이메일</label><input type="email" id="suMail" autocomplete="email"></div>'+
+'<div class="field"><label for="suPw">비밀번호</label><input type="password" id="suPw" autocomplete="new-password" placeholder="8자 이상"></div>'+
+'<div class="field"><label for="suTel">휴대폰 번호</label><input type="tel" id="suTel" autocomplete="tel" placeholder="010-0000-0000"></div>'+
+'<label class="check" for="suTerms"><input type="checkbox" id="suTerms"><span>(필수) 이용약관에 동의해요</span></label>'+
+'<label class="check" for="suPriv"><input type="checkbox" id="suPriv"><span>(필수) 개인정보 수집·이용에 동의해요</span></label>'+
+'<label class="check" for="suAd"><input type="checkbox" id="suAd"><span>(선택) 신상품·할인 소식을 받아 볼게요</span></label>'+
+'<p class="err" id="suErr" role="alert"></p><button class="btn-black" type="submit">가입하기</button><p class="note center">이미 회원이신가요? <a class="link" href="#login">로그인</a></p></form></div>';
+}
+function viewHelp(){
+var faq=[["사이즈를 고르기 어려워요","상품 상세페이지의 사이즈 가이드에서 옷을 펼쳐 잰 길이를 확인할 수 있어요. 가지고 있는 잠옷을 같은 방법으로 재서 비교하면 가장 정확해요."],
+["커플 잠옷을 한 벌만 살 수 있나요?","네. 남자 잠옷과 여자 잠옷은 따로 판매해요. 상세페이지의 커플로 맞추기에서 같은 원단의 짝을 확인할 수 있어요."],
+["주문하면 언제 받을 수 있나요?","결제를 마친 뒤 1~3영업일 안에 보내 드리고, 받는 데까지는 보통 1~2일 걸려요."],
+["교환은 어떻게 신청하나요?","상품을 받은 날부터 7일 안에 고객센터로 연락해 주세요. 입었거나 세탁한 상품은 교환이 어려워요."],
+["계좌이체는 언제까지 입금해야 하나요?","무통장 입금은 주문한 날부터 3일 안에 입금해 주세요. 기한이 지나면 주문이 자동으로 취소돼요."]];
+return '<div class="page" style="max-width:800px"><h1 class="page-title">CUSTOMER CENTER</h1><p class="note center" style="margin:-24px 0 40px">평일 10:00–17:00 · 전화번호 입력 예정</p>'+
+'<section class="help-sec" id="faq"><h2>자주 묻는 질문</h2><div>'+faq.map(function(f){return '<details><summary>'+f[0]+'</summary><p>'+f[1]+'</p></details>';}).join("")+'</div></section>'+
+'<section class="help-sec policy" id="sec-ship"><h2>배송 안내</h2><ul>'+POLICY.ship.map(li).join("")+'</ul></section>'+
+'<section class="help-sec policy" id="sec-return"><h2>교환 · 환불 안내</h2><div><h3>교환 · 반품</h3><ul>'+POLICY.exchange.map(li).join("")+'</ul></div><div><h3>환불</h3><ul>'+POLICY.refund.map(li).join("")+'</ul></div></section></div>';
+}
+function viewMissing(){return '<div class="page"><div class="done"><h1>찾는 페이지가 없어요</h1><a class="link" href="#home">메인으로</a></div></div>';}
+
+/* 라우팅 */
+var app=document.getElementById("app");
+function current(){return location.hash.replace(/^#/,"")||"home";}
+function render(keep){
+var h=current(),html,to=null;
+if(h==="home")html=viewHome();
+else if(CAT[h])html=viewList(h);
+else if(h.indexOf("item-")===0)html=viewItem(h.slice(5));
+else if(h==="cart")html=viewCart();
+else if(h==="checkout")html=viewCheckout();
+else if(h==="order-done")html=viewDone();
+else if(h==="login")html=viewLogin();
+else if(h==="signup")html=viewSignup();
+else if(h==="search")html=viewSearch();
+else if(h==="wish")html=viewWish();
+else if(h==="help"||h==="help-ship"||h==="help-return"){html=viewHelp();to=h==="help-ship"?"sec-ship":h==="help-return"?"sec-return":null;}
+else html=viewMissing();
+var y=window.scrollY;app.innerHTML=html;
+document.getElementById("cartCount").textContent=cartQty();
+if(to){var el=document.getElementById(to);if(el)el.scrollIntoView();}else window.scrollTo(0,keep?y:0);
+}
+function placeDrawer(){var b=document.getElementById("top").getBoundingClientRect().bottom;document.getElementById("drawer").style.top=b+"px";document.getElementById("scrim").style.top=b+"px";}
+function openMenu(){placeDrawer();document.body.classList.add("menu-open");document.getElementById("drawer").setAttribute("aria-hidden","false");var m=document.getElementById("menuBtn");m.setAttribute("aria-expanded","true");m.setAttribute("aria-label","메뉴 닫기");}
+function closeMenu(){document.body.classList.remove("menu-open");document.getElementById("drawer").setAttribute("aria-hidden","true");var m=document.getElementById("menuBtn");m.setAttribute("aria-expanded","false");m.setAttribute("aria-label","메뉴 열기");}
+window.addEventListener("hashchange",function(){closeMenu();render(false);});
+window.addEventListener("scroll",function(){if(document.body.classList.contains("menu-open"))placeDrawer();},{passive:true});
+window.addEventListener("resize",function(){if(document.body.classList.contains("menu-open"))placeDrawer();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&document.body.classList.contains("menu-open")){closeMenu();document.getElementById("menuBtn").focus();}});
+
+function addToCart(){
+var pd=state.pd,p=byId(pd.id);
+if(!pd.color||!pd.size){pd.msg="색상과 사이즈를 골라 주세요.";render(true);return false;}
+var found=null;state.cart.forEach(function(c){if(c.id===pd.id&&c.color===pd.color&&c.size===pd.size)found=c;});
+if(found)found.qty+=pd.qty;else state.cart.push({id:pd.id,color:pd.color,size:pd.size,qty:pd.qty});
+pd.msg=p.name+" "+COLORS[pd.color].name+" / "+pd.size+" "+pd.qty+"개를 장바구니에 담았어요.";return true;
+}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[data-act]");if(!t)return;
+var a=t.getAttribute("data-act"),pd=state.pd;
+if(a==="scroll")e.preventDefault();
+if(a==="menu-toggle"){document.body.classList.contains("menu-open")?closeMenu():openMenu();}
+else if(a==="menu-close")closeMenu();
+else if(a==="acc"){var open=t.getAttribute("aria-expanded")==="true";t.setAttribute("aria-expanded",String(!open));document.getElementById(t.getAttribute("aria-controls")).hidden=open;}
+else if(a==="scroll"){var el=document.getElementById(t.getAttribute("data-target"));if(el){var y=el.getBoundingClientRect().top+window.scrollY-document.getElementById("top").offsetHeight;window.scrollTo({top:y,behavior:"smooth"});}}
+else if(a==="prev"){pd.vi=(pd.vi+VIEWS.length-1)%VIEWS.length;render(true);}
+else if(a==="next"){pd.vi=(pd.vi+1)%VIEWS.length;render(true);}
+else if(a==="qty"){pd.qty=Math.max(1,Math.min(9,pd.qty+Number(t.getAttribute("data-d"))));render(true);}
+else if(a==="add"){if(addToCart())render(true);}
+else if(a==="buy"){if(addToCart()){pd.msg="";location.hash="checkout";}}
+else if(a==="wish"){state.wish[pd.id]=!state.wish[pd.id];pd.msg=state.wish[pd.id]?"찜 목록에 담았어요.":"찜 목록에서 뺐어요.";render(true);}
+else if(a==="cqty"){var c=state.cart[Number(t.getAttribute("data-i"))];c.qty=Math.max(1,Math.min(9,c.qty+Number(t.getAttribute("data-d"))));render(true);}
+else if(a==="cdel"){state.cart.splice(Number(t.getAttribute("data-i")),1);render(true);}
+});
+document.addEventListener("change",function(e){
+var id=e.target.id,pd=state.pd;
+if(id==="sortSel"){state.sort=e.target.value;render(true);}
+else if(id==="optColor"){pd.color=e.target.value||null;pd.msg="";render(true);}
+else if(id==="optSize"){pd.size=e.target.value||null;pd.msg="";render(true);}
+});
+document.addEventListener("input",function(e){if(e.target.id==="searchInput"){state.q=e.target.value;document.getElementById("searchResults").innerHTML=searchResults();}});
+function val(id){var el=document.getElementById(id);return el?el.value.trim():"";}
+document.addEventListener("submit",function(e){
+var f=e.target;e.preventDefault();
+if(f.id==="reviewForm"){var text=val("rvText");if(text.length<5){document.getElementById("rvErr").textContent="후기를 5자 이상 적어 주세요.";return;}
+var pd=state.pd;(state.reviews[pd.id]=state.reviews[pd.id]||[]).unshift({rating:Number(val("rvRating")),text:text,opt:(pd.color?COLORS[pd.color].name:"")+(pd.size?" / "+pd.size:"")+" 구매"});render(true);}
+else if(f.id==="checkoutForm"){var err=document.getElementById("coErr");
+if(!val("coName")||!val("coTel")||!val("coAddr")){err.textContent="받는 분, 연락처, 주소를 모두 입력해 주세요.";return;}
+if(!document.getElementById("coAgree").checked){err.textContent="결제 동의에 체크해 주세요.";return;}
+var pay=f.querySelector('input[name="pay"]:checked').value,sum=cartSum();
+state.lastOrder={name:val("coName"),total:sum+shipFee(sum),payLabel:{card:"신용·체크카드",easy:"간편결제",bank:"계좌이체"}[pay]};state.cart=[];location.hash="order-done";}
+else if(f.id==="loginForm"){var le=document.getElementById("lgErr");le.textContent=(!val("lgId")||!val("lgPw"))?"이메일과 비밀번호를 입력해 주세요.":"데모 페이지라 실제 로그인은 되지 않아요.";}
+else if(f.id==="signupForm"){var se=document.getElementById("suErr");
+if(!val("suName")||!val("suMail")||val("suPw").length<8){se.textContent="이름, 이메일을 입력하고 비밀번호는 8자 이상으로 정해 주세요.";return;}
+if(!document.getElementById("suTerms").checked||!document.getElementById("suPriv").checked){se.textContent="필수 약관 두 가지에 동의해 주세요.";return;}
+se.textContent="데모 페이지라 실제 가입은 되지 않아요.";}
+});
+render(false);
+})();
+</script>
+</body>
+</html>

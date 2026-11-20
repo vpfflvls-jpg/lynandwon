@@ -4,25 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>린앤원 LYNANDWON</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Italiana&display=swap" rel="stylesheet">
 <style>
-/* 레이아웃: 잠든 밤하늘 같은 어두운 바탕, 달빛 크림색 글씨, 상단에 아주 작은 별. 달이 메인 포인트, 별이 서브 포인트 */
+@font-face{font-family:"Wanted Sans";src:url("fonts/WantedSans-Regular.woff") format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Wanted Sans";src:url("fonts/WantedSans-Medium.woff") format("woff");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Wanted Sans";src:url("fonts/WantedSans-SemiBold.woff") format("woff");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Wanted Sans";src:url("fonts/WantedSans-Bold.woff") format("woff");font-weight:700;font-style:normal;font-display:swap}
+/* 레이아웃: 거의 검정에 가까운 밤 바탕, 고딕(Wanted Sans) 한 가지 글씨체, 상단과 배너에 아주 희미한 별 */
 :root{
---paper:#0C0E15;
---surface:#131622;
---ink:#EAE4D6;
---mute:#8F8C98;
---line:rgba(234,228,214,.12);
---rule:rgba(234,228,214,.30);
---photo:#161A26;
---beige:#E3C98A;
---moon:#F4E9C8;
---font-moon:"Gowun Batang","Noto Serif KR",serif;
---font-en:"Jost","Noto Sans KR",sans-serif;
---font-body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
---font-deco:"Italiana","Times New Roman",serif;
+--paper:#0B0B0D;
+--surface:#141416;
+--ink:#ECEAE6;
+--mute:#8B8A8F;
+--line:rgba(255,255,255,.09);
+--rule:rgba(255,255,255,.24);
+--photo:#17171A;
+--beige:#B9AE98;
+--moon:#F2F0EB;
+--font-moon:"Wanted Sans","Apple SD Gothic Neo",sans-serif;
+--font-en:"Wanted Sans","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+--font-body:"Wanted Sans","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+--font-deco:"Wanted Sans","Apple SD Gothic Neo",sans-serif;
 --head-h:74px;
 color-scheme:dark;
 }
@@ -41,14 +42,14 @@ p{margin:0}
 .num{font-variant-numeric:tabular-nums}
 
 /* 상단 */
-.notice{position:relative;overflow:hidden;background:#07080D;color:var(--mute);font-family:var(--font-en);font-size:12px;font-weight:500;text-align:center;padding:8px 16px;letter-spacing:.02em}
+.notice{position:relative;overflow:hidden;background:#08080A;color:var(--mute);font-family:var(--font-en);font-size:12px;font-weight:500;text-align:center;padding:8px 16px;letter-spacing:.02em}
 .top{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--rule)}
 .top-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:var(--head-h);padding:0 30px}
 .menu-btn{justify-self:start;padding:6px}
 .menu-btn .x{display:none}
 body.menu-open .menu-btn .bars{display:none}
 body.menu-open .menu-btn .x{display:block}
-.logo{font-family:var(--font-en);font-weight:600;font-size:29px;letter-spacing:.04em;line-height:1}
+.logo{font-family:var(--font-en);font-weight:600;font-size:26px;letter-spacing:.14em;line-height:1}
 .icons{justify-self:end;display:flex;align-items:center;gap:44px}
 .icons a{display:flex;align-items:flex-start;gap:2px}
 .cnt{font-family:var(--font-en);font-size:10px;color:var(--beige);margin-top:8px}
@@ -64,7 +65,7 @@ body.menu-open .drawer{transform:none;visibility:visible}
 .acc-btn[aria-expanded="true"] .ico{transform:rotate(180deg)}
 .acc-panel{display:grid;padding:2px 0 8px 12px}
 .acc-panel[hidden]{display:none}
-.acc-panel a{font-size:13px;line-height:28px;color:#BDB7AA}
+.acc-panel a{font-size:13px;line-height:28px;color:#B5B3AE}
 .mnav a:hover,.acc-btn:hover{color:var(--beige)}
 .gap{height:30px}
 .msmall{display:grid;gap:2px;margin-top:56px;font-size:12px}
@@ -113,11 +114,11 @@ body.menu-open .drawer{transform:none;visibility:visible}
 .pd-price{font-size:13px;margin-top:10px}
 .btn-line{display:block;width:400px;max-width:100%;border:1px solid var(--rule);padding:11px;font-size:14px;font-weight:700;margin-top:18px}
 .btn-line:hover{background:var(--photo)}
-.desc{margin-top:42px;font-size:13px;display:grid;gap:18px;color:#CFC9BC}
+.desc{margin-top:42px;font-size:13px;display:grid;gap:18px;color:#C9C7C2}
 .desc .dl{font-family:var(--font-en);color:var(--ink);font-size:13px}
 .opts{margin-top:34px;border-top:1px solid var(--rule)}
 .opt{position:relative;border-bottom:1px solid var(--rule)}
-.opt label{position:absolute;left:0;top:13px;font-size:11px;color:#BDB7AA;pointer-events:none}
+.opt label{position:absolute;left:0;top:13px;font-size:11px;color:#B5B3AE;pointer-events:none}
 .opt select{width:100%;appearance:none;-webkit-appearance:none;border:0;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%23EAE4D6' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 4px center/14px;padding:12px 30px 12px 90px;font-size:13px;cursor:pointer}
 .opt select.blank{color:transparent}
 .opt select option{color:var(--ink)}
@@ -129,8 +130,8 @@ body.menu-open .drawer{transform:none;visibility:visible}
 .sum b{font-size:18px;font-weight:500}
 .msg{font-size:12px;color:var(--beige);min-height:18px;margin-top:8px}
 .btn-black,.btn-outline{display:flex;align-items:center;justify-content:center;width:100%;height:50px;font-family:var(--font-en);font-size:15px;font-weight:500;letter-spacing:.01em}
-.btn-black{background:var(--moon);color:#0C0E15;margin-top:12px;border:1px solid var(--rule)}
-.btn-black:hover{background:#fff8e3}
+.btn-black{background:var(--moon);color:#0B0B0D;margin-top:12px;border:1px solid var(--rule)}
+.btn-black:hover{background:#FFFFFF}
 .btn-outline{border:1px solid var(--rule);margin-top:5px}
 .btn-outline:hover{background:var(--photo)}
 .wish-row{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--rule);margin-top:5px;padding-top:12px;font-size:12px}
@@ -154,7 +155,7 @@ body.menu-open .drawer{transform:none;visibility:visible}
 .dbox .en{font-family:var(--font-deco);font-size:72px;line-height:1;color:var(--beige)}
 .dbox .ko{font-size:24px;font-weight:300;color:var(--beige)}
 .dbox .ph{width:62%;background:transparent;margin-top:28px;padding:0}
-.dtext{font-size:14px;text-align:center;color:#CFC9BC;line-height:1.9}
+.dtext{font-size:14px;text-align:center;color:#C9C7C2;line-height:1.9}
 .dimg{background:var(--photo);aspect-ratio:4/5;display:grid;place-items:center;padding:14%}
 .dimg svg{width:100%;height:100%}
 .cap{font-size:11px;color:var(--mute);text-align:center;margin-top:-34px}
@@ -166,7 +167,7 @@ thead th{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);fo
 tbody th{font-weight:500}
 .note{font-size:12px;color:var(--mute)}
 .center{text-align:center}
-.care{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:13px;text-align:center;color:#CFC9BC}
+.care{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:13px;text-align:center;color:#C9C7C2}
 .empty{border-top:1px solid var(--rule);border-bottom:1px solid var(--line);padding:56px 20px;text-align:center;color:var(--mute);font-size:13px}
 .review{border-bottom:1px solid var(--line);padding:18px 4px;display:grid;gap:6px;font-size:13px}
 .stars{letter-spacing:.1em}
@@ -174,17 +175,17 @@ tbody th{font-weight:500}
 .review-form{display:grid;gap:12px}
 .policy{display:grid;gap:34px}
 .policy h3{font-size:14px;font-weight:700;margin-bottom:10px}
-.policy ul{margin:0;padding-left:16px;display:grid;gap:4px;font-size:13px;color:#CFC9BC}
+.policy ul{margin:0;padding-left:16px;display:grid;gap:4px;font-size:13px;color:#C9C7C2}
 
 /* 폼, 공통 버튼 */
-.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--moon);color:#0C0E15;height:50px;padding:0 28px;font-size:14px;border:1px solid var(--rule)}
-.btn:hover{background:#fff8e3}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--moon);color:#0B0B0D;height:50px;padding:0 28px;font-size:14px;border:1px solid var(--rule)}
+.btn:hover{background:#FFFFFF}
 .btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
 .btn.ghost:hover{background:var(--photo)}
 .btn.w{width:100%}
 .link{border-bottom:1px solid currentColor}
 .field{display:grid;gap:6px}
-.field label{font-size:12px;color:#BDB7AA}
+.field label{font-size:12px;color:#B5B3AE}
 input[type="text"],input[type="email"],input[type="password"],input[type="tel"],input[type="search"],select.input,textarea{width:100%;border:1px solid var(--line);background:var(--surface);padding:12px 14px;font-size:13px;border-radius:0}
 input:focus,select.input:focus,textarea:focus{outline:none;border-color:var(--ink)}
 textarea{min-height:100px;resize:vertical}
@@ -266,9 +267,9 @@ input:disabled{background:var(--photo);color:var(--mute)}
 
 /* 밤 테마: 별, 달, 로고 */
 .sky{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.star{position:absolute;width:1.5px;height:1.5px;border-radius:50%;background:var(--moon);opacity:.55;animation:twinkle 5s ease-in-out infinite}
-.star.big{width:2.5px;height:2.5px;box-shadow:0 0 6px rgba(244,233,200,.7)}
-@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.8}}
+.star{position:absolute;width:1px;height:1px;border-radius:50%;background:#fff;opacity:.35;animation:twinkle 7s ease-in-out infinite}
+.star.big{width:1.6px;height:1.6px;opacity:.5}
+@keyframes twinkle{0%,100%{opacity:.18}50%{opacity:.5}}
 .notice span{position:relative}
 .top{background:var(--paper)}
 .top-in{position:relative}
@@ -276,23 +277,21 @@ input:disabled{background:var(--photo);color:var(--mute)}
 .top-in .sky{z-index:0}
 .logo{display:flex;align-items:center;gap:10px;position:relative}
 .logo-moon{width:22px;height:22px;fill:var(--beige);filter:drop-shadow(0 0 6px rgba(227,201,138,.55))}
-.foot{background:#090B11}
-.sec-title::before{content:"";display:block;width:8px;height:8px;margin:0 auto 14px;background:var(--beige);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+.foot{background:#08080A}
 .ph.photo{padding:0;overflow:hidden}
 .ph.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
 .card:hover .ph.photo img{transform:scale(1.03)}
 select option{background:var(--surface);color:var(--ink)}
-.hero{position:relative;overflow:hidden;background:var(--paper);display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:40px;padding:70px 8% 0;min-height:620px;border-bottom:1px solid var(--line)}
-.hero .sky{bottom:35%}
-.moon{position:absolute;top:56px;right:12%;width:170px;height:170px;border-radius:50%;box-shadow:inset -30px 12px 0 0 var(--moon);transform:rotate(-18deg);filter:drop-shadow(0 0 28px rgba(244,233,200,.28));z-index:2}
-.hero-copy{position:relative;z-index:3;display:grid;gap:18px;padding-bottom:70px}
-.kicker{font-family:var(--font-en);font-size:12px;letter-spacing:.32em;color:var(--beige);font-weight:400}
-.hero-title{font-family:var(--font-moon);font-weight:400;font-size:clamp(34px,4.2vw,54px);line-height:1.3;letter-spacing:-.01em}
+.hero{position:relative;overflow:hidden;background:var(--paper);display:grid;grid-template-columns:1fr 1fr;min-height:min(78vh,760px);border-bottom:1px solid var(--line)}
+.hero-photo{position:relative;display:block;overflow:hidden}
+.hero-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.hero-night{position:relative;display:grid;align-content:end;padding:0 8% 9%}
+.hero-copy{position:relative;z-index:1;display:grid;gap:14px}
+.kicker{font-family:var(--font-en);font-size:12px;letter-spacing:.24em;color:var(--mute);font-weight:500}
+.hero-title{font-weight:500;font-size:clamp(28px,3vw,40px);line-height:1.3;letter-spacing:-.01em}
 .hero-sub{color:var(--mute);font-size:14px}
-.btn-moon{justify-self:start;display:inline-flex;align-items:center;gap:10px;margin-top:10px;padding:14px 26px;border:1px solid var(--rule);border-radius:999px;font-size:13px;transition:border-color .2s,background .2s}
-.btn-moon:hover{border-color:var(--moon);background:rgba(244,233,200,.06)}
-.hero-photo{position:relative;z-index:1;align-self:end;justify-self:center;width:min(380px,100%);aspect-ratio:3/4.2;border-radius:999px 999px 0 0;overflow:hidden;border:1px solid var(--rule);border-bottom:0}
-.hero-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(.82) saturate(.9)}
+.btn-moon{justify-self:start;display:inline-flex;align-items:center;margin-top:14px;padding:13px 28px;border:1px solid var(--rule);font-size:13px;font-weight:500;letter-spacing:.04em;transition:border-color .2s,background .2s}
+.btn-moon:hover{border-color:var(--ink);background:rgba(255,255,255,.04)}
 /* 상세 (리치) */
 .pd-ph.photo{padding:0;overflow:hidden}
 .pd-ph.photo img{width:100%;height:100%;object-fit:cover;display:block}
@@ -309,9 +308,8 @@ select option{background:var(--surface);color:var(--ink)}
 .r-hero-txt p{font-size:14px;color:var(--moon)}
 .r-sec{display:grid;gap:22px;justify-items:center;text-align:center}
 .r-k{font-family:var(--font-en);font-size:12px;letter-spacing:.3em;color:var(--beige);display:flex;align-items:center;gap:10px}
-.r-k::before,.r-k::after{content:"";width:6px;height:6px;background:var(--beige);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
 .r-h{font-family:var(--font-moon);font-size:26px;font-weight:400;line-height:1.45}
-.r-p{font-size:14px;color:#CFC9BC;line-height:1.9;max-width:34em}
+.r-p{font-size:14px;color:#C9C7C2;line-height:1.9;max-width:34em}
 .r-points{display:grid;gap:0;width:100%;text-align:left;border-top:1px solid var(--line)}
 .r-point{display:grid;grid-template-columns:90px 1fr;gap:20px;padding:26px 6px;border-bottom:1px solid var(--line)}
 .r-point b{font-family:var(--font-en);font-weight:300;font-size:30px;color:var(--beige);line-height:1}
@@ -333,10 +331,10 @@ select option{background:var(--surface);color:var(--ink)}
 .r-scale div{display:grid;grid-template-columns:110px repeat(3,1fr);align-items:center;padding:18px 6px;border-bottom:1px solid var(--line);font-size:13px}
 .r-scale span{color:rgba(234,228,214,.28);text-align:center}
 .r-scale span.on{color:var(--moon);font-weight:500}
-.r-scale span.on::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--beige);margin-right:7px;vertical-align:middle;box-shadow:0 0 8px rgba(227,201,138,.7)}
+.r-scale span.on::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--moon);margin-right:7px;vertical-align:middle}
 .r-scale strong{font-weight:500;text-align:left}
 .r-measure{width:100%;text-align:left;font-size:12px;color:var(--mute);display:grid;gap:4px;padding:0;margin:0;list-style:none}
-.r-warn{width:100%;border:1px solid var(--rule);padding:16px 18px;font-size:13px;color:#CFC9BC;text-align:left;line-height:1.8}
+.r-warn{width:100%;border:1px solid var(--rule);padding:16px 18px;font-size:13px;color:#C9C7C2;text-align:left;line-height:1.8}
 .r-warn b{color:var(--beige);font-weight:500}
 .r-care{display:flex;justify-content:center;gap:56px;flex-wrap:wrap}
 .r-care figure{margin:0;display:grid;justify-items:center;gap:12px;width:150px}
@@ -347,10 +345,9 @@ select option{background:var(--surface);color:var(--ink)}
 .r-notice th,.r-notice td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 .r-notice th{width:34%;color:var(--mute);font-weight:400}
 @media (max-width:900px){
-.hero{grid-template-columns:1fr;padding:56px 24px 0;min-height:0;gap:10px}
-.moon{width:110px;height:110px;top:34px;right:8%;box-shadow:inset -20px 8px 0 0 var(--moon)}
-.hero-copy{padding-bottom:20px}
-.hero-photo{width:min(300px,80%)}
+.hero{grid-template-columns:1fr;min-height:0}
+.hero-photo{aspect-ratio:4/5}
+.hero-night{padding:44px 24px 48px}
 .rich{gap:80px}
 .r-hero-txt{left:20px;bottom:20px}.r-hero-txt h2{font-size:24px}
 .r-care{gap:28px}
@@ -359,7 +356,7 @@ select option{background:var(--surface);color:var(--ink)}
 @media (max-width:420px){.hide-xs{display:none!important}}
 @media (prefers-reduced-motion:reduce){.star{animation:none}}
 /* 하단 */
-.foot{border-top:1px solid var(--rule);margin-top:80px;padding:44px 30px 36px;font-size:12px;color:#BDB7AA}
+.foot{border-top:1px solid var(--rule);margin-top:80px;padding:44px 30px 36px;font-size:12px;color:#B5B3AE}
 .foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.6fr;gap:30px}
 .foot .logo{font-size:20px;display:inline-block;margin-bottom:10px;color:var(--ink)}
 .foot h3{font-family:var(--font-en);font-size:12px;font-weight:600;color:var(--ink);margin-bottom:10px}
@@ -400,14 +397,14 @@ select option{background:var(--surface);color:var(--ink)}
 </style>
 </head>
 <body>
-<div class="notice"><div class="sky" id="skyNotice"></div><span>GOOD NIGHT, LYNANDWON · 50,000원 이상 무료배송</span></div>
+<div class="notice"><div class="sky" id="skyNotice"></div><span>50,000원 이상 구매 시 무료배송</span></div>
 <header class="top" id="top">
 <div class="top-in"><div class="sky" id="skyTop"></div>
 <button class="menu-btn" type="button" id="menuBtn" data-act="menu-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="drawer">
 <svg class="ico bars" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
 <svg class="ico x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg>
 </button>
-<a href="#home" class="logo" aria-label="린앤원 메인으로"><svg class="logo-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 2.5a9.5 9.5 0 1 0 7 15.8A8 8 0 0 1 14.5 2.5z"/></svg><span>LYNANDWON</span></a>
+<a href="#home" class="logo" aria-label="린앤원 메인으로"><span>LYNANDWON</span></a>
 <nav class="icons" aria-label="회원 메뉴">
 <button type="button" id="searchBtn" data-act="search-toggle" aria-label="검색" aria-expanded="false" aria-controls="searchPanel"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button>
 <a href="#login" id="userLink" aria-label="로그인"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c1.2-4 4-6 7.5-6s6.3 2 7.5 6"/></svg></a>
@@ -462,14 +459,14 @@ select option{background:var(--surface);color:var(--ink)}
 var SHIP_FEE=3000,FREE_OVER=50000;
 var COLORS={ink:{name:"먹색",hex:"#3B3B40"},brown:{name:"브라운",hex:"#8B6B47"},oat:{name:"오트밀",hex:"#D9C7B0"},ivory:{name:"아이보리",hex:"#F6F1E8"},cocoa:{name:"코코아",hex:"#8C6F5A"},rose:{name:"더스티 로즈",hex:"#D9BCB0"},charcoal:{name:"차콜",hex:"#5C5752"},mocha:{name:"모카",hex:"#AD917B"}};
 var FABRIC={
-leopard:{label:"면, 폴리에스테르",en:"midnight leopard",tag:"하루의 끝, 가장 편안한 밤",info:["은은한 광택이 도는 레오파드 패턴","남녀공용 FREE 사이즈, 여유 있는 핏","카라·소매·밑단 파이핑 마감","먹색 · 브라운 2가지 색상"],desc:"",care:["손세탁","단독세탁"]},
-modal:{label:"모달 60% · 면 40%",en:"soft modal",tag:"매끄럽게 감기는 모달로 지은 포근한 밤",info:["매끄럽고 부드러운 모달 저지","몸을 따라 떨어지는 여유 있는 핏","목둘레와 소매 끝 파이핑 마감","허리 밴딩과 안쪽 조절끈"],
+leopard:{label:"면, 폴리에스테르",en:"midnight leopard",tag:"남녀공용 · FREE",info:["은은한 광택이 도는 레오파드 패턴","남녀공용 FREE 사이즈, 여유 있는 핏","카라·소매·밑단 파이핑 마감","먹색 · 브라운 2가지 색상"],desc:"",care:["손세탁","단독세탁"]},
+modal:{label:"모달 60% · 면 40%",en:"soft modal",tag:"모달 · 면 혼방",info:["매끄럽고 부드러운 모달 저지","몸을 따라 떨어지는 여유 있는 핏","목둘레와 소매 끝 파이핑 마감","허리 밴딩과 안쪽 조절끈"],
 desc:"모달은 피부에 닿는 면이 매끄럽고 잘 늘어나지 않아요.<br>몸을 따라 부드럽게 떨어져서 자다가 뒤척여도 걸리는 데가 없어요.",care:["30℃ 이하 미온수로 단독 세탁","세탁망에 넣고 약하게 탈수","건조기 사용 금지","그늘에서 뉘어 말리기"]},
-gauze:{label:"면 100% (2중 거즈)",en:"cotton gauze",tag:"두 겹 거즈가 품은 가벼운 온기",info:["두 겹 거즈로 사계절 착용","빨수록 부드러워지는 면 100%","여유 있는 오버핏","자연스러운 주름 질감"],
+gauze:{label:"면 100% (2중 거즈)",en:"cotton gauze",tag:"2중 면 거즈",info:["두 겹 거즈로 사계절 착용","빨수록 부드러워지는 면 100%","여유 있는 오버핏","자연스러운 주름 질감"],
 desc:"얇은 면 거즈 두 겹을 겹쳐 짰어요.<br>두 겹 사이 공기층 덕분에 겨울엔 따뜻하고 여름엔 땀을 빨리 말려요.",care:["40℃ 이하 세탁 가능","첫 세탁 때 조금 줄어들 수 있음","표백제 사용 금지","그늘 건조"]},
-jersey:{label:"면 80% · 폴리 20% (안쪽 기모)",en:"brushed jersey",tag:"한겨울 밤을 위한 안쪽 기모",info:["안쪽 기모로 포근한 겨울 잠옷","잘 늘어나지 않는 고밀도 저지","부드러운 시보리 마감","여유 있는 핏"],
+jersey:{label:"면 80% · 폴리 20% (안쪽 기모)",en:"brushed jersey",tag:"안쪽 기모 저지",info:["안쪽 기모로 포근한 겨울 잠옷","잘 늘어나지 않는 고밀도 저지","부드러운 시보리 마감","여유 있는 핏"],
 desc:"안쪽을 살짝 기모 처리한 면 저지예요.<br>난방을 낮춘 한겨울 방에서도 포근하게 입을 수 있어요.",care:["뒤집어서 30℃ 이하 세탁","섬유유연제는 조금만","건조기 사용 시 수축 주의","낮은 온도로 다림질"]},
-linen:{label:"리넨 55% · 레이온 45%",en:"linen blend",tag:"바람이 통하는 여름밤의 잠옷",info:["시원한 리넨 블렌드","길이를 조절하는 어깨끈","몸에 붙지 않는 A라인","봄부터 초가을까지"],
+linen:{label:"리넨 55% · 레이온 45%",en:"linen blend",tag:"리넨 · 레이온 혼방",info:["시원한 리넨 블렌드","길이를 조절하는 어깨끈","몸에 붙지 않는 A라인","봄부터 초가을까지"],
 desc:"리넨의 바스락한 결에 레이온을 섞어 몸에 닿는 느낌을 부드럽게 했어요.<br>봄부터 초가을까지 시원하게 입어요.",care:["손세탁 또는 울 코스","비틀어 짜지 않기","그늘에서 걸어 말리기","중간 온도 다림질"]}
 };
 var PRODUCTS=[
@@ -578,9 +575,9 @@ function viewHome(){
 var news=PRODUCTS.filter(function(p){return p.isNew;}).slice(0,8),best=PRODUCTS.filter(function(p){return p.best;});
 var tiles=[["unisex","UNISEX","남녀공용","set","mocha"],["men","MEN","남자 잠옷","set","oat"],["women","WOMEN","여자 잠옷","top","rose"],["women-dress","DRESS","원피스","dress","cocoa"]];
 var insta="";for(var i=0;i<6;i++){insta+='<div>사진 '+(i+1)+'</div>';}
-return '<section class="hero" aria-label="메인 배너"><div class="sky"></div><div class="moon" aria-hidden="true"></div>'+
-'<div class="hero-copy"><p class="kicker">GOOD NIGHT, LYNANDWON</p><h1 class="hero-title">같은 달 아래,<br>같은 잠옷으로</h1><p class="hero-sub">하루의 끝, 둘이 함께 입는 가장 편안한 밤</p><a class="btn-moon" href="#item-r1">미드나잇 레오파드 보기 →</a></div>'+
-'<a class="hero-photo" href="#item-r1" aria-label="미드나잇 레오파드 파자마 세트 보기"><img src="images/leo-stand2.jpg" alt="먹색 레오파드 파자마를 입은 모델"></a></section>'+
+return '<section class="hero" aria-label="메인 배너">'+
+'<a class="hero-photo" href="#item-r1" aria-label="미드나잇 레오파드 파자마 세트 보기"><img src="images/leo-stand2.jpg" alt="먹색 레오파드 파자마를 입은 모델"></a>'+
+'<div class="hero-night"><div class="sky"></div><div class="hero-copy"><p class="kicker">NEW ARRIVAL</p><h1 class="hero-title">미드나잇 레오파드<br>파자마 세트</h1><p class="hero-sub">남녀공용 · FREE · 먹색, 브라운</p><a class="btn-moon" href="#item-r1">자세히 보기</a></div></div></section>'+
 '<div class="full"><section class="sec"><h2 class="sec-title">NEW ARRIVAL</h2><p class="sec-sub">이번 시즌 새로 나온 잠옷</p>'+grid(news)+'</section>'+
 '<section class="sec"><h2 class="sec-title">CATEGORY</h2><p class="sec-sub">찾는 잠옷 바로 보기</p><div class="grid">'+tiles.map(function(t){
 var n=PRODUCTS.filter(function(p){if(t[0]==="women")return p.cat.indexOf("women")===0||p.cat==="unisex";if(t[0]==="men")return p.cat==="men"||p.cat==="unisex";return p.cat===t[0];}).length;
@@ -653,7 +650,7 @@ function policyHtml(){return '<div><h3>배송</h3><ul>'+POLICY.ship.map(li).join
 function viewRefund(){
 var sec=function(t,items){return '<section class="help-sec policy"><h2>'+t+'</h2><ul>'+items.map(li).join("")+'</ul></section>';};
 return '<div class="page" style="max-width:800px"><h1 class="page-title">REFUND POLICY</h1><p class="note center" style="margin:-24px 0 32px">교환 · 반품 · 환불 정책 · 2026년 11월 20일부터 적용</p>'+
-'<p style="font-size:13px;color:#CFC9BC;line-height:1.9">린앤원은 「전자상거래 등에서의 소비자보호에 관한 법률」에 따라 교환·반품·환불을 처리해요. 이 정책에 적히지 않은 내용은 같은 법과 공정거래위원회 「소비자분쟁해결기준」을 따라요.</p>'+
+'<p style="font-size:13px;color:#C9C7C2;line-height:1.9">린앤원은 「전자상거래 등에서의 소비자보호에 관한 법률」에 따라 교환·반품·환불을 처리해요. 이 정책에 적히지 않은 내용은 같은 법과 공정거래위원회 「소비자분쟁해결기준」을 따라요.</p>'+
 sec("1. 주문 취소",["상품이 출고되기 전에는 언제든 주문을 취소할 수 있고, 결제 금액 전액을 환불해 드려요.","이미 출고된 뒤에는 상품을 받은 다음 반품으로 진행해요."])+
 sec("2. 교환 · 반품 신청 기간",["<b>단순 변심</b>: 상품을 받은 날부터 <b>7일 이내</b>에 신청할 수 있어요.","<b>불량 · 오배송 · 상품 설명과 다른 경우</b>: 상품을 받은 날부터 <b>3개월 이내</b>, 그 사실을 안 날(또는 알 수 있었던 날)부터 <b>30일 이내</b>에 신청할 수 있어요.","신청은 서면(이메일·문자 등)을 보낸 날에 효력이 생겨요."])+
 sec("3. 교환 · 반품이 어려운 경우",["고객님의 책임으로 상품이 없어지거나 훼손된 경우 (상품 확인을 위해 포장을 뜯은 경우는 제외)","착용·세탁 등 사용으로 상품의 가치가 크게 줄어든 경우 (잠옷은 피부에 직접 닿는 상품이라 착용 흔적·얼룩·냄새가 있으면 다시 판매하기 어려워요)","시간이 지나 다시 판매하기 어려울 만큼 상품의 가치가 크게 줄어든 경우","위 경우라도 상품이 불량이거나 설명과 다르면 교환·반품할 수 있어요."])+
@@ -822,28 +819,28 @@ return '<div class="page"><h1 class="page-title">NEW PASSWORD</h1><form class="n
 function sprinkle(el,n){if(!el||el.dataset.done)return;el.dataset.done="1";var h="";for(var i=0;i<n;i++){var big=Math.random()<.08;h+='<i class="star'+(big?' big':'')+'" style="left:'+(Math.random()*100).toFixed(2)+'%;top:'+(Math.random()*100).toFixed(2)+'%;animation-delay:'+(Math.random()*5).toFixed(2)+'s;animation-duration:'+(3+Math.random()*4).toFixed(2)+'s"></i>';}el.innerHTML=h;}
 var MOON_SVG='<svg class="logo-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 2.5a9.5 9.5 0 1 0 7 15.8A8 8 0 0 1 14.5 2.5z"/></svg>';
 var CARE_ICON={
-"손세탁":'<svg viewBox="0 0 96 96" aria-hidden="true"><path d="M14 50h68l-6 26a6 6 0 0 1-6 5H26a6 6 0 0 1-6-5z"/><path d="M20 61c5-4 10 4 15 0s10 4 15 0 10 4 15 0 8 3 11 1"/><path d="M47 52V26a4 4 0 0 1 8 0v18"/><path d="M55 40v-8a4 4 0 0 1 8 0v12"/><path d="M63 40a4 4 0 0 1 8 0v12c0 4-2 8-6 8"/><path d="M47 44l-4-4a4 4 0 0 0-6 5l8 9"/><circle cx="28" cy="40" r="3"/><circle cx="22" cy="31" r="2"/><circle cx="33" cy="28" r="1.6"/><path d="M80 18l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/></svg>',
-"단독세탁":'<svg viewBox="0 0 96 96" aria-hidden="true"><path d="M14 54h68l-6 24a6 6 0 0 1-6 5H26a6 6 0 0 1-6-5z"/><path d="M20 64c5-4 10 4 15 0s10 4 15 0 10 4 15 0 8 3 11 1"/><path d="M36 14l-12 8 5 8 5-3v21h28V27l5 3 5-8-12-8c-2 4-6 6-12 6s-10-2-12-6z"/><path d="M48 20v8"/><path d="M80 16l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/></svg>'};
-var CARE_TIP={"손세탁":"미지근한 물에 중성세제로<br>가볍게 눌러 빨아 주세요","단독세탁":"색이 빠질 수 있어<br>다른 옷과 따로 빨아 주세요"};
+"손세탁":'<svg viewBox="0 0 96 96" aria-hidden="true"><path d="M14 50h68l-6 26a6 6 0 0 1-6 5H26a6 6 0 0 1-6-5z"/><path d="M20 61c5-4 10 4 15 0s10 4 15 0 10 4 15 0 8 3 11 1"/><path d="M47 52V26a4 4 0 0 1 8 0v18"/><path d="M55 40v-8a4 4 0 0 1 8 0v12"/><path d="M63 40a4 4 0 0 1 8 0v12c0 4-2 8-6 8"/><path d="M47 44l-4-4a4 4 0 0 0-6 5l8 9"/><circle cx="28" cy="40" r="3"/><circle cx="22" cy="31" r="2"/><circle cx="33" cy="28" r="1.6"/></svg>',
+"단독세탁":'<svg viewBox="0 0 96 96" aria-hidden="true"><path d="M14 54h68l-6 24a6 6 0 0 1-6 5H26a6 6 0 0 1-6-5z"/><path d="M20 64c5-4 10 4 15 0s10 4 15 0 10 4 15 0 8 3 11 1"/><path d="M36 14l-12 8 5 8 5-3v21h28V27l5 3 5-8-12-8c-2 4-6 6-12 6s-10-2-12-6z"/><path d="M48 20v8"/></svg>'};
+var CARE_TIP={"손세탁":"미지근한 물에<br>중성세제로 손세탁","단독세탁":"다른 옷과 따로<br>세탁해 주세요"};
 function scaleRow(t,opts,on){return '<div><strong>'+t+'</strong>'+opts.map(function(o){return '<span'+(o===on?' class="on"':'')+'>'+o+'</span>';}).join("")+'</div>';}
 function richDetail(p,f,sz){
 var I=function(n){return "images/leo-"+n+".jpg";};
 return '<div class="rich">'+
-'<div class="r-hero"><img src="'+I("sit")+'" alt="먹색 레오파드 파자마를 입고 침대에 앉은 모델" loading="lazy"><div class="r-hero-txt">'+MOON_SVG+'<h2>'+esc(p.name)+'</h2><p>'+f.tag+'</p></div></div>'+
-'<section class="r-sec"><p class="r-k">POINT</p><h3 class="r-h">달빛 아래 은은하게,<br>둘이 함께 입는 레오파드</h3>'+
+'<div class="r-hero"><img src="'+I("sit")+'" alt="먹색 레오파드 파자마를 입고 침대에 앉은 모델" loading="lazy"><div class="r-hero-txt"><h2>'+esc(p.name)+'</h2><p>남녀공용 · FREE</p></div></div>'+
+'<section class="r-sec"><p class="r-k">POINT</p>'+
 '<div class="r-points">'+
-'<div class="r-point"><b>01</b><div><h3>은은한 광택의 레오파드</h3><p>어두운 바탕에 레오파드 무늬가 차분하게 올라와, 잠옷인데도 갖춰 입은 느낌이 나요.</p></div></div>'+
-'<div class="r-point"><b>02</b><div><h3>남녀공용 FREE 사이즈</h3><p>어깨 52cm의 여유 있는 핏이라 둘이 같은 사이즈로 편하게 입을 수 있어요.</p></div></div>'+
-'<div class="r-point"><b>03</b><div><h3>파이핑 디테일</h3><p>카라와 소매, 바지 밑단에 같은 톤의 파이핑을 둘러 단정하게 마무리했어요.</p></div></div>'+
+'<div class="r-point"><b>01</b><div><h3>레오파드 패턴</h3><p>은은한 광택이 있는 레오파드 원단이에요.</p></div></div>'+
+'<div class="r-point"><b>02</b><div><h3>남녀공용 FREE</h3><p>어깨 52cm, 여유 있는 핏이에요.</p></div></div>'+
+'<div class="r-point"><b>03</b><div><h3>파이핑 마감</h3><p>카라, 소매, 바지 밑단에 파이핑이 들어가요.</p></div></div>'+
 '</div></section>'+
-'<section class="r-sec"><p class="r-k">COUPLE</p><h3 class="r-h">먹색과 브라운, 하나씩</h3><img class="r-img" src="'+I("couple")+'" alt="먹색과 브라운 레오파드 파자마를 입은 두 모델" loading="lazy"></section>'+
-'<section class="r-sec"><p class="r-k">DETAIL</p><h3 class="r-h">가까이 볼수록 예쁜 디테일</h3><div class="r-grid2">'+
-'<figure><img src="'+I("d-collar")+'" alt="카라와 단추 확대" loading="lazy"><figcaption><b>카라 & 단추</b>오픈 카라와 은은한 단추</figcaption></figure>'+
-'<figure><img src="'+I("d-cuff")+'" alt="소매 파이핑 확대" loading="lazy"><figcaption><b>소매 파이핑</b>소매 끝을 감싼 파이핑 라인</figcaption></figure>'+
-'<figure><img src="'+I("d-fabric")+'" alt="레오파드 원단 확대" loading="lazy"><figcaption><b>레오파드 원단</b>빛에 따라 은은하게 비치는 결</figcaption></figure>'+
-'<figure><img src="'+I("d-hem")+'" alt="바지 밑단 확대" loading="lazy"><figcaption><b>와이드 밑단</b>발목까지 떨어지는 여유 있는 바지</figcaption></figure>'+
+'<section class="r-sec"><p class="r-k">COUPLE</p><h3 class="r-h">먹색 / 브라운</h3><img class="r-img" src="'+I("couple")+'" alt="먹색과 브라운 레오파드 파자마를 입은 두 모델" loading="lazy"></section>'+
+'<section class="r-sec"><p class="r-k">DETAIL</p><div class="r-grid2">'+
+'<figure><img src="'+I("d-collar")+'" alt="카라와 단추 확대" loading="lazy"><figcaption><b>카라 & 단추</b>오픈 카라, 단추 여밈</figcaption></figure>'+
+'<figure><img src="'+I("d-cuff")+'" alt="소매 파이핑 확대" loading="lazy"><figcaption><b>소매</b>소매 끝 파이핑</figcaption></figure>'+
+'<figure><img src="'+I("d-fabric")+'" alt="레오파드 원단 확대" loading="lazy"><figcaption><b>원단</b>면, 폴리에스테르</figcaption></figure>'+
+'<figure><img src="'+I("d-hem")+'" alt="바지 밑단 확대" loading="lazy"><figcaption><b>바지 밑단</b>와이드 핏, 밑단 파이핑</figcaption></figure>'+
 '</div></section>'+
-'<section class="r-sec"><p class="r-k">COLOR</p><h3 class="r-h">2 colors</h3><div class="r-colors">'+
+'<section class="r-sec"><p class="r-k">COLOR</p><div class="r-colors">'+
 '<div class="r-color"><img class="full" src="'+I("stand1")+'" alt="먹색 착용 사진" loading="lazy"><p class="r-sw"><img src="'+I("sw-ink")+'" alt="">먹색</p></div>'+
 '<div class="r-color"><img class="full" src="'+I("brown")+'" alt="브라운 착용 사진" loading="lazy"><p class="r-sw"><img src="'+I("sw-brown")+'" alt="">브라운</p></div>'+
 '</div></section>'+
@@ -854,7 +851,7 @@ return '<div class="rich">'+
 '<section class="r-sec"><p class="r-k">FABRIC</p><h3 class="r-h">옷감 정보</h3><p class="r-p">소재 '+f.label+'</p><div class="r-scale">'+
 scaleRow("두께감",["얇음","보통","두꺼움"],"보통")+scaleRow("비침",["없음","보통","있음"],"없음")+scaleRow("신축성",["없음","보통","좋음"],"보통")+scaleRow("안감",["있음","없음","기모안감"],"없음")+
 '</div></section>'+
-'<section class="r-sec" id="sizeGuide"><p class="r-k">SIZE</p><h3 class="r-h">남녀공용 FREE</h3><div class="table-wrap" style="width:100%"><table><thead><tr>'+sz.head.map(function(h){return '<th scope="col">'+h+'</th>';}).join("")+'</tr></thead><tbody>'+
+'<section class="r-sec" id="sizeGuide"><p class="r-k">SIZE</p><h3 class="r-h">FREE</h3><div class="table-wrap" style="width:100%"><table><thead><tr>'+sz.head.map(function(h){return '<th scope="col">'+h+'</th>';}).join("")+'</tr></thead><tbody>'+
 sz.rows.map(function(r){return '<tr>'+r.map(function(c,i){return i===0?'<th scope="row">'+c+'</th>':'<td>'+c+'</td>';}).join("")+'</tr>';}).join("")+'</tbody></table></div>'+
 '<ul class="r-measure"><li>어깨: 어깨 끝에서 끝까지</li><li>팔길이: 어깨선에서 소매 끝까지</li><li>상의 총장: 뒷목 중심에서 밑단까지</li><li>허리 단면: 밴딩을 늘리지 않은 상태의 단면</li><li>바지 총장: 허리에서 밑단까지</li></ul>'+
 '<p class="r-warn"><b>사이즈 오차 안내</b><br>단위는 cm이고, 옷을 바닥에 펼쳐 손으로 잰 길이예요. 재는 방법과 원단 특성에 따라 1~3cm 정도 오차가 있을 수 있어요. 오차로 인한 교환·반품은 단순 변심과 같이 처리돼요.</p></section>'+
@@ -891,7 +888,7 @@ else if(h==="auth-callback")html='<div class="page"><p class="note center" style
 else if(h==="refund")html=viewRefund();
 else if(h==="help"||h==="help-ship"||h==="help-return"){html=viewHelp();to=h==="help-ship"?"sec-ship":h==="help-return"?"sec-return":null;}
 else html=viewMissing();
-var y=window.scrollY;app.innerHTML=html;var hs=app.querySelector(".hero .sky");if(hs)sprinkle(hs,70);
+var y=window.scrollY;app.innerHTML=html;var hs=app.querySelector(".hero .sky");if(hs)sprinkle(hs,55);
 document.getElementById("cartCount").textContent=cartQty();
 var ul=document.getElementById("userLink");ul.href=state.loggedIn?"#mypage":"#login";ul.setAttribute("aria-label",state.loggedIn?"마이페이지":"로그인");
 document.getElementById("msmall").innerHTML=(state.loggedIn?'<a href="#mypage">마이페이지</a>':'<a href="#login">로그인</a><a href="#signup">회원가입</a>')+'<a href="#wish">찜 목록</a><a href="#cart">장바구니</a>'+(state.loggedIn?'<button type="button" data-act="logout" style="text-align:left;font-size:12px">로그아웃</button>':'');

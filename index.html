@@ -411,7 +411,9 @@ select option{background:var(--surface);color:var(--ink)}
 .dv-sketch .g{fill:none;stroke:currentColor;stroke-width:1.3;stroke-linejoin:round;stroke-linecap:round}
 .dv-sketch .dim{stroke:var(--beige);stroke-width:1;stroke-dasharray:3 3;fill:none}
 .dv-sketch .ar{fill:var(--beige)}
-.dv-sketch text{fill:var(--beige);font-size:11px;font-family:var(--font-body)}
+.dv-sketch text{fill:var(--beige);font-size:13px;}
+@media(max-width:600px){.dv-sketch text{font-size:19px}}
+.dv-sketch text{font-family:var(--font-body)}
 .dv-sizehead{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:600;letter-spacing:.08em}
 .dv-sizehead span{font-weight:400;color:var(--mute);letter-spacing:0;font-size:12px}
 .dv-info{display:grid;grid-template-columns:70px 1fr;gap:18px;align-items:start;padding-top:22px;border-top:1px solid var(--line)}
@@ -899,15 +901,16 @@ function richDetail(p,f,sz){
 var I=function(n){return "images/leo-"+n+".jpg";};
 var SW=function(k,cls){return '<span class="leo-sw'+(cls?' '+cls:'')+'" style="background-image:url(images/leopard-'+k+'.svg)" aria-hidden="true"></span>';};
 var table='<div class="table-wrap"><table><thead><tr>'+sz.head.map(function(h){return '<th scope="col">'+h+'</th>';}).join("")+'</tr></thead><tbody>'+sz.rows.map(function(r){return '<tr>'+r.map(function(c,i){return i===0?'<th scope="row">'+c+'</th>':'<td>'+c+'</td>';}).join("")+'</tr>';}).join("")+'</tbody></table></div>';
-var sketch='<svg class="dv-sketch" viewBox="0 0 640 330" role="img" aria-label="상의와 바지 사이즈 재는 위치">'+
-'<path class="g" d="M126 52 L160 40 Q180 58 200 40 L234 52 L290 96 L272 210 L250 206 L262 120 L254 120 L254 290 L106 290 L106 120 L98 120 L110 206 L88 210 L70 96 Z"/>'+
-'<path class="g" d="M160 40 L180 82 L200 40 M180 82 L180 290"/><circle class="g" cx="186" cy="118" r="2.4"/><circle class="g" cx="186" cy="158" r="2.4"/><circle class="g" cx="186" cy="198" r="2.4"/><circle class="g" cx="186" cy="238" r="2.4"/>'+
-'<path class="dim" d="M126 28 H234"/><path class="ar" d="M126 28 l6 -3 v6z M234 28 l-6 -3 v6z"/><text x="180" y="20" text-anchor="middle">어깨 52</text>'+
-'<path class="dim" d="M244 60 L292 220"/><text x="300" y="150">팔길이 52</text>'+
-'<path class="dim" d="M54 40 V290"/><path class="ar" d="M54 40 l-3 6 h6z M54 290 l-3 -6 h6z"/><text x="46" y="170" text-anchor="end">총장 65</text>'+
-'<path class="g" d="M392 40 H512 L540 300 L478 300 L452 120 L426 300 L364 300 Z"/><path class="g" d="M392 52 H512"/>'+
-'<path class="dim" d="M392 24 H452"/><path class="ar" d="M392 24 l6 -3 v6z M452 24 l-6 -3 v6z"/><text x="422" y="16" text-anchor="middle">허리 단면 32</text>'+
-'<path class="dim" d="M562 40 V300"/><path class="ar" d="M562 40 l-3 6 h6z M562 300 l-3 -6 h6z"/><text x="570" y="174">총장 97</text>'+
+var sketch='<svg class="dv-sketch" viewBox="-24 0 772 340" role="img" aria-label="상의와 바지 사이즈 재는 위치">'+
+'<g transform="translate(70,0)"><path class="g" d="M120 60 L158 50 Q180 62 202 50 L240 60 L344 120 L322 158 L240 108 L240 300 L120 300 L120 108 L38 158 L16 120 Z"/>'+
+'<path class="g" d="M335 115 L313 153 M25 115 L47 153 M158 50 L180 92 L202 50 M158 50 L146 70 L170 82 M202 50 L214 70 L190 82 M180 92 V300"/>'+
+'<circle class="g" cx="186" cy="124" r="2.4"/><circle class="g" cx="186" cy="164" r="2.4"/><circle class="g" cx="186" cy="204" r="2.4"/><circle class="g" cx="186" cy="244" r="2.4"/>'+
+'<path class="dim" d="M120 32 H240"/><path class="ar" d="M120 32 l6 -3 v6z M240 32 l-6 -3 v6z"/><text x="180" y="22" text-anchor="middle">어깨 52</text>'+
+'<path class="dim" d="M248 46 L352 106"/><path class="ar" d="M248 46 l7.7 0.8 l-3 5.2z M352 106 l-7.7 -0.8 l3 -5.2z"/><text x="300" y="58" transform="rotate(30 300 58)" text-anchor="middle">팔길이 52</text>'+
+'<path class="dim" d="M-12 60 V300"/><path class="ar" d="M-12 60 l-3 6 h6z M-12 300 l-3 -6 h6z"/><text x="-20" y="184" text-anchor="end">총장 65</text></g>'+
+'<path class="g" d="M520 44 H620 V58 H520 Z M520 58 L506 310 L560 310 L570 120 L580 310 L634 310 L620 58"/>'+
+'<path class="dim" d="M520 28 H620"/><path class="ar" d="M520 28 l6 -3 v6z M620 28 l-6 -3 v6z"/><text x="570" y="18" text-anchor="middle">허리 단면 32</text>'+
+'<path class="dim" d="M656 44 V310"/><path class="ar" d="M656 44 l-3 6 h6z M656 310 l-3 -6 h6z"/><text x="664" y="182">총장 97</text>'+
 '</svg>';
 var notice='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 L29 27 H3 Z"/><path d="M16 12 V19"/><circle cx="16" cy="23" r=".8"/></svg>';
 var truck='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 9 H19 V22 H3 Z"/><path d="M19 13 H25 L29 18 V22 H19"/><circle cx="9" cy="24" r="2.5"/><circle cx="23" cy="24" r="2.5"/></svg>';
@@ -920,7 +923,7 @@ return '<div class="dv">'+
 [["d-collar","오픈 카라","단추 여밈"],["d-cuff","소매","파이핑 마감"],["d-fabric","원단","은은한 광택"],["d-hem","바지 밑단","와이드 핏"]].map(function(d,i){return '<div class="dv-circle"><span class="n">0'+(i+1)+'</span><img src="'+I(d[0])+'" alt="'+d[1]+' 확대" loading="lazy"><p><b>'+d[1]+'</b>'+d[2]+'</p></div>';}).join("")+
 '</div></section>'+
 '<section class="dv-band alt dv-story"><h3 class="dv-h">LYNANDWON.</h3><p class="dv-p">린앤원은 둘이 같이 입는 잠옷을 만들어요.<br>남녀 구분 없이 같은 디자인, 같은 사이즈로 맞춰 입을 수 있어요.</p><div class="dv-pair"><img src="'+I("couple")+'" alt="두 가지 컬러를 입은 두 모델" loading="lazy"><img src="'+I("peace")+'" alt="먹색 착용 사진" loading="lazy"></div></section>'+
-'<section class="dv-band warm"><h3 class="dv-h">About Fabric</h3><p class="dv-sub">'+f.label+'</p><img class="dv-fabric" src="'+I("d-fabric")+'" alt="레오파드 원단 확대" loading="lazy"><p class="dv-p">두께는 보통이고 비침이 없어요. 안감 없이 한 겹이고, 신축성은 보통이에요.</p>'+
+'<section class="dv-band warm"><h3 class="dv-h">About Fabric</h3><p class="dv-sub">'+f.label+'</p><p class="dv-p">두께는 보통이고 비침이 없어요. 안감 없이 한 겹이고, 신축성은 보통이에요.</p>'+
 '<div class="r-scale" style="max-width:560px">'+scaleRow("두께감",["얇음","보통","두꺼움"],"보통")+scaleRow("비침",["없음","보통","있음"],"없음")+scaleRow("신축성",["없음","보통","좋음"],"보통")+scaleRow("안감",["있음","없음","기모안감"],"없음")+'</div></section>'+
 '<section class="dv-band"><h3 class="dv-hash">#About color</h3><p class="dv-sub">두 가지 컬러</p><div class="dv-colors">'+
 '<figure><img src="'+I("stand1")+'" alt="먹색" loading="lazy"><figcaption>'+SW("ink")+'<span>먹색<small>INK</small></span></figcaption></figure>'+

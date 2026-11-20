@@ -345,7 +345,7 @@ input:disabled{background:var(--photo);color:var(--mute)}
 <div class="gap"></div>
 <div class="acc">
 <button type="button" class="acc-btn" data-act="acc" aria-expanded="false" aria-controls="accHelp">고객센터<svg class="ico" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
-<div class="acc-panel" id="accHelp" hidden><a href="#help">자주 묻는 질문</a><a href="#help-ship">배송 안내</a><a href="#help-return">교환·환불 안내</a></div>
+<div class="acc-panel" id="accHelp" hidden><a href="#help">자주 묻는 질문</a><a href="#help-ship">배송 안내</a><a href="#help-return">교환·환불 안내</a><a href="#refund">환불 정책</a></div>
 </div>
 </nav>
 <div class="msmall" id="msmall"></div>
@@ -357,10 +357,10 @@ input:disabled{background:var(--photo);color:var(--mute)}
 <div class="foot-grid">
 <div><span class="logo">LYNANDWON</span><p>린앤원 · 커플 잠옷</p><p>인스타그램 @lynandwon (준비 중)</p></div>
 <div><h3>SHOP</h3><ul><li><a href="#men">남자 잠옷</a></li><li><a href="#women">여자 잠옷</a></li><li><a href="#women-dress">원피스</a></li></ul></div>
-<div><h3>CUSTOMER CENTER</h3><ul><li><a href="#help">자주 묻는 질문</a></li><li><a href="#help-ship">배송 안내</a></li><li><a href="#help-return">교환·환불 안내</a></li><li>평일 10:00–17:00</li></ul></div>
+<div><h3>CUSTOMER CENTER</h3><ul><li><a href="#help">자주 묻는 질문</a></li><li><a href="#help-ship">배송 안내</a></li><li><a href="#help-return">교환·환불 안내</a></li><li><a href="#refund">교환·반품·환불 정책</a></li><li>평일 10:00–17:00</li></ul></div>
 <div><h3>COMPANY</h3><ul><li>상호 린앤원 · 대표자 장혜린</li><li>사업자등록번호 715-65-00659 <a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=7156500659" target="_blank" rel="noopener" style="text-decoration:underline">사업자정보확인</a></li><li>통신판매업 신고번호 입력 예정</li><li>주소 경기도 수원시 권선구 세류동 1158-34, 703호</li><li>고객센터 <a href="tel:010-7456-8114">010-7456-8114</a> · <a href="mailto:vpfflvls@gmail.com">vpfflvls@gmail.com</a></li><li>개인정보보호책임자 장혜린 · 호스팅 서비스 Netlify</li></ul></div>
 </div>
-<div class="foot-bottom"><span>이용약관 · <b>개인정보처리방침</b></span><span>© 2026 LYNANDWON</span></div>
+<div class="foot-bottom"><span>이용약관 · <b>개인정보처리방침</b> · <a href="#refund" style="text-decoration:underline">교환·반품·환불 정책</a></span><span>© 2026 LYNANDWON</span></div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -402,9 +402,10 @@ var CAT={"men":"남자 잠옷","women":"여자 잠옷","women-top":"여자 상�
 var CAT_EN={"men":"MEN","women":"WOMEN","women-top":"WOMEN TOP","women-bottom":"WOMEN BOTTOM","women-dress":"DRESS","new":"NEW ARRIVAL"};
 var POLICY={
 ship:["배송비 3,000원 · 50,000원 이상 구매하면 무료","결제를 마친 뒤 1~3영업일 안에 보내 드려요","받는 데까지는 보통 1~2일 걸려요","제주·도서산간 지역은 배송비 3,000원이 더 붙어요"],
-exchange:["상품을 받은 날부터 7일 안에 신청해 주세요","단순 변심은 왕복 배송비 6,000원을 부담해 주세요","불량이거나 잘못 보내 드린 상품은 배송비 없이 교환·환불해 드려요","입었거나 세탁한 상품, 택을 뗀 상품은 위생 문제로 교환·환불이 어려워요"],
-refund:["돌려받은 상품을 확인하고 3영업일 안에 환불해 드려요","카드·간편결제는 결제를 취소하는 방식으로 환불돼요","계좌이체는 입력하신 환불 계좌로 보내 드려요"]
+exchange:["상품을 받은 날부터 7일 안에 신청해 주세요","단순 변심은 반품 배송비(왕복 6,000원)를 부담해 주세요","불량·오배송이거나 상품 설명과 다른 경우 배송비 없이 교환·환불해 드려요 (받은 날부터 3개월, 안 날부터 30일 안)","착용·세탁 등으로 상품 가치가 크게 줄어든 경우 교환·환불이 어려워요"],
+refund:["돌려받은 상품을 받은 날부터 3영업일 안에 환불해 드려요","카드·간편결제는 결제를 취소하는 방식으로 환불돼요","계좌이체는 알려주신 환불 계좌로 보내 드려요"]
 };
+var RETURN_ADDR="경기도 수원시 권선구 세류동 1158-34, 703호 린앤원";
 var VIEWS=["front","back","detail"];
 var state={cart:[],reviews:{},wish:{},orders:[],account:null,loggedIn:false,authMsg:"",myMsg:"",sort:"new",q:"",lastOrder:null,pd:{id:null,color:null,size:null,qty:1,vi:0,msg:""}};
 /* 이 브라우저에만 저장 (서버 없는 데모) */
@@ -544,7 +545,21 @@ sz.rows.map(function(r){return '<tr>'+r.map(function(c,i){return i===0?'<th scop
 '<section class="dsec" id="sec-guide">'+tabBar(2,rv.length)+'<div class="dbody policy" style="margin-top:60px">'+policyHtml()+'</div></section>';
 }
 function li(t){return '<li>'+t+'</li>';}
-function policyHtml(){return '<div><h3>배송</h3><ul>'+POLICY.ship.map(li).join("")+'</ul></div><div><h3>교환 · 반품</h3><ul>'+POLICY.exchange.map(li).join("")+'</ul></div><div><h3>환불</h3><ul>'+POLICY.refund.map(li).join("")+'</ul></div>';}
+function policyHtml(){return '<div><h3>배송</h3><ul>'+POLICY.ship.map(li).join("")+'</ul></div><div><h3>교환 · 반품</h3><ul>'+POLICY.exchange.map(li).join("")+'</ul></div><div><h3>환불</h3><ul>'+POLICY.refund.map(li).join("")+'</ul></div><p><a class="link" href="#refund">교환·반품·환불 정책 전체 보기</a></p>';}
+function viewRefund(){
+var sec=function(t,items){return '<section class="help-sec policy"><h2>'+t+'</h2><ul>'+items.map(li).join("")+'</ul></section>';};
+return '<div class="page" style="max-width:800px"><h1 class="page-title">REFUND POLICY</h1><p class="note center" style="margin:-24px 0 32px">교환 · 반품 · 환불 정책 · 2026년 11월 20일부터 적용</p>'+
+'<p style="font-size:13px;color:#3b3835;line-height:1.9">린앤원은 「전자상거래 등에서의 소비자보호에 관한 법률」에 따라 교환·반품·환불을 처리해요. 이 정책에 적히지 않은 내용은 같은 법과 공정거래위원회 「소비자분쟁해결기준」을 따라요.</p>'+
+sec("1. 주문 취소",["상품이 출고되기 전에는 언제든 주문을 취소할 수 있고, 결제 금액 전액을 환불해 드려요.","이미 출고된 뒤에는 상품을 받은 다음 반품으로 진행해요."])+
+sec("2. 교환 · 반품 신청 기간",["<b>단순 변심</b>: 상품을 받은 날부터 <b>7일 이내</b>에 신청할 수 있어요.","<b>불량 · 오배송 · 상품 설명과 다른 경우</b>: 상품을 받은 날부터 <b>3개월 이내</b>, 그 사실을 안 날(또는 알 수 있었던 날)부터 <b>30일 이내</b>에 신청할 수 있어요.","신청은 서면(이메일·문자 등)을 보낸 날에 효력이 생겨요."])+
+sec("3. 교환 · 반품이 어려운 경우",["고객님의 책임으로 상품이 없어지거나 훼손된 경우 (상품 확인을 위해 포장을 뜯은 경우는 제외)","착용·세탁 등 사용으로 상품의 가치가 크게 줄어든 경우 (잠옷은 피부에 직접 닿는 상품이라 착용 흔적·얼룩·냄새가 있으면 다시 판매하기 어려워요)","시간이 지나 다시 판매하기 어려울 만큼 상품의 가치가 크게 줄어든 경우","위 경우라도 상품이 불량이거나 설명과 다르면 교환·반품할 수 있어요."])+
+sec("4. 반품 배송비",["<b>단순 변심</b>: 반품 배송비는 고객님이 부담해요. 왕복 6,000원이에요. 무료배송으로 받으셨다면 처음 배송비 3,000원을 포함한 왕복 배송비를 부담해 주세요.","<b>불량 · 오배송 · 상품 설명과 다른 경우</b>: 배송비는 모두 린앤원이 부담해요.","반품 배송비 외에 위약금이나 손해배상은 청구하지 않아요."])+
+sec("5. 환불 시기와 방법",["반품 상품을 <b>받은 날부터 3영업일 이내</b>에 환불해 드려요. 늦어지면 법에 따른 지연배상금을 함께 드려요.","신용·체크카드, 간편결제: 결제를 취소하는 방식으로 환불돼요. 카드사 사정에 따라 실제 반영까지 며칠 더 걸릴 수 있어요.","계좌이체: 알려주신 환불 계좌로 보내 드려요. 예금주는 주문하신 분과 같아야 해요.","단순 변심 반품은 반품 배송비를 뺀 금액을 환불해 드려요."])+
+sec("6. 신청 방법",["고객센터 전화 <a class=\"link\" href=\"tel:010-7456-8114\">010-7456-8114</a> 또는 이메일 <a class=\"link\" href=\"mailto:vpfflvls@gmail.com\">vpfflvls@gmail.com</a>으로 신청해 주세요. (평일 10:00–17:00)","주문번호, 교환·반품할 상품, 사유를 알려주세요. 불량이나 오배송이면 상품 사진을 함께 보내 주세요.","교환은 같은 상품의 다른 색상·사이즈로만 할 수 있어요. 재고가 없으면 반품·환불로 진행해요."])+
+sec("7. 반품 보내실 곳",[RETURN_ADDR,"택배사와 보내는 방법은 신청하실 때 안내해 드려요. 받은 상태 그대로, 구성품과 함께 포장해 보내 주세요."])+
+sec("8. 분쟁 해결",["교환·반품·환불에 관한 불만이나 분쟁은 고객센터에서 먼저 도와드려요.","해결되지 않으면 한국소비자원(국번 없이 1372) 등 소비자분쟁조정기관에 조정을 신청할 수 있어요."])+
+'</div>';
+}
 function viewSearch(){
 return '<div class="full"><div class="list-head"><h1>SEARCH</h1></div><div style="max-width:480px;margin:30px auto 40px"><label class="field"><span class="note">상품 이름이나 소재로 찾아보세요</span><input type="search" id="searchInput" value="'+esc(state.q)+'" placeholder="예: 모달, 원피스"></label></div><div id="searchResults">'+searchResults()+'</div></div>';
 }
@@ -673,7 +688,7 @@ var faq=[["사이즈를 고르기 어려워요","상품 상세페이지의 사�
 return '<div class="page" style="max-width:800px"><h1 class="page-title">CUSTOMER CENTER</h1><p class="note center" style="margin:-24px 0 40px">평일 10:00–17:00 · <a class="link" href="tel:010-7456-8114">010-7456-8114</a> · <a class="link" href="mailto:vpfflvls@gmail.com">vpfflvls@gmail.com</a></p>'+
 '<section class="help-sec" id="faq"><h2>자주 묻는 질문</h2><div>'+faq.map(function(f){return '<details><summary>'+f[0]+'</summary><p>'+f[1]+'</p></details>';}).join("")+'</div></section>'+
 '<section class="help-sec policy" id="sec-ship"><h2>배송 안내</h2><ul>'+POLICY.ship.map(li).join("")+'</ul></section>'+
-'<section class="help-sec policy" id="sec-return"><h2>교환 · 환불 안내</h2><div><h3>교환 · 반품</h3><ul>'+POLICY.exchange.map(li).join("")+'</ul></div><div><h3>환불</h3><ul>'+POLICY.refund.map(li).join("")+'</ul></div></section></div>';
+'<section class="help-sec policy" id="sec-return"><h2>교환 · 환불 안내</h2><div><h3>교환 · 반품</h3><ul>'+POLICY.exchange.map(li).join("")+'</ul></div><div><h3>환불</h3><ul>'+POLICY.refund.map(li).join("")+'</ul></div><p><a class="btn ghost" href="#refund">교환·반품·환불 정책 전체 보기</a></p></section></div>';
 }
 function lookupHtml(){
 var l=state.lookup;if(!l)return "";
@@ -720,6 +735,7 @@ else if(h==="mypage")html=viewMypage();
 else if(h==="find-pw")html=viewFindPw();
 else if(h==="new-pw")html=viewNewPw();
 else if(h==="auth-callback")html='<div class="page"><p class="note center" style="padding-top:60px">확인하고 있어요…</p></div>';
+else if(h==="refund")html=viewRefund();
 else if(h==="help"||h==="help-ship"||h==="help-return"){html=viewHelp();to=h==="help-ship"?"sec-ship":h==="help-return"?"sec-return":null;}
 else html=viewMissing();
 var y=window.scrollY;app.innerHTML=html;

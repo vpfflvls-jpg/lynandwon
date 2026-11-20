@@ -367,8 +367,8 @@ select option{background:var(--surface);color:var(--ink)}
 .dv-sub{font-size:13px;color:var(--mute);margin-top:-18px}
 .dv-p{font-size:14px;color:#C9C7C2;line-height:1.9;max-width:32em}
 .dv-hero{position:relative;overflow:hidden}
-.dv-hero img{width:100%;display:block;filter:brightness(.72)}
-.dv-hero .t{position:absolute;left:44px;top:48px;text-align:left;display:grid;gap:10px}
+.dv-hero img{width:100%;display:block}
+.dv-hero .t{padding:64px 20px 40px;text-align:center;display:grid;gap:12px}
 .dv-hero .t b{font-size:clamp(28px,4vw,44px);font-weight:300;letter-spacing:.06em;line-height:1.15}
 .dv-hero .t span{font-size:14px;font-weight:500}
 .dv-hero .m{position:absolute;right:28px;bottom:24px;font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.7)}
@@ -421,7 +421,7 @@ select option{background:var(--surface);color:var(--ink)}
 @media (max-width:700px){
 .dv{margin:0 -16px}
 .dv-band{padding:70px 20px}
-.dv-hero .t{left:20px;top:26px}
+.dv-hero .t{padding:44px 16px 28px}
 .dv-vs div{grid-template-columns:1fr 44px 1fr;gap:10px;font-size:12px}
 .dv-vs i{width:44px;height:44px;font-size:10px}
 .dv-circles{gap:30px 14px}
@@ -543,7 +543,7 @@ desc:"리넨의 바스락한 결에 레이온을 섞어 몸에 닿는 느낌을 
 };
 var PRODUCTS=[
 {id:"r1",name:"미드나잇 레오파드 파자마 세트",gender:"공용",cat:"unisex",shape:"set",sizeKey:"free",fabric:"leopard",price:null,colors:["ink","brown"],isNew:true,best:true,rich:true,origin:"중국",
-thumb:"images/leo-stand3.jpg",images:{ink:["images/leo-stand2.jpg","images/leo-sit.jpg","images/leo-stand1.jpg","images/leo-peace.jpg","images/leo-stand3.jpg","images/leo-d-collar.jpg"],brown:["images/leo-brown.jpg","images/leo-couple.jpg"]}},
+thumb:"images/leo-stand3.jpg",images:{ink:["images/leo-stand2.jpg","images/leo-sit.jpg","images/leo-stand1.jpg","images/leo-peace.jpg","images/leo-stand3.jpg"],brown:["images/leo-brown.jpg","images/leo-couple.jpg"]}},
 {id:"u1",name:"코지 저지 커플 파자마 세트",gender:"공용",cat:"unisex",shape:"set",sizeKey:"unisex",fabric:"jersey",price:64000,colors:["oat","charcoal","rose"],isNew:true,best:true},
 {id:"u2",name:"코튼 거즈 데일리 파자마",gender:"공용",cat:"unisex",shape:"set",sizeKey:"unisex",fabric:"gauze",price:56000,colors:["ivory","mocha"],isNew:true},
 {id:"u3",name:"모달 라운지 셔츠",gender:"공용",cat:"unisex",shape:"top",sizeKey:"unisexTop",fabric:"modal",price:39000,colors:["oat","cocoa"],isNew:true},
@@ -912,7 +912,7 @@ var sketch='<svg class="dv-sketch" viewBox="0 0 640 330" role="img" aria-label="
 var notice='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 L29 27 H3 Z"/><path d="M16 12 V19"/><circle cx="16" cy="23" r=".8"/></svg>';
 var truck='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 9 H19 V22 H3 Z"/><path d="M19 13 H25 L29 18 V22 H19"/><circle cx="9" cy="24" r="2.5"/><circle cx="23" cy="24" r="2.5"/></svg>';
 return '<div class="dv">'+
-'<div class="dv-hero"><img src="'+I("sit")+'" alt="먹색 레오파드 파자마를 입고 침대에 앉은 모델" loading="lazy"><div class="t"><b>MIDNIGHT<br>LEOPARD</b><span>미드나잇 레오파드 파자마 세트</span></div><p class="m">LYNANDWON</p></div>'+
+'<div class="dv-hero"><div class="t"><b>MIDNIGHT LEOPARD</b><span>미드나잇 레오파드 파자마 세트</span></div><img src="'+I("sit")+'" alt="먹색 레오파드 파자마를 입고 침대에 앉은 모델" loading="lazy"></div>'+
 '<section class="dv-band warm"><span class="dv-tag">LYNANDWON</span><p class="dv-sub" style="margin:0">먹색과 브라운</p><h3 class="dv-h" style="margin-top:-18px">두 가지 컬러를 한눈에</h3>'+
 '<div class="dv-cards"><div class="dv-card"><img src="'+I("stand2")+'" alt="먹색 착용 사진" loading="lazy"><p>먹색 · INK</p></div><div class="dv-card"><img src="'+I("brown")+'" alt="브라운 착용 사진" loading="lazy"><p>브라운 · BROWN</p></div></div>'+
 '<div class="dv-vs"><div><span class="l">남녀공용 FREE</span><i>Fit</i><span class="r">어깨 52cm 여유 있는 핏</span></div><div><span class="l">면, 폴리에스테르</span><i>Fabric</i><span class="r">은은한 광택의 레오파드</span></div><div><span class="l">카라 · 소매 · 밑단</span><i>Point</i><span class="r">같은 톤 파이핑 마감</span></div></div></section>'+
@@ -926,7 +926,7 @@ return '<div class="dv">'+
 '<figure><img src="'+I("stand1")+'" alt="먹색" loading="lazy"><figcaption>'+SW("ink")+'<span>먹색<small>INK</small></span></figcaption></figure>'+
 '<figure><img src="'+I("brown")+'" alt="브라운" loading="lazy"><figcaption>'+SW("brown")+'<span>브라운<small>BROWN</small></span></figcaption></figure>'+
 '</div></section>'+
-'<section class="dv-band alt dv-colorsec"><h3 class="dv-h">INK</h3><p class="dv-sub">먹색</p><div class="big"><img src="'+I("stand3")+'" alt="먹색 전신 착용 사진" loading="lazy"><span class="chip">'+SW("ink")+'INK</span></div><div class="dv-pair"><img src="'+I("sit")+'" alt="먹색 착용 사진" loading="lazy"><img src="'+I("d-collar")+'" alt="먹색 카라 확대" loading="lazy"></div></section>'+
+'<section class="dv-band alt dv-colorsec"><h3 class="dv-h">INK</h3><p class="dv-sub">먹색</p><div class="big"><img src="'+I("stand3")+'" alt="먹색 전신 착용 사진" loading="lazy"><span class="chip">'+SW("ink")+'INK</span></div><div class="dv-pair"><img src="'+I("stand2")+'" alt="먹색 착용 사진" loading="lazy"><img src="'+I("sit")+'" alt="먹색 착용 사진" loading="lazy"></div></section>'+
 '<section class="dv-band warm dv-colorsec"><h3 class="dv-h">BROWN</h3><p class="dv-sub">브라운</p><div class="big"><img src="'+I("brown")+'" alt="브라운 착용 사진" loading="lazy"><span class="chip">'+SW("brown")+'BROWN</span></div><img class="r-img" src="'+I("couple")+'" alt="먹색과 브라운을 입은 두 모델" loading="lazy"></section>'+
 '<section class="dv-band alt" id="sizeGuide"><div class="dv-sizebox">'+sketch+
 '<div class="dv-sizehead">SIZE CHECK <span>단위 cm · 남녀공용 FREE</span></div>'+table+

@@ -336,6 +336,7 @@ input:disabled{background:var(--photo);color:var(--mute)}
 <div class="scrim" id="scrim" data-act="menu-close"></div>
 <aside class="drawer" id="drawer" aria-label="메뉴" aria-hidden="true">
 <nav class="mnav" aria-label="상품 카테고리">
+<a href="#unisex">남녀공용</a>
 <a href="#new">NEW</a>
 <a href="#men">남자 잠옷</a>
 <div class="acc">
@@ -356,7 +357,7 @@ input:disabled{background:var(--photo);color:var(--mute)}
 <footer class="foot">
 <div class="foot-grid">
 <div><span class="logo">LYNANDWON</span><p>린앤원 · 커플 잠옷</p><p>인스타그램 @lynandwon (준비 중)</p></div>
-<div><h3>SHOP</h3><ul><li><a href="#men">남자 잠옷</a></li><li><a href="#women">여자 잠옷</a></li><li><a href="#women-dress">원피스</a></li></ul></div>
+<div><h3>SHOP</h3><ul><li><a href="#unisex">남녀공용</a></li><li><a href="#men">남자 잠옷</a></li><li><a href="#women">여자 잠옷</a></li><li><a href="#women-dress">원피스</a></li></ul></div>
 <div><h3>CUSTOMER CENTER</h3><ul><li><a href="#help">자주 묻는 질문</a></li><li><a href="#help-ship">배송 안내</a></li><li><a href="#help-return">교환·환불 안내</a></li><li><a href="#refund">교환·반품·환불 정책</a></li><li>평일 10:00–17:00</li></ul></div>
 <div><h3>COMPANY</h3><ul><li>상호 린앤원 · 대표자 장혜린</li><li>사업자등록번호 715-65-00659 <a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=7156500659" target="_blank" rel="noopener" style="text-decoration:underline">사업자정보확인</a></li><li>통신판매업 신고번호 입력 예정</li><li>주소 경기도 수원시 권선구 세류동 1158-34, 703호</li><li>고객센터 <a href="tel:010-7456-8114">010-7456-8114</a> · <a href="mailto:vpfflvls@gmail.com">vpfflvls@gmail.com</a></li><li>개인정보보호책임자 장혜린 · 호스팅 서비스 Netlify</li></ul></div>
 </div>
@@ -381,6 +382,9 @@ linen:{label:"리넨 55% · 레이온 45%",en:"linen blend",tag:"바람이 통�
 desc:"리넨의 바스락한 결에 레이온을 섞어 몸에 닿는 느낌을 부드럽게 했어요.<br>봄부터 초가을까지 시원하게 입어요.",care:["손세탁 또는 울 코스","비틀어 짜지 않기","그늘에서 걸어 말리기","중간 온도 다림질"]}
 };
 var PRODUCTS=[
+{id:"u1",name:"코지 저지 커플 파자마 세트",gender:"공용",cat:"unisex",shape:"set",sizeKey:"unisex",fabric:"jersey",price:64000,colors:["oat","charcoal","rose"],isNew:true,best:true},
+{id:"u2",name:"코튼 거즈 데일리 파자마",gender:"공용",cat:"unisex",shape:"set",sizeKey:"unisex",fabric:"gauze",price:56000,colors:["ivory","mocha"],isNew:true},
+{id:"u3",name:"모달 라운지 셔츠",gender:"공용",cat:"unisex",shape:"top",sizeKey:"unisexTop",fabric:"modal",price:39000,colors:["oat","cocoa"],isNew:true},
 {id:"m1",name:"포근 모달 상하의 세트",gender:"남",cat:"men",shape:"set",fabric:"modal",price:69000,colors:["oat","charcoal"],isNew:true,best:true,pair:["w1","w2"]},
 {id:"w1",name:"포근 모달 셔츠",gender:"여",cat:"women-top",shape:"top",fabric:"modal",price:36000,colors:["rose","oat"],isNew:true,best:true,pair:["m1"]},
 {id:"w2",name:"포근 모달 팬츠",gender:"여",cat:"women-bottom",shape:"bottom",fabric:"modal",price:33000,colors:["rose","oat"],isNew:true,pair:["m1"]},
@@ -392,14 +396,16 @@ var PRODUCTS=[
 {id:"w5",name:"기모 저지 롱 원피스",gender:"여",cat:"women-dress",shape:"dress",fabric:"jersey",price:58000,colors:["cocoa","oat"],best:true,pair:["m3"]}
 ];
 var SIZES={
+unisex:{sizes:["S","M","L","XL"],head:["사이즈","추천 키","어깨","가슴단면","상의 총장","허리단면(밴딩)","바지 총장"],rows:[["S","155–165",42,52,66,"30–40",94],["M","165–172",45,55,69,"32–42",97],["L","172–180",48,58,72,"34–44",100],["XL","180–188",51,61,75,"36–46",103]]},
+unisexTop:{sizes:["S","M","L","XL"],head:["사이즈","추천 키","어깨","가슴단면","소매길이","총장"],rows:[["S","155–165",42,52,57,66],["M","165–172",45,55,59,69],["L","172–180",48,58,61,72],["XL","180–188",51,61,63,75]]},
 set:{sizes:["M","L","XL"],head:["사이즈","어깨","가슴단면","상의 총장","허리단면(밴딩)","바지 총장"],rows:[["M",46,56,72,"34–44",100],["L",48,59,74,"36–46",102],["XL",50,62,76,"38–48",104]]},
 top:{sizes:["S","M","L"],head:["사이즈","어깨","가슴단면","소매길이","총장"],rows:[["S",38,50,56,62],["M",40,53,57,64],["L",42,56,58,66]]},
 bottom:{sizes:["S","M","L"],head:["사이즈","허리단면(밴딩)","엉덩이단면","밑위","총장"],rows:[["S","30–38",50,29,95],["M","32–40",53,30,97],["L","34–42",56,31,99]]},
 dress:{sizes:["S","M","L"],head:["사이즈","어깨","가슴단면","허리단면","총장"],rows:[["S",37,50,48,112],["M",39,53,51,115],["L",41,56,54,118]]},
 slip:{sizes:["S","M","L"],head:["사이즈","가슴단면","허리단면","총장(어깨끈 제외)"],rows:[["S",44,46,98],["M",47,49,100],["L",50,52,102]]}
 };
-var CAT={"men":"남자 잠옷","women":"여자 잠옷","women-top":"여자 상의","women-bottom":"여자 하의","women-dress":"원피스","new":"신상품"};
-var CAT_EN={"men":"MEN","women":"WOMEN","women-top":"WOMEN TOP","women-bottom":"WOMEN BOTTOM","women-dress":"DRESS","new":"NEW ARRIVAL"};
+var CAT={"unisex":"남녀공용","men":"남자 잠옷","women":"여자 잠옷","women-top":"여자 상의","women-bottom":"여자 하의","women-dress":"원피스","new":"신상품"};
+var CAT_EN={"unisex":"UNISEX","men":"MEN","women":"WOMEN","women-top":"WOMEN TOP","women-bottom":"WOMEN BOTTOM","women-dress":"DRESS","new":"NEW ARRIVAL"};
 var POLICY={
 ship:["배송비 3,000원 · 50,000원 이상 구매하면 무료","결제를 마친 뒤 1~3영업일 안에 보내 드려요","받는 데까지는 보통 1~2일 걸려요","제주·도서산간 지역은 배송비 3,000원이 더 붙어요"],
 exchange:["상품을 받은 날부터 7일 안에 신청해 주세요","단순 변심은 반품 배송비(왕복 6,000원)를 부담해 주세요","불량·오배송이거나 상품 설명과 다른 경우 배송비 없이 교환·환불해 드려요 (받은 날부터 3개월, 안 날부터 30일 안)","착용·세탁 등으로 상품 가치가 크게 줄어든 경우 교환·환불이 어려워요"],
@@ -462,11 +468,11 @@ else if(shape==="slip"){body=slip();}
 if(view==="detail"){vb=shape==="bottom"?"30 70 60 80":(shape==="slip"?"30 4 60 80":"30 0 60 80");}
 return '<svg viewBox="'+vb+'" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">'+body+'</svg>';
 }
-function tags(p){return (p.isNew?"[NEW]":"")+"["+p.gender+"]";}
+function tags(p){return (p.isNew?"[NEW]":"")+"["+(p.gender==="공용"?"남녀공용":p.gender)+"]";}
 var HEART='<path d="M12 20s-7.5-4.6-7.5-10.1A4.1 4.1 0 0 1 12 7.6a4.1 4.1 0 0 1 7.5 2.3C19.5 15.4 12 20 12 20z"/>';
 function card(p){var w=!!state.wish[p.id];return '<div class="card-wrap"><a class="card" href="#item-'+p.id+'"><div class="ph">'+garment(p.shape,COLORS[p.colors[0]].hex)+'</div><p class="nm">'+tags(p)+esc(p.name)+'</p><p class="pr">'+won(p.price)+'</p></a>'+
 '<button type="button" class="card-heart" data-act="wishcard" data-id="'+p.id+'" aria-pressed="'+w+'" aria-label="'+esc(p.name)+(w?' 찜 해제':' 찜하기')+'">'+ico(HEART)+'</button></div>';}
-function matchQ(q){q=q.trim().toLowerCase();if(!q)return [];return PRODUCTS.filter(function(p){var f=FABRIC[p.fabric];return (p.name+" "+f.label+" "+f.en+" "+CAT[p.cat]+" "+(p.gender==="남"?"남자":"여자")+(p.pair?" 커플":"")).toLowerCase().indexOf(q)>-1;});}
+function matchQ(q){q=q.trim().toLowerCase();if(!q)return [];return PRODUCTS.filter(function(p){var f=FABRIC[p.fabric];return (p.name+" "+f.label+" "+f.en+" "+CAT[p.cat]+" "+(p.gender==="남"?"남자":p.gender==="여"?"여자":"남녀공용 공용 남자 여자 커플")+(p.pair?" 커플":"")).toLowerCase().indexOf(q)>-1;});}
 function grid(list){return '<div class="grid">'+list.map(card).join("")+'</div>';}
 function cartQty(){return state.cart.reduce(function(a,b){return a+b.qty;},0);}
 function cartSum(){return state.cart.reduce(function(a,b){return a+byId(b.id).price*b.qty;},0);}
@@ -475,13 +481,13 @@ function shipFee(s){return s===0||s>=FREE_OVER?0:SHIP_FEE;}
 /* 화면 */
 function viewHome(){
 var news=PRODUCTS.filter(function(p){return p.isNew;}).slice(0,8),best=PRODUCTS.filter(function(p){return p.best;});
-var tiles=[["men","MEN","남자 잠옷","set","oat"],["women-top","TOP","여자 상의","top","rose"],["women-bottom","BOTTOM","여자 하의","bottom","ivory"],["women-dress","DRESS","원피스","dress","cocoa"]];
+var tiles=[["unisex","UNISEX","남녀공용","set","mocha"],["men","MEN","남자 잠옷","set","oat"],["women","WOMEN","여자 잠옷","top","rose"],["women-dress","DRESS","원피스","dress","cocoa"]];
 var insta="";for(var i=0;i<6;i++){insta+='<div>사진 '+(i+1)+'</div>';}
 return '<section class="hero" aria-label="메인 배너">'+garment("set",COLORS.oat.hex)+garment("set",COLORS.rose.hex)+
 '<div class="hero-text"><p class="en">26 WINTER — SAME NIGHT</p><p class="ko">결이 같은 원단으로 짝지어 만든 커플 잠옷</p><a href="#new">SHOP NOW</a></div><p class="hero-note">메인 배너 사진이 들어갈 자리예요</p></section>'+
 '<div class="full"><section class="sec"><h2 class="sec-title">NEW ARRIVAL</h2><p class="sec-sub">이번 시즌 새로 나온 잠옷</p>'+grid(news)+'</section>'+
 '<section class="sec"><h2 class="sec-title">CATEGORY</h2><p class="sec-sub">찾는 잠옷 바로 보기</p><div class="grid">'+tiles.map(function(t){
-var n=PRODUCTS.filter(function(p){return p.cat===t[0];}).length;
+var n=PRODUCTS.filter(function(p){if(t[0]==="women")return p.cat.indexOf("women")===0||p.cat==="unisex";if(t[0]==="men")return p.cat==="men"||p.cat==="unisex";return p.cat===t[0];}).length;
 return '<a class="card" href="#'+t[0]+'"><div class="ph">'+garment(t[3],COLORS[t[4]].hex)+'</div><p class="cat-label">'+t[1]+' <small>'+t[2]+' '+n+'</small></p></a>';}).join("")+'</div></section>'+
 '<section class="sec"><h2 class="sec-title">BEST ITEM</h2><p class="sec-sub">많이 찾는 잠옷</p>'+grid(best)+'</section>'+
 '<section class="sec"><h2 class="sec-title">@lynandwon</h2><p class="sec-sub">인스타그램 계정을 준비하고 있어요</p><div class="insta">'+insta+'</div></section></div>';
@@ -489,7 +495,8 @@ return '<a class="card" href="#'+t[0]+'"><div class="ph">'+garment(t[3],COLORS[t
 function viewList(key){
 var list;
 if(key==="new")list=PRODUCTS.filter(function(p){return p.isNew;});
-else if(key==="women")list=PRODUCTS.filter(function(p){return p.cat.indexOf("women")===0;});
+else if(key==="women")list=PRODUCTS.filter(function(p){return p.cat.indexOf("women")===0||p.cat==="unisex";});
+else if(key==="men")list=PRODUCTS.filter(function(p){return p.cat==="men"||p.cat==="unisex";});
 else list=PRODUCTS.filter(function(p){return p.cat===key;});
 list=list.slice();
 if(state.sort==="low")list.sort(function(a,b){return a.price-b.price;});
@@ -508,10 +515,10 @@ return '<nav class="tabs" aria-label="상세 메뉴">'+t.map(function(x,k){retur
 function viewItem(id){
 var p=byId(id);if(!p)return viewMissing();
 var pd=state.pd;if(pd.id!==id){state.pd=pd={id:id,color:null,size:null,qty:1,vi:0,msg:""};}
-var hex=COLORS[pd.color||p.colors[0]].hex,f=FABRIC[p.fabric],sz=SIZES[p.shape],rv=state.reviews[id]||[];
+var hex=COLORS[pd.color||p.colors[0]].hex,f=FABRIC[p.fabric],sz=SIZES[p.sizeKey||p.shape],rv=state.reviews[id]||[];
 var chosen=pd.color&&pd.size;
 var match="";
-if(p.pair){match='<div class="match"><p class="ttl">같은 원단의 '+(p.gender==="남"?"여자":"남자")+' 잠옷 · 커플로 맞추기</p>'+p.pair.map(function(pid){var q=byId(pid);return '<a href="#item-'+q.id+'"><div class="ph">'+garment(q.shape,COLORS[q.colors[0]].hex)+'</div><span>'+esc(q.name)+'</span><span>'+won(q.price)+'</span></a>';}).join("")+'</div>';}
+if(p.pair){match='<div class="match"><p class="ttl">같은 원단의 '+(p.gender==="남"?"여자":p.gender==="여"?"남자":"")+' 잠옷 · 커플로 맞추기</p>'+p.pair.map(function(pid){var q=byId(pid);return '<a href="#item-'+q.id+'"><div class="ph">'+garment(q.shape,COLORS[q.colors[0]].hex)+'</div><span>'+esc(q.name)+'</span><span>'+won(q.price)+'</span></a>';}).join("")+'</div>';}
 var reviews=rv.length?rv.map(function(r){return '<div class="review"><span class="stars" aria-label="별점 '+r.rating+'점">'+stars(r.rating)+'</span><p>'+esc(r.text)+'</p><span class="by">'+esc(r.opt)+'</span></div>';}).join(""):'<div class="empty">아직 작성된 후기가 없어요.</div>';
 return '<div class="pd">'+
 '<div class="pd-media"><div class="pd-stage"><button type="button" class="arr l" data-act="prev" aria-label="이전 사진">'+ico('<path d="M15 4l-8 8 8 8"/>')+'</button>'+
@@ -536,7 +543,7 @@ match+'</div></div></div>'+
 '<div class="dimg">'+garment(p.shape,hex,"back")+'</div><p class="cap">착용 사진이 들어갈 자리예요</p>'+
 '<div id="sizeGuide"><p class="dh">SIZE</p><div class="table-wrap"><table><thead><tr>'+sz.head.map(function(h){return '<th scope="col">'+h+'</th>';}).join("")+'</tr></thead><tbody>'+
 sz.rows.map(function(r){return '<tr>'+r.map(function(c,i){return i===0?'<th scope="row">'+c+'</th>':'<td>'+c+'</td>';}).join("")+'</tr>';}).join("")+'</tbody></table></div>'+
-'<p class="note center" style="margin-top:12px">단위 cm · 옷을 바닥에 펼쳐 놓고 잰 길이예요. 재는 방법에 따라 1~2cm 차이가 날 수 있어요.</p></div>'+
+(p.gender==="공용"?'<p class="note center" style="margin-top:12px">남녀공용 사이즈예요. 추천 키를 참고해 고르시고, 여유 있게 입고 싶으면 한 사이즈 크게 골라 주세요.</p>':'')+'<p class="note center" style="margin-top:12px">단위 cm · 옷을 바닥에 펼쳐 놓고 잰 길이예요. 재는 방법에 따라 1~2cm 차이가 날 수 있어요.</p></div>'+
 '<div><p class="dh">CARE</p><ul class="care">'+f.care.map(function(c){return '<li>'+c+'</li>';}).join("")+'</ul></div>'+
 '</div></section>'+
 '<section class="dsec" id="sec-review">'+tabBar(1,rv.length)+'<div class="dbody" style="margin-top:60px"><div>'+reviews+'</div>'+

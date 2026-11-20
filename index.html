@@ -355,6 +355,78 @@ select option{background:var(--surface);color:var(--ink)}
 @media (max-width:600px){.logo{font-size:17px;gap:6px;letter-spacing:.02em}.logo-moon{width:16px;height:16px}.icons{gap:12px}}
 @media (max-width:420px){.hide-xs{display:none!important}}
 @media (prefers-reduced-motion:reduce){.star{animation:none}}
+
+/* 상세페이지 v2 */
+.dsec#sec-detail .dbody{max-width:860px}
+.dv{display:grid;gap:0;margin:0 -30px}
+.dv-band{padding:96px 48px;display:grid;gap:28px;justify-items:center;text-align:center}
+.dv-band.alt{background:#121214}
+.dv-band.warm{background:#1A1816}
+.dv-tag{display:inline-block;border:1px solid var(--rule);border-radius:999px;padding:6px 16px;font-size:11px;letter-spacing:.18em;font-weight:500;color:var(--ink)}
+.dv-h{font-size:22px;font-weight:600;letter-spacing:-.01em}
+.dv-sub{font-size:13px;color:var(--mute);margin-top:-18px}
+.dv-p{font-size:14px;color:#C9C7C2;line-height:1.9;max-width:32em}
+.dv-hero{position:relative;overflow:hidden}
+.dv-hero img{width:100%;display:block;filter:brightness(.72)}
+.dv-hero .t{position:absolute;left:44px;top:48px;text-align:left;display:grid;gap:10px}
+.dv-hero .t b{font-size:clamp(28px,4vw,44px);font-weight:300;letter-spacing:.06em;line-height:1.15}
+.dv-hero .t span{font-size:14px;font-weight:500}
+.dv-hero .m{position:absolute;right:28px;bottom:24px;font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.7)}
+.dv-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
+.dv-card{border-radius:16px;overflow:hidden;background:var(--photo)}
+.dv-card img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.dv-card p{padding:12px;font-size:12px;font-weight:500;background:rgba(255,255,255,.06);letter-spacing:.04em}
+.dv-vs{display:grid;gap:14px;width:100%;margin-top:8px}
+.dv-vs div{display:grid;grid-template-columns:1fr 54px 1fr;align-items:center;gap:16px;font-size:13px}
+.dv-vs .l{text-align:right;color:var(--mute)}
+.dv-vs .r{text-align:left;font-weight:500}
+.dv-vs i{font-style:normal;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--paper);font-size:11px;font-weight:600}
+.dv-hash{font-size:22px;font-weight:600}
+.dv-circles{display:grid;grid-template-columns:1fr 1fr;gap:44px 28px;width:100%;max-width:560px}
+.dv-circle{display:grid;justify-items:center;gap:14px}
+.dv-circle .n{width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:12px;font-weight:600;margin-bottom:-28px;position:relative;z-index:1}
+.dv-circle img{width:100%;max-width:240px;aspect-ratio:1;border-radius:50%;object-fit:cover;display:block;border:1px solid var(--line)}
+.dv-circle p{font-size:12px;color:var(--mute);line-height:1.6}
+.dv-circle p b{display:block;color:var(--ink);font-size:14px;font-weight:600}
+.dv-story{justify-items:start;text-align:left}
+.dv-story .dv-h{font-size:26px}
+.dv-pair{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}
+.dv-pair img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.dv-fabric{width:100%;max-width:560px;aspect-ratio:16/10;object-fit:cover;border-radius:0 0 0 64px;display:block}
+.dv-colors{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
+.dv-colors figure{margin:0;display:grid;gap:14px}
+.dv-colors figure>img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.dv-colors figcaption{display:flex;justify-content:center;align-items:center;gap:12px;font-size:13px;text-align:left}
+.dv-colors figcaption .leo-sw{width:40px;height:40px}
+.dv-colors figcaption small{display:block;font-size:11px;color:var(--mute);letter-spacing:.12em}
+.leo-sw{display:inline-block;width:14px;height:14px;border-radius:50%;background-size:cover;background-position:center;border:1px solid var(--rule);flex:none}
+.leo-sw.lg{width:72px;height:72px}
+.dv-colorsec{gap:20px}
+.dv-colorsec .big{position:relative;width:100%}
+.dv-colorsec .big>img{width:100%;display:block}
+.dv-colorsec .big .chip{position:absolute;right:18px;bottom:18px;display:grid;justify-items:center;gap:6px;font-size:10px;letter-spacing:.14em;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.dv-colorsec .big .chip .leo-sw{width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,255,255,.7);box-shadow:0 2px 10px rgba(0,0,0,.4)}
+.dv-sizebox{width:100%;background:#151517;border:1px solid var(--line);padding:40px 34px;display:grid;gap:26px;text-align:left}
+.dv-sketch{width:100%;max-width:560px;justify-self:center;color:var(--ink)}
+.dv-sketch .g{fill:none;stroke:currentColor;stroke-width:1.3;stroke-linejoin:round;stroke-linecap:round}
+.dv-sketch .dim{stroke:var(--beige);stroke-width:1;stroke-dasharray:3 3;fill:none}
+.dv-sketch .ar{fill:var(--beige)}
+.dv-sketch text{fill:var(--beige);font-size:11px;font-family:var(--font-body)}
+.dv-sizehead{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:600;letter-spacing:.08em}
+.dv-sizehead span{font-weight:400;color:var(--mute);letter-spacing:0;font-size:12px}
+.dv-info{display:grid;grid-template-columns:70px 1fr;gap:18px;align-items:start;padding-top:22px;border-top:1px solid var(--line)}
+.dv-info .ic{display:grid;justify-items:center;gap:6px;font-size:10px;letter-spacing:.12em;color:var(--mute)}
+.dv-info svg{width:34px;height:34px;fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+.dv-info ul{margin:0;padding-left:16px;display:grid;gap:4px;font-size:12px;color:#C9C7C2;line-height:1.7}
+@media (max-width:700px){
+.dv{margin:0 -16px}
+.dv-band{padding:70px 20px}
+.dv-hero .t{left:20px;top:26px}
+.dv-vs div{grid-template-columns:1fr 44px 1fr;gap:10px;font-size:12px}
+.dv-vs i{width:44px;height:44px;font-size:10px}
+.dv-circles{gap:30px 14px}
+.dv-sizebox{padding:28px 16px}
+}
 /* 하단 */
 .foot{border-top:1px solid var(--rule);margin-top:80px;padding:44px 30px 36px;font-size:12px;color:#B5B3AE}
 .foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.6fr;gap:30px}
@@ -825,40 +897,44 @@ var CARE_TIP={"손세탁":"미지근한 물에<br>중성세제로 손세탁","�
 function scaleRow(t,opts,on){return '<div><strong>'+t+'</strong>'+opts.map(function(o){return '<span'+(o===on?' class="on"':'')+'>'+o+'</span>';}).join("")+'</div>';}
 function richDetail(p,f,sz){
 var I=function(n){return "images/leo-"+n+".jpg";};
-return '<div class="rich">'+
-'<div class="r-hero"><img src="'+I("sit")+'" alt="먹색 레오파드 파자마를 입고 침대에 앉은 모델" loading="lazy"><div class="r-hero-txt"><h2>'+esc(p.name)+'</h2><p>남녀공용 · FREE</p></div></div>'+
-'<section class="r-sec"><p class="r-k">POINT</p>'+
-'<div class="r-points">'+
-'<div class="r-point"><b>01</b><div><h3>레오파드 패턴</h3><p>은은한 광택이 있는 레오파드 원단이에요.</p></div></div>'+
-'<div class="r-point"><b>02</b><div><h3>남녀공용 FREE</h3><p>어깨 52cm, 여유 있는 핏이에요.</p></div></div>'+
-'<div class="r-point"><b>03</b><div><h3>파이핑 마감</h3><p>카라, 소매, 바지 밑단에 파이핑이 들어가요.</p></div></div>'+
+var SW=function(k,cls){return '<span class="leo-sw'+(cls?' '+cls:'')+'" style="background-image:url(images/leopard-'+k+'.svg)" aria-hidden="true"></span>';};
+var table='<div class="table-wrap"><table><thead><tr>'+sz.head.map(function(h){return '<th scope="col">'+h+'</th>';}).join("")+'</tr></thead><tbody>'+sz.rows.map(function(r){return '<tr>'+r.map(function(c,i){return i===0?'<th scope="row">'+c+'</th>':'<td>'+c+'</td>';}).join("")+'</tr>';}).join("")+'</tbody></table></div>';
+var sketch='<svg class="dv-sketch" viewBox="0 0 640 330" role="img" aria-label="상의와 바지 사이즈 재는 위치">'+
+'<path class="g" d="M126 52 L160 40 Q180 58 200 40 L234 52 L290 96 L272 210 L250 206 L262 120 L254 120 L254 290 L106 290 L106 120 L98 120 L110 206 L88 210 L70 96 Z"/>'+
+'<path class="g" d="M160 40 L180 82 L200 40 M180 82 L180 290"/><circle class="g" cx="186" cy="118" r="2.4"/><circle class="g" cx="186" cy="158" r="2.4"/><circle class="g" cx="186" cy="198" r="2.4"/><circle class="g" cx="186" cy="238" r="2.4"/>'+
+'<path class="dim" d="M126 28 H234"/><path class="ar" d="M126 28 l6 -3 v6z M234 28 l-6 -3 v6z"/><text x="180" y="20" text-anchor="middle">어깨 52</text>'+
+'<path class="dim" d="M244 60 L292 220"/><text x="300" y="150">팔길이 52</text>'+
+'<path class="dim" d="M54 40 V290"/><path class="ar" d="M54 40 l-3 6 h6z M54 290 l-3 -6 h6z"/><text x="46" y="170" text-anchor="end">총장 65</text>'+
+'<path class="g" d="M392 40 H512 L540 300 L478 300 L452 120 L426 300 L364 300 Z"/><path class="g" d="M392 52 H512"/>'+
+'<path class="dim" d="M392 24 H452"/><path class="ar" d="M392 24 l6 -3 v6z M452 24 l-6 -3 v6z"/><text x="422" y="16" text-anchor="middle">허리 단면 32</text>'+
+'<path class="dim" d="M562 40 V300"/><path class="ar" d="M562 40 l-3 6 h6z M562 300 l-3 -6 h6z"/><text x="570" y="174">총장 97</text>'+
+'</svg>';
+var notice='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 L29 27 H3 Z"/><path d="M16 12 V19"/><circle cx="16" cy="23" r=".8"/></svg>';
+var truck='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 9 H19 V22 H3 Z"/><path d="M19 13 H25 L29 18 V22 H19"/><circle cx="9" cy="24" r="2.5"/><circle cx="23" cy="24" r="2.5"/></svg>';
+return '<div class="dv">'+
+'<div class="dv-hero"><img src="'+I("sit")+'" alt="먹색 레오파드 파자마를 입고 침대에 앉은 모델" loading="lazy"><div class="t"><b>MIDNIGHT<br>LEOPARD</b><span>미드나잇 레오파드 파자마 세트</span></div><p class="m">LYNANDWON</p></div>'+
+'<section class="dv-band warm"><span class="dv-tag">LYNANDWON</span><p class="dv-sub" style="margin:0">먹색과 브라운</p><h3 class="dv-h" style="margin-top:-18px">두 가지 컬러를 한눈에</h3>'+
+'<div class="dv-cards"><div class="dv-card"><img src="'+I("stand2")+'" alt="먹색 착용 사진" loading="lazy"><p>먹색 · INK</p></div><div class="dv-card"><img src="'+I("brown")+'" alt="브라운 착용 사진" loading="lazy"><p>브라운 · BROWN</p></div></div>'+
+'<div class="dv-vs"><div><span class="l">남녀공용 FREE</span><i>Fit</i><span class="r">어깨 52cm 여유 있는 핏</span></div><div><span class="l">면, 폴리에스테르</span><i>Fabric</i><span class="r">은은한 광택의 레오파드</span></div><div><span class="l">카라 · 소매 · 밑단</span><i>Point</i><span class="r">같은 톤 파이핑 마감</span></div></div></section>'+
+'<section class="dv-band"><h3 class="dv-hash">#Detail point</h3><p class="dv-sub">디테일 포인트</p><div class="dv-circles">'+
+[["d-collar","오픈 카라","단추 여밈"],["d-cuff","소매","파이핑 마감"],["d-fabric","원단","은은한 광택"],["d-hem","바지 밑단","와이드 핏"]].map(function(d,i){return '<div class="dv-circle"><span class="n">0'+(i+1)+'</span><img src="'+I(d[0])+'" alt="'+d[1]+' 확대" loading="lazy"><p><b>'+d[1]+'</b>'+d[2]+'</p></div>';}).join("")+
 '</div></section>'+
-'<section class="r-sec"><p class="r-k">COUPLE</p><h3 class="r-h">먹색 / 브라운</h3><img class="r-img" src="'+I("couple")+'" alt="먹색과 브라운 레오파드 파자마를 입은 두 모델" loading="lazy"></section>'+
-'<section class="r-sec"><p class="r-k">DETAIL</p><div class="r-grid2">'+
-'<figure><img src="'+I("d-collar")+'" alt="카라와 단추 확대" loading="lazy"><figcaption><b>카라 & 단추</b>오픈 카라, 단추 여밈</figcaption></figure>'+
-'<figure><img src="'+I("d-cuff")+'" alt="소매 파이핑 확대" loading="lazy"><figcaption><b>소매</b>소매 끝 파이핑</figcaption></figure>'+
-'<figure><img src="'+I("d-fabric")+'" alt="레오파드 원단 확대" loading="lazy"><figcaption><b>원단</b>면, 폴리에스테르</figcaption></figure>'+
-'<figure><img src="'+I("d-hem")+'" alt="바지 밑단 확대" loading="lazy"><figcaption><b>바지 밑단</b>와이드 핏, 밑단 파이핑</figcaption></figure>'+
+'<section class="dv-band alt dv-story"><h3 class="dv-h">LYNANDWON.</h3><p class="dv-p">린앤원은 둘이 같이 입는 잠옷을 만들어요.<br>남녀 구분 없이 같은 디자인, 같은 사이즈로 맞춰 입을 수 있어요.</p><div class="dv-pair"><img src="'+I("couple")+'" alt="두 가지 컬러를 입은 두 모델" loading="lazy"><img src="'+I("peace")+'" alt="먹색 착용 사진" loading="lazy"></div></section>'+
+'<section class="dv-band warm"><h3 class="dv-h">About Fabric</h3><p class="dv-sub">'+f.label+'</p><img class="dv-fabric" src="'+I("d-fabric")+'" alt="레오파드 원단 확대" loading="lazy"><p class="dv-p">두께는 보통이고 비침이 없어요. 안감 없이 한 겹이고, 신축성은 보통이에요.</p>'+
+'<div class="r-scale" style="max-width:560px">'+scaleRow("두께감",["얇음","보통","두꺼움"],"보통")+scaleRow("비침",["없음","보통","있음"],"없음")+scaleRow("신축성",["없음","보통","좋음"],"보통")+scaleRow("안감",["있음","없음","기모안감"],"없음")+'</div></section>'+
+'<section class="dv-band"><h3 class="dv-hash">#About color</h3><p class="dv-sub">두 가지 컬러</p><div class="dv-colors">'+
+'<figure><img src="'+I("stand1")+'" alt="먹색" loading="lazy"><figcaption>'+SW("ink")+'<span>먹색<small>INK</small></span></figcaption></figure>'+
+'<figure><img src="'+I("brown")+'" alt="브라운" loading="lazy"><figcaption>'+SW("brown")+'<span>브라운<small>BROWN</small></span></figcaption></figure>'+
 '</div></section>'+
-'<section class="r-sec"><p class="r-k">COLOR</p><div class="r-colors">'+
-'<div class="r-color"><img class="full" src="'+I("stand1")+'" alt="먹색 착용 사진" loading="lazy"><p class="r-sw"><img src="'+I("sw-ink")+'" alt="">먹색</p></div>'+
-'<div class="r-color"><img class="full" src="'+I("brown")+'" alt="브라운 착용 사진" loading="lazy"><p class="r-sw"><img src="'+I("sw-brown")+'" alt="">브라운</p></div>'+
+'<section class="dv-band alt dv-colorsec"><h3 class="dv-h">INK</h3><p class="dv-sub">먹색</p><div class="big"><img src="'+I("stand3")+'" alt="먹색 전신 착용 사진" loading="lazy"><span class="chip">'+SW("ink")+'INK</span></div><div class="dv-pair"><img src="'+I("sit")+'" alt="먹색 착용 사진" loading="lazy"><img src="'+I("d-collar")+'" alt="먹색 카라 확대" loading="lazy"></div></section>'+
+'<section class="dv-band warm dv-colorsec"><h3 class="dv-h">BROWN</h3><p class="dv-sub">브라운</p><div class="big"><img src="'+I("brown")+'" alt="브라운 착용 사진" loading="lazy"><span class="chip">'+SW("brown")+'BROWN</span></div><img class="r-img" src="'+I("couple")+'" alt="먹색과 브라운을 입은 두 모델" loading="lazy"></section>'+
+'<section class="dv-band alt" id="sizeGuide"><div class="dv-sizebox">'+sketch+
+'<div class="dv-sizehead">SIZE CHECK <span>단위 cm · 남녀공용 FREE</span></div>'+table+
+'<div class="dv-info"><div class="ic">'+notice+'NOTICE</div><ul><li>옷을 바닥에 펼쳐 손으로 잰 길이라 재는 방법과 원단 특성에 따라 1~3cm 정도 오차가 있을 수 있어요.</li><li>오차로 인한 교환·반품은 단순 변심과 같이 처리돼요.</li><li>모니터와 휴대폰 화면에 따라 실제 색과 조금 다르게 보일 수 있어요.</li></ul></div>'+
+'<div class="dv-info"><div class="ic">'+truck+'DELIVERY</div><ul><li>배송비 3,000원 · 50,000원 이상 구매 시 무료</li><li>결제 후 1~3영업일 안에 출고돼요.</li><li>교환·반품 안내는 아래 구매안내 탭에서 확인해 주세요.</li></ul></div>'+
 '</div></section>'+
-'<section class="r-sec"><p class="r-k">LOOK</p><div class="r-grid2 tall">'+
-'<figure><img src="'+I("peace")+'" alt="먹색 파자마 착용 사진" loading="lazy"></figure>'+
-'<figure><img src="'+I("stand3")+'" alt="먹색 파자마 전신 사진" loading="lazy"></figure>'+
-'</div></section>'+
-'<section class="r-sec"><p class="r-k">FABRIC</p><h3 class="r-h">옷감 정보</h3><p class="r-p">소재 '+f.label+'</p><div class="r-scale">'+
-scaleRow("두께감",["얇음","보통","두꺼움"],"보통")+scaleRow("비침",["없음","보통","있음"],"없음")+scaleRow("신축성",["없음","보통","좋음"],"보통")+scaleRow("안감",["있음","없음","기모안감"],"없음")+
-'</div></section>'+
-'<section class="r-sec" id="sizeGuide"><p class="r-k">SIZE</p><h3 class="r-h">FREE</h3><div class="table-wrap" style="width:100%"><table><thead><tr>'+sz.head.map(function(h){return '<th scope="col">'+h+'</th>';}).join("")+'</tr></thead><tbody>'+
-sz.rows.map(function(r){return '<tr>'+r.map(function(c,i){return i===0?'<th scope="row">'+c+'</th>':'<td>'+c+'</td>';}).join("")+'</tr>';}).join("")+'</tbody></table></div>'+
-'<ul class="r-measure"><li>어깨: 어깨 끝에서 끝까지</li><li>팔길이: 어깨선에서 소매 끝까지</li><li>상의 총장: 뒷목 중심에서 밑단까지</li><li>허리 단면: 밴딩을 늘리지 않은 상태의 단면</li><li>바지 총장: 허리에서 밑단까지</li></ul>'+
-'<p class="r-warn"><b>사이즈 오차 안내</b><br>단위는 cm이고, 옷을 바닥에 펼쳐 손으로 잰 길이예요. 재는 방법과 원단 특성에 따라 1~3cm 정도 오차가 있을 수 있어요. 오차로 인한 교환·반품은 단순 변심과 같이 처리돼요.</p></section>'+
-'<section class="r-sec"><p class="r-k">CARE</p><h3 class="r-h">세탁 방법</h3><div class="r-care">'+
-f.care.map(function(c){return '<figure>'+(CARE_ICON[c]||"")+'<figcaption>'+c+'</figcaption><small>'+(CARE_TIP[c]||"")+'</small></figure>';}).join("")+
-'</div></section>'+
-'<section class="r-sec"><p class="r-k">INFORMATION</p><h3 class="r-h">상품정보 제공고시</h3><table class="r-notice"><tbody>'+
+'<section class="dv-band"><h3 class="dv-hash">#Care</h3><p class="dv-sub">세탁 방법</p><div class="r-care">'+f.care.map(function(c){return '<figure>'+(CARE_ICON[c]||"")+'<figcaption>'+c+'</figcaption><small>'+(CARE_TIP[c]||"")+'</small></figure>';}).join("")+'</div></section>'+
+'<section class="dv-band alt"><h3 class="dv-h">상품정보 제공고시</h3><table class="r-notice"><tbody>'+
 [["제품 소재",f.label],["색상",p.colors.map(function(k){return COLORS[k].name;}).join(", ")],["치수","FREE (남녀공용)"],["제조자 / 수입자","입력 예정"],["제조국",p.origin||"입력 예정"],["세탁 방법 및 취급 시 주의사항",f.care.join(", ")+" · 다른 옷과 따로 세탁해 주세요"],["제조연월","입력 예정"],["품질보증기준","관련 법 및 공정거래위원회 소비자분쟁해결기준에 따라요"],["A/S 책임자와 전화번호","린앤원 고객센터 010-7456-8114"]].map(function(r){return '<tr><th scope="row">'+r[0]+'</th><td>'+r[1]+'</td></tr>';}).join("")+
 '</tbody></table></section>'+
 '</div>';

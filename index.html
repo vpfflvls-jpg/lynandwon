@@ -372,6 +372,12 @@ select option{background:var(--surface);color:var(--ink)}
 .dv-hero .t b{font-size:clamp(28px,4vw,44px);font-weight:300;letter-spacing:.06em;line-height:1.15}
 .dv-hero .t span{font-size:14px;font-weight:500}
 .dv-hero .m{position:absolute;right:28px;bottom:24px;font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.7)}
+.dv-cards.three{grid-template-columns:repeat(3,1fr);gap:10px}
+.dv-gif{width:100%;max-width:360px;display:block;border-radius:16px}
+.dv-feat{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+.dv-feat figure{margin:0;width:128px;padding:22px 10px 16px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid var(--line);display:grid;justify-items:center;gap:12px}
+.dv-feat svg{width:52px;height:52px;fill:none;stroke:var(--moon);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dv-feat figcaption{font-size:12px}
 .dv-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
 .dv-card{border-radius:16px;overflow:hidden;background:var(--photo)}
 .dv-card img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
@@ -531,8 +537,9 @@ select option{background:var(--surface);color:var(--ink)}
 "use strict";
 /* 상품, 가격, 수치는 예시 */
 var SHIP_FEE=3000,FREE_OVER=50000;
-var COLORS={ink:{name:"먹색",hex:"#3B3B40"},brown:{name:"브라운",hex:"#8B6B47"},oat:{name:"오트밀",hex:"#D9C7B0"},ivory:{name:"아이보리",hex:"#F6F1E8"},cocoa:{name:"코코아",hex:"#8C6F5A"},rose:{name:"더스티 로즈",hex:"#D9BCB0"},charcoal:{name:"차콜",hex:"#5C5752"},mocha:{name:"모카",hex:"#AD917B"}};
+var COLORS={butter:{name:"옐로우",hex:"#F1E2A6"},ink:{name:"먹색",hex:"#3B3B40"},brown:{name:"브라운",hex:"#8B6B47"},oat:{name:"오트밀",hex:"#D9C7B0"},ivory:{name:"아이보리",hex:"#F6F1E8"},cocoa:{name:"코코아",hex:"#8C6F5A"},rose:{name:"더스티 로즈",hex:"#D9BCB0"},charcoal:{name:"차콜",hex:"#5C5752"},mocha:{name:"모카",hex:"#AD917B"}};
 var FABRIC={
+crinkle:{label:"줄지 원단",en:"round crinkle",tag:"FREE",info:["오돌토돌한 줄지 원단","곰 · 꽃 · 튤립 프린트","라운드 넥 단추 여밈","소매 · 바지 밑단 밴딩"],desc:"",care:["손세탁","단독세탁"]},
 leopard:{label:"면, 폴리에스테르",en:"midnight leopard",tag:"남녀공용 · FREE",info:["은은한 광택이 도는 레오파드 패턴","남녀공용 FREE 사이즈, 여유 있는 핏","카라·소매·밑단 파이핑 마감","먹색 · 브라운 2가지 색상"],desc:"",care:["손세탁","단독세탁"]},
 modal:{label:"모달 60% · 면 40%",en:"soft modal",tag:"모달 · 면 혼방",info:["매끄럽고 부드러운 모달 저지","몸을 따라 떨어지는 여유 있는 핏","목둘레와 소매 끝 파이핑 마감","허리 밴딩과 안쪽 조절끈"],
 desc:"모달은 피부에 닿는 면이 매끄럽고 잘 늘어나지 않아요.<br>몸을 따라 부드럽게 떨어져서 자다가 뒤척여도 걸리는 데가 없어요.",care:["30℃ 이하 미온수로 단독 세탁","세탁망에 넣고 약하게 탈수","건조기 사용 금지","그늘에서 뉘어 말리기"]},
@@ -546,6 +553,8 @@ desc:"리넨의 바스락한 결에 레이온을 섞어 몸에 닿는 느낌을 
 var PRODUCTS=[
 {id:"r1",name:"미드나잇 레오파드 파자마 세트",gender:"공용",cat:"unisex",shape:"set",sizeKey:"free",fabric:"leopard",price:25000,colors:["ink","brown"],isNew:true,best:true,rich:true,origin:"중국",
 thumb:"images/leo-stand3.jpg",images:{ink:["images/leo-stand2.jpg","images/leo-sit.jpg","images/leo-stand1.jpg","images/leo-peace.jpg","images/leo-stand3.jpg"],brown:["images/leo-brown.jpg","images/leo-couple.jpg"]}},
+{id:"r2",name:"라운드 오픈 줄지 잠옷세트",gender:"여",cat:"women",shape:"set",sizeKey:"bearFree",fabric:"crinkle",price:15000,colors:["butter"],isNew:true,best:true,rich:"bear",
+thumb:"images/bear-sit.jpg",images:{butter:["images/bear-sit.jpg","images/bear-selfie.jpg","images/bear-front.jpg","images/bear-side.jpg","images/bear-back.jpg"]}},
 {id:"u1",name:"코지 저지 커플 파자마 세트",gender:"공용",cat:"unisex",shape:"set",sizeKey:"unisex",fabric:"jersey",price:64000,colors:["oat","charcoal","rose"],isNew:true,best:true},
 {id:"u2",name:"코튼 거즈 데일리 파자마",gender:"공용",cat:"unisex",shape:"set",sizeKey:"unisex",fabric:"gauze",price:56000,colors:["ivory","mocha"],isNew:true},
 {id:"u3",name:"모달 라운지 셔츠",gender:"공용",cat:"unisex",shape:"top",sizeKey:"unisexTop",fabric:"modal",price:39000,colors:["oat","cocoa"],isNew:true},
@@ -560,6 +569,7 @@ thumb:"images/leo-stand3.jpg",images:{ink:["images/leo-stand2.jpg","images/leo-s
 {id:"w5",name:"기모 저지 롱 원피스",gender:"여",cat:"women-dress",shape:"dress",fabric:"jersey",price:58000,colors:["cocoa","oat"],best:true,pair:["m3"]}
 ];
 var SIZES={
+bearFree:{sizes:["FREE"],head:["사이즈","어깨","팔길이","상의 총장","허리 단면","바지 총장"],rows:[["FREE","-","-","-","-","-"]]},
 free:{sizes:["FREE"],head:["사이즈","어깨","팔길이","상의 총장","허리 단면","바지 총장"],rows:[["FREE",52,52,65,32,97]]},
 unisex:{sizes:["S","M","L","XL"],head:["사이즈","추천 키","어깨","가슴단면","상의 총장","허리단면(밴딩)","바지 총장"],rows:[["S","155–165",42,52,66,"30–40",94],["M","165–172",45,55,69,"32–42",97],["L","172–180",48,58,72,"34–44",100],["XL","180–188",51,61,75,"36–46",103]]},
 unisexTop:{sizes:["S","M","L","XL"],head:["사이즈","추천 키","어깨","가슴단면","소매길이","총장"],rows:[["S","155–165",42,52,57,66],["M","165–172",45,55,59,69],["L","172–180",48,58,61,72],["XL","180–188",51,61,63,75]]},
@@ -897,7 +907,57 @@ var CARE_ICON={
 "단독세탁":'<svg viewBox="0 0 96 96" aria-hidden="true"><path d="M14 54h68l-6 24a6 6 0 0 1-6 5H26a6 6 0 0 1-6-5z"/><path d="M20 64c5-4 10 4 15 0s10 4 15 0 10 4 15 0 8 3 11 1"/><path d="M36 14l-12 8 5 8 5-3v21h28V27l5 3 5-8-12-8c-2 4-6 6-12 6s-10-2-12-6z"/><path d="M48 20v8"/></svg>'};
 var CARE_TIP={"손세탁":"미지근한 물에<br>중성세제로 손세탁","단독세탁":"다른 옷과 따로<br>세탁해 주세요"};
 function scaleRow(t,opts,on){return '<div><strong>'+t+'</strong>'+opts.map(function(o){return '<span'+(o===on?' class="on"':'')+'>'+o+'</span>';}).join("")+'</div>';}
+function dvTable(sz){return '<div class="table-wrap"><table><thead><tr>'+sz.head.map(function(h){return '<th scope="col">'+h+'</th>';}).join("")+'</tr></thead><tbody>'+sz.rows.map(function(r){return '<tr>'+r.map(function(c,i){return i===0?'<th scope="row">'+c+'</th>':'<td>'+c+'</td>';}).join("")+'</tr>';}).join("")+'</tbody></table></div>';}
+function dvTail(p,f,sz,table,sketch,szLabel,szNotice){
+var notice='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 L29 27 H3 Z"/><path d="M16 12 V19"/><circle cx="16" cy="23" r=".8"/></svg>';
+var truck='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 9 H19 V22 H3 Z"/><path d="M19 13 H25 L29 18 V22 H19"/><circle cx="9" cy="24" r="2.5"/><circle cx="23" cy="24" r="2.5"/></svg>';
+return '<section class="dv-band alt" id="sizeGuide"><div class="dv-sizebox">'+sketch+
+'<div class="dv-sizehead">SIZE CHECK <span>단위 cm · '+szLabel+'</span></div>'+table+
+'<div class="dv-info"><div class="ic">'+notice+'NOTICE</div><ul><li>옷을 바닥에 펼쳐 손으로 잰 길이라 재는 방법과 원단 특성에 따라 1~3cm 정도 오차가 있을 수 있어요.</li><li>오차로 인한 교환·반품은 단순 변심과 같이 처리돼요.</li><li>모니터와 휴대폰 화면에 따라 실제 색과 조금 다르게 보일 수 있어요.</li></ul></div>'+
+'<div class="dv-info"><div class="ic">'+truck+'DELIVERY</div><ul><li>배송비 3,000원 · 50,000원 이상 구매 시 무료</li><li>결제 후 1~3영업일 안에 출고돼요.</li><li>교환·반품 안내는 아래 구매안내 탭에서 확인해 주세요.</li></ul></div>'+
+'</div></section>'+
+'<section class="dv-band"><h3 class="dv-hash">#Care</h3><p class="dv-sub">세탁 방법</p><div class="r-care">'+f.care.map(function(c){return '<figure>'+(CARE_ICON[c]||"")+'<figcaption>'+c+'</figcaption><small>'+(CARE_TIP[c]||"")+'</small></figure>';}).join("")+'</div></section>'+
+'<section class="dv-band alt"><h3 class="dv-h">상품정보 제공고시</h3><table class="r-notice"><tbody>'+
+[["제품 소재",f.label],["색상",p.colors.map(function(k){return COLORS[k].name;}).join(", ")],["치수",szNotice],["제조자 / 수입자","입력 예정"],["제조국",p.origin||"입력 예정"],["세탁 방법 및 취급 시 주의사항",f.care.join(", ")+" · 다른 옷과 따로 세탁해 주세요"],["제조연월","입력 예정"],["품질보증기준","관련 법 및 공정거래위원회 소비자분쟁해결기준에 따라요"],["A/S 책임자와 전화번호","린앤원 고객센터 010-7456-8114"]].map(function(r){return '<tr><th scope="row">'+r[0]+'</th><td>'+r[1]+'</td></tr>';}).join("")+
+'</tbody></table></section>';
+}
+function bearDetail(p,f,sz){
+var I=function(n,e){return "images/bear-"+n+"."+(e||"jpg");};
+var SW='<span class="leo-sw" style="background-image:url(images/bear-d-print.jpg)" aria-hidden="true"></span>';
+var D='<path class="dim" ';
+var sketch='<svg class="dv-sketch" viewBox="-24 0 772 340" role="img" aria-label="상의와 바지 사이즈 재는 위치">'+
+'<g transform="translate(70,0)"><path class="g" d="M120 60 L158 52 Q180 74 202 52 L240 60 L330 128 L318 150 L322 158 L306 168 L298 160 L240 112 L240 300 L120 300 L120 112 L62 160 L54 168 L38 158 L42 150 L30 128 Z"/>'+
+'<path class="g" d="M318 150 L298 160 M42 150 L62 160 M180 70 V300"/>'+
+'<circle class="g" cx="186" cy="96" r="2.4"/><circle class="g" cx="186" cy="140" r="2.4"/><circle class="g" cx="186" cy="184" r="2.4"/><circle class="g" cx="186" cy="228" r="2.4"/>'+
+D+'d="M120 32 H240"/><path class="ar" d="M120 32 l6 -3 v6z M240 32 l-6 -3 v6z"/><text x="180" y="22" text-anchor="middle">어깨</text>'+
+D+'d="M248 46 L342 116"/><text x="300" y="66" transform="rotate(37 300 66)" text-anchor="middle">팔길이</text>'+
+D+'d="M-12 60 V300"/><path class="ar" d="M-12 60 l-3 6 h6z M-12 300 l-3 -6 h6z"/><text x="-20" y="184" text-anchor="end">총장</text></g>'+
+'<path class="g" d="M520 44 H620 V60 H520 Z M520 60 L508 290 L512 306 L558 306 L562 290 L570 124 L578 290 L582 306 L628 306 L632 290 L620 60 M508 290 H562 M578 290 H632"/>'+
+D+'d="M520 28 H620"/><path class="ar" d="M520 28 l6 -3 v6z M620 28 l-6 -3 v6z"/><text x="570" y="18" text-anchor="middle">허리 단면</text>'+
+D+'d="M656 44 V306"/><path class="ar" d="M656 44 l-3 6 h6z M656 306 l-3 -6 h6z"/><text x="664" y="180">총장</text>'+
+'</svg>';
+var ic={
+"부드러운 촉감":'<path d="M60 12c-20 4-34 20-38 44l-8 22"/><path d="M60 12c-6 22-18 38-38 44"/><path d="M30 46h14M36 34h16"/>',
+"가볍고 쾌적해요":'<path d="M10 40c8-6 14 6 22 0s14 6 22 0 10 4 12 2"/><path d="M10 52c8-6 14 6 22 0s14 6 22 0 10 4 12 2"/><path d="M22 28V12m-5 5 5-5 5 5M40 28V12m-5 5 5-5 5 5M56 28V12m-5 5 5-5 5 5"/>',
+"편안한 핏":'<path d="M26 12l-14 8 4 14 7-3v29h34V31l7 3 4-14-14-8c-2 6-7 9-14 9s-12-3-14-9z"/><path d="M40 21v10"/>'};
+return '<div class="dv">'+
+'<div class="dv-hero"><div class="t"><b>ROUND CRINKLE</b><span>'+p.name+'</span></div><img src="'+I("sit")+'" alt="옐로우 줄지 잠옷을 입고 침대에 앉은 모델" loading="lazy"></div>'+
+'<section class="dv-band warm"><span class="dv-tag">LYNANDWON</span><p class="dv-sub" style="margin:0">앞 · 옆 · 뒤</p><h3 class="dv-h" style="margin-top:-18px">전체 핏 한눈에</h3>'+
+'<div class="dv-cards three"><div class="dv-card"><img src="'+I("front")+'" alt="앞모습" loading="lazy"><p>FRONT</p></div><div class="dv-card"><img src="'+I("side")+'" alt="옆모습" loading="lazy"><p>SIDE</p></div><div class="dv-card"><img src="'+I("back")+'" alt="뒷모습" loading="lazy"><p>BACK</p></div></div>'+
+'<div class="dv-vs"><div><span class="l">여유 있는 상의</span><i>Fit</i><span class="r">일자로 떨어지는 바지</span></div><div><span class="l">줄지 원단</span><i>Fabric</i><span class="r">오돌토돌한 질감</span></div><div><span class="l">라운드 넥 · 단추</span><i>Point</i><span class="r">같은 톤 파이핑 마감</span></div></div></section>'+
+'<section class="dv-band"><h3 class="dv-hash">#Detail point</h3><p class="dv-sub">디테일 포인트</p><div class="dv-circles">'+
+[["d-neck","라운드 넥","파이핑 · 단추 여밈"],["d-cuff","소매","밴딩 마감"],["d-hem","바지 밑단","밴딩 마감"],["d-print","프린트","곰 · 꽃 · 튤립"]].map(function(d,i){return '<div class="dv-circle"><span class="n">0'+(i+1)+'</span><img src="'+I(d[0])+'" alt="'+d[1]+' 확대" loading="lazy"><p><b>'+d[1]+'</b>'+d[2]+'</p></div>';}).join("")+
+'</div></section>'+
+'<section class="dv-band alt"><h3 class="dv-hash">#Fit</h3><p class="dv-sub">돌아보는 모습</p><img class="dv-gif" src="'+I("fit","gif")+'" alt="잠옷을 입고 한 바퀴 도는 모델" loading="lazy"></section>'+
+'<section class="dv-band warm"><h3 class="dv-h">About Fabric</h3><p class="dv-sub">'+f.label+'</p><p class="dv-p">표면이 오돌토돌한 줄지 원단이라 몸에 달라붙지 않아요.</p>'+
+'<div class="dv-feat">'+Object.keys(ic).map(function(k){return '<figure><svg viewBox="0 0 72 72" aria-hidden="true">'+ic[k]+'</svg><figcaption>'+k+'</figcaption></figure>';}).join("")+'</div></section>'+
+'<section class="dv-band dv-colorsec"><h3 class="dv-hash">#About color</h3><p class="dv-sub">옐로우 한 가지</p><div class="big"><img src="'+I("selfie")+'" alt="옐로우 착용 사진" loading="lazy"><span class="chip">'+SW+'YELLOW</span></div>'+
+'<div class="dv-pair"><img src="'+I("front")+'" alt="옐로우 앞모습" loading="lazy"><img src="'+I("back")+'" alt="옐로우 뒷모습" loading="lazy"></div></section>'+
+dvTail(p,f,sz,dvTable(sz),sketch,"FREE","FREE")+
+'</div>';
+}
 function richDetail(p,f,sz){
+if(p.rich==="bear")return bearDetail(p,f,sz);
 var I=function(n){return "images/leo-"+n+".jpg";};
 var SW=function(k,cls){return '<span class="leo-sw'+(cls?' '+cls:'')+'" style="background-image:url(images/leopard-'+k+'.svg)" aria-hidden="true"></span>';};
 var table='<div class="table-wrap"><table><thead><tr>'+sz.head.map(function(h){return '<th scope="col">'+h+'</th>';}).join("")+'</tr></thead><tbody>'+sz.rows.map(function(r){return '<tr>'+r.map(function(c,i){return i===0?'<th scope="row">'+c+'</th>':'<td>'+c+'</td>';}).join("")+'</tr>';}).join("")+'</tbody></table></div>';
@@ -912,8 +972,6 @@ var sketch='<svg class="dv-sketch" viewBox="-24 0 772 340" role="img" aria-label
 '<path class="dim" d="M520 28 H620"/><path class="ar" d="M520 28 l6 -3 v6z M620 28 l-6 -3 v6z"/><text x="570" y="18" text-anchor="middle">허리 단면 32</text>'+
 '<path class="dim" d="M656 44 V310"/><path class="ar" d="M656 44 l-3 6 h6z M656 310 l-3 -6 h6z"/><text x="664" y="182">총장 97</text>'+
 '</svg>';
-var notice='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4 L29 27 H3 Z"/><path d="M16 12 V19"/><circle cx="16" cy="23" r=".8"/></svg>';
-var truck='<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 9 H19 V22 H3 Z"/><path d="M19 13 H25 L29 18 V22 H19"/><circle cx="9" cy="24" r="2.5"/><circle cx="23" cy="24" r="2.5"/></svg>';
 return '<div class="dv">'+
 '<div class="dv-hero"><div class="t"><b>MIDNIGHT LEOPARD</b><span>미드나잇 레오파드 파자마 세트</span></div><img src="'+I("sit")+'" alt="먹색 레오파드 파자마를 입고 침대에 앉은 모델" loading="lazy"></div>'+
 '<section class="dv-band warm"><span class="dv-tag">LYNANDWON</span><p class="dv-sub" style="margin:0">먹색과 브라운</p><h3 class="dv-h" style="margin-top:-18px">두 가지 컬러를 한눈에</h3>'+
@@ -931,15 +989,7 @@ return '<div class="dv">'+
 '</div></section>'+
 '<section class="dv-band alt dv-colorsec"><h3 class="dv-h">INK</h3><p class="dv-sub">먹색</p><div class="big"><img src="'+I("stand3")+'" alt="먹색 전신 착용 사진" loading="lazy"><span class="chip">'+SW("ink")+'INK</span></div><div class="dv-pair"><img src="'+I("stand2")+'" alt="먹색 착용 사진" loading="lazy"><img src="'+I("sit")+'" alt="먹색 착용 사진" loading="lazy"></div></section>'+
 '<section class="dv-band warm dv-colorsec"><h3 class="dv-h">BROWN</h3><p class="dv-sub">브라운</p><div class="big"><img src="'+I("brown")+'" alt="브라운 착용 사진" loading="lazy"><span class="chip">'+SW("brown")+'BROWN</span></div><img class="r-img" src="'+I("couple")+'" alt="먹색과 브라운을 입은 두 모델" loading="lazy"></section>'+
-'<section class="dv-band alt" id="sizeGuide"><div class="dv-sizebox">'+sketch+
-'<div class="dv-sizehead">SIZE CHECK <span>단위 cm · 남녀공용 FREE</span></div>'+table+
-'<div class="dv-info"><div class="ic">'+notice+'NOTICE</div><ul><li>옷을 바닥에 펼쳐 손으로 잰 길이라 재는 방법과 원단 특성에 따라 1~3cm 정도 오차가 있을 수 있어요.</li><li>오차로 인한 교환·반품은 단순 변심과 같이 처리돼요.</li><li>모니터와 휴대폰 화면에 따라 실제 색과 조금 다르게 보일 수 있어요.</li></ul></div>'+
-'<div class="dv-info"><div class="ic">'+truck+'DELIVERY</div><ul><li>배송비 3,000원 · 50,000원 이상 구매 시 무료</li><li>결제 후 1~3영업일 안에 출고돼요.</li><li>교환·반품 안내는 아래 구매안내 탭에서 확인해 주세요.</li></ul></div>'+
-'</div></section>'+
-'<section class="dv-band"><h3 class="dv-hash">#Care</h3><p class="dv-sub">세탁 방법</p><div class="r-care">'+f.care.map(function(c){return '<figure>'+(CARE_ICON[c]||"")+'<figcaption>'+c+'</figcaption><small>'+(CARE_TIP[c]||"")+'</small></figure>';}).join("")+'</div></section>'+
-'<section class="dv-band alt"><h3 class="dv-h">상품정보 제공고시</h3><table class="r-notice"><tbody>'+
-[["제품 소재",f.label],["색상",p.colors.map(function(k){return COLORS[k].name;}).join(", ")],["치수","FREE (남녀공용)"],["제조자 / 수입자","입력 예정"],["제조국",p.origin||"입력 예정"],["세탁 방법 및 취급 시 주의사항",f.care.join(", ")+" · 다른 옷과 따로 세탁해 주세요"],["제조연월","입력 예정"],["품질보증기준","관련 법 및 공정거래위원회 소비자분쟁해결기준에 따라요"],["A/S 책임자와 전화번호","린앤원 고객센터 010-7456-8114"]].map(function(r){return '<tr><th scope="row">'+r[0]+'</th><td>'+r[1]+'</td></tr>';}).join("")+
-'</tbody></table></section>'+
+dvTail(p,f,sz,table,sketch,"남녀공용 FREE","FREE (남녀공용)")+
 '</div>';
 }
 function viewMissing(){return '<div class="page"><div class="done"><h1>찾는 페이지가 없어요</h1><a class="link" href="#home">메인으로</a></div></div>';}
